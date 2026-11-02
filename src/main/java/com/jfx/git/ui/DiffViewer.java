@@ -438,6 +438,7 @@ public class DiffViewer extends VBox {
         getStyleClass().add("diff-viewer");
         try {
             getStylesheets().add(getClass().getResource("/diff-styles.css").toExternalForm());
+            MonospaceFallback.addTo(getStylesheets(), "/diff-styles.css");
         } catch (Exception ignored) {
             // Styling is optional.
         }

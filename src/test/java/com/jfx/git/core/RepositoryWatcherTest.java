@@ -112,6 +112,20 @@ class RepositoryWatcherTest {
         assertTrue(firesWithin(10_000), "a branch created from a terminal must be noticed");
     }
 
+    /** A namespace of refs that did not exist when watching began, then a branch in it. */
+    @Test
+    void aRefInANewNamespaceIsHeard() throws Exception {
+        Files.createDirectories(root.resolve(".git/refs/heads/team"));
+        assertTrue(firesWithin(10_000), "the new namespace is a change of its own");
+        // The watcher registers a new directory before it schedules the notification, so
+        // by now the namespace is watched; only the branch below can fire again.
+        fired.drainPermits();
+        Files.writeString(root.resolve(".git/refs/heads/team/login"),
+                "0000000000000000000000000000000000000002\n");
+
+        assertTrue(firesWithin(10_000), "a branch in the new namespace must be noticed too");
+    }
+
     @Test
     void changesWhileTheApplicationIsWorkingAreItsOwn() throws Exception {
         ownWork.set(true);

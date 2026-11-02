@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A git command line whose revisions and paths cannot be read as options.
@@ -33,8 +34,17 @@ import java.util.List;
  * </ul>
  * Every command it is used for parses its options with git's parse-options or revision
  * machinery, which both accept {@code --end-of-options} from git 2.24 on.
+ *
+ * <p>With one exception: {@code checkout} and {@code reset} keep it as an argument in older
+ * gits, which then fail on it - "only one reference expected, 2 given", and "option
+ * '--end-of-options' must come before non-option arguments" - in git 2.43, which is Ubuntu
+ * 24.04's, though not in 2.56. For those two it goes in only when a revision starts with a
+ * dash, the one case it is there for: any other revision cannot be read as an option.
  */
 final class GitCommand {
+
+    /** Subcommands given {@code --end-of-options} only for a dashed revision; see above. */
+    private static final Set<String> END_OF_OPTIONS_ONLY_FOR_DASHES = Set.of("checkout", "reset");
 
     private final List<String> options = new ArrayList<>();
     private final List<String> revisions = new ArrayList<>();
@@ -104,7 +114,10 @@ final class GitCommand {
     List<String> args() {
         List<String> args = new ArrayList<>(options);
         if (!revisions.isEmpty()) {
-            args.add(CliRepo.END_OF_OPTIONS);
+            if (options.isEmpty() || !END_OF_OPTIONS_ONLY_FOR_DASHES.contains(options.get(0))
+                    || revisions.stream().anyMatch(revision -> revision.startsWith("-"))) {
+                args.add(CliRepo.END_OF_OPTIONS);
+            }
             args.addAll(revisions);
         }
         if (!paths.isEmpty() || endOfRevisions) {

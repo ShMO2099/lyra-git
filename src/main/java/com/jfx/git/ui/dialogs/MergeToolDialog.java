@@ -3,6 +3,7 @@ package com.jfx.git.ui.dialogs;
 import com.jfx.git.ui.CodeStyler;
 import com.jfx.git.ui.DiffTextArea;
 import com.jfx.git.ui.Icons;
+import com.jfx.git.ui.MonospaceFallback;
 import com.jfx.git.ui.UiScale;
 import com.jfx.git.ui.dialogs.ConflictDocument.Conflict;
 import com.jfx.git.ui.dialogs.ConflictDocument.Located;
@@ -528,6 +529,7 @@ public class MergeToolDialog extends Dialog<String> {
         try {
             getDialogPane().getStylesheets().add(
                     getClass().getResource("/diff-styles.css").toExternalForm());
+            MonospaceFallback.addTo(getDialogPane().getStylesheets(), "/diff-styles.css");
         } catch (Exception ignored) {
             // Styling is optional; the dialog is still usable without it.
         }

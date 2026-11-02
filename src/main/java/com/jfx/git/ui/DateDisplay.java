@@ -316,8 +316,9 @@ public final class DateDisplay {
             ZonedDateTime sample = ZonedDateTime.of(2026, month, 28, 23, 59, 59, 0, ZoneId.systemDefault());
             widest = Math.max(widest, current.formatter().format(sample).length());
         }
-        // 11px Consolas is a little over six pixels a character; the padding is the
-        // column's own right inset.
-        return Math.max(relativeWidth, (int) Math.ceil(widest * 6.8) + 10);
+        // 11px Consolas is a little over six pixels a character, scaled for a wider
+        // monospace where Consolas is missing; the padding is the column's own right inset.
+        return Math.max(relativeWidth,
+                (int) Math.ceil(widest * 6.8 * MonospaceFallback.widthScale()) + 10);
     }
 }

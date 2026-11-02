@@ -89,19 +89,21 @@ final class GitExecutable {
             if (!new File(dir, "git.exe").isFile()) continue;
             // The first git.exe on PATH is the one "git" would start; only its install
             // is considered. A launcher lives in <Git>/cmd or <Git>/bin, beside <Git>/usr.
+            // Nested Files rather than "usr\\bin": the same path on Windows, and one the
+            // tests can build on any platform, where a backslash is part of a file name.
             String name = dir.getName().toLowerCase(java.util.Locale.ROOT);
             File root = dir.getParentFile();
             if (!(name.equals("cmd") || name.equals("bin")) || root == null
-                    || !new File(root, "usr\\bin").isDirectory()) {
+                    || !new File(new File(root, "usr"), "bin").isDirectory()) {
                 return Resolved.PLAIN;
             }
             for (String[] environment : ENVIRONMENTS) {
-                File bin = new File(root, environment[0] + "\\bin");
+                File bin = new File(new File(root, environment[0]), "bin");
                 File git = new File(bin, "git.exe");
                 if (git.isFile()) {
                     return new Resolved(git.getAbsolutePath(),
                             bin.getAbsolutePath() + File.pathSeparator
-                                    + new File(root, "usr\\bin").getAbsolutePath(),
+                                    + new File(new File(root, "usr"), "bin").getAbsolutePath(),
                             environment[1]);
                 }
             }

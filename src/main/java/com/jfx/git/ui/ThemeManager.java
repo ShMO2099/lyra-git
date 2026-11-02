@@ -530,6 +530,11 @@ public final class ThemeManager {
                 sheets.add(app);
             }
         }
+        // Where Consolas is missing, a monospace family for the rules that name it; see
+        // MonospaceFallback. After the sheets it answers, so it wins over them.
+        for (String sheet : APP_STYLESHEETS) {
+            MonospaceFallback.addTo(sheets, sheet);
+        }
         // The user's theme goes last of all, so that what it sets wins over both the
         // base theme's tokens and the application's own rules.
         if (userSheet != null) {

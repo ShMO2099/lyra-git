@@ -92,9 +92,21 @@ public enum GraphDensity {
     /** Author column. Wide enough for its heading, not just for the avatar in it. */
     public int authorWidth() { return authorWidth; }
 
-    public int ageWidth() { return ageWidth; }
+    /** Age column, in this platform's monospace; see {@link #monoWidth}. */
+    public int ageWidth() { return monoWidth(ageWidth); }
 
-    public int hashWidth() { return hashWidth; }
+    /** Hash column, in this platform's monospace; see {@link #monoWidth}. */
+    public int hashWidth() { return monoWidth(hashWidth); }
+
+    /**
+     * A column width measured in 11px Consolas plus the cell's 8px of right padding, for
+     * the monospace this platform actually has: the text part grows with it, the padding
+     * does not. Unchanged where Consolas is installed.
+     */
+    private static int monoWidth(int width) {
+        double scale = com.jfx.git.ui.MonospaceFallback.widthScale();
+        return scale == 1.0 ? width : (int) Math.ceil((width - 8) * scale) + 8;
+    }
 
     public String label() { return label; }
 
@@ -177,8 +189,8 @@ public enum GraphDensity {
                 case AUTHOR -> columns.add(fixed(shown ? authorWidth(style) : 0));
                 // Wider when the dates are absolute: see DateDisplay.graphAgeWidth.
                 case AGE -> columns.add(rightAligned(shown
-                        ? com.jfx.git.ui.DateDisplay.graphAgeWidth(ageWidth) : 0));
-                case HASH -> columns.add(rightAligned(shown ? hashWidth : 0));
+                        ? com.jfx.git.ui.DateDisplay.graphAgeWidth(ageWidth()) : 0));
+                case HASH -> columns.add(rightAligned(shown ? hashWidth() : 0));
             }
         }
         return java.util.List.copyOf(columns);
@@ -208,8 +220,8 @@ public enum GraphDensity {
                 // hide the text and keep every pixel of the space it was using.
                 visible.contains(GraphColumn.MESSAGE) ? growing() : fixed(0),
                 fixed(visible.contains(GraphColumn.AUTHOR) ? authorWidth(style) : 0),
-                rightAligned(visible.contains(GraphColumn.AGE) ? ageWidth : 0),
-                rightAligned(visible.contains(GraphColumn.HASH) ? hashWidth : 0));
+                rightAligned(visible.contains(GraphColumn.AGE) ? ageWidth() : 0),
+                rightAligned(visible.contains(GraphColumn.HASH) ? hashWidth() : 0));
     }
 
     private static javafx.scene.layout.ColumnConstraints fixed(double width) {

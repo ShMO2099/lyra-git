@@ -39,10 +39,39 @@ class GitCommandTest {
 
     @Test
     void endOfRevisionsMakesEveryRevisionHaveToBeOne() {
-        assertEquals(List.of("checkout", "--end-of-options", "main", "--"),
-                GitCommand.of("checkout").revs("main").endOfRevisions().args());
+        assertEquals(List.of("log", "--end-of-options", "main", "--"),
+                GitCommand.of("log").revs("main").endOfRevisions().args());
         assertEquals(List.of("submodule", "update", "--"),
                 GitCommand.of("submodule", "update").endOfRevisions().args());
+    }
+
+    /** Older gits fail on --end-of-options in these two, so it is kept for a dashed revision. */
+    @Test
+    void checkoutAndResetMarkTheEndOfOptionsOnlyForADashedRevision() {
+        assertEquals(List.of("checkout", "main", "--"),
+                GitCommand.of("checkout").revs("main").endOfRevisions().args());
+        assertEquals(List.of("reset", "--mixed", "HEAD~1", "--", "f"),
+                GitCommand.of("reset", "--mixed").revs("HEAD~1").paths("f").args());
+        assertEquals(List.of("checkout", "--end-of-options", "-x", "--"),
+                GitCommand.of("checkout").revs("-x").endOfRevisions().args());
+    }
+
+    /** The installed git runs them: git 2.43 refused both while they carried --end-of-options. */
+    @Test
+    void gitRunsACheckoutAndAResetLaidOutThisWay() throws Exception {
+        assumeTrue(NativeGitRunner.isGitInstalled(), "Native Git is not installed on this system");
+        assertTrue(git.run("init", "-b", "main").isOk());
+        git.run("config", "user.name", "T");
+        git.run("config", "user.email", "t@example.com");
+        Files.writeString(dir.resolve("f"), "1\n");
+        git.run("add", "-A");
+        assertTrue(git.run("commit", "-q", "-m", "one").isOk());
+        assertTrue(git.run("branch", "side").isOk());
+
+        var checkout = git.run(GitCommand.of("checkout").revs("side").endOfRevisions().args());
+        assertTrue(checkout.isOk(), checkout::stderr);
+        var reset = git.run(GitCommand.of("reset", "--mixed").revs("main").paths("f").args());
+        assertTrue(reset.isOk(), reset::stderr);
     }
 
     @Test

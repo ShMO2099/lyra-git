@@ -233,14 +233,21 @@ public final class RepositoryWatcher implements AutoCloseable {
         keys.put(key, dir);
     }
 
-    /** Registers {@code root} and the directories under it, skipping what {@link #skipped} names. */
+    /**
+     * Registers {@code root} and the directories under it, skipping what {@link #skipped}
+     * names in the work tree. Under the git directory - the refs - nothing is skipped:
+     * {@code skipped} says no to everything in there, and the refs walk once registered
+     * {@code refs} alone, so on Linux a branch created or moved from a terminal, in
+     * {@code refs/heads}, went unheard.
+     */
     private void registerTree(Path root) throws IOException {
+        boolean refs = root.startsWith(gitDir);
         Files.walkFileTree(root, new SimpleFileVisitor<>() {
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
                 // A tab closed part way through a large walk stops it.
                 if (closed) return FileVisitResult.TERMINATE;
-                if (!dir.equals(root) && skipped(dir)) return FileVisitResult.SKIP_SUBTREE;
+                if (!refs && !dir.equals(root) && skipped(dir)) return FileVisitResult.SKIP_SUBTREE;
                 if (keys.size() >= MAX_DIRECTORIES) {
                     LOGGER.fine("Watching only the first " + MAX_DIRECTORIES + " directories of " + workTree);
                     return FileVisitResult.TERMINATE;
@@ -314,9 +321,12 @@ public final class RepositoryWatcher implements AutoCloseable {
                 if (dir == null || !(event.context() instanceof Path name)) continue;
                 Path changed = dir.resolve(name);
                 if (isRelevant(changed)) relevant = true;
+                // A new directory is registered when it is one this would have registered
+                // at the start: in the work tree and not skipped, or a new namespace of refs
+                // (refs/heads/feature/, a remote's folder under refs/remotes/).
                 if (!wholeTree && event.kind() == StandardWatchEventKinds.ENTRY_CREATE
-                        && !changed.startsWith(gitDir)
-                        && Files.isDirectory(changed, LinkOption.NOFOLLOW_LINKS) && !skipped(changed)) {
+                        && Files.isDirectory(changed, LinkOption.NOFOLLOW_LINKS)
+                        && (changed.startsWith(gitDir.resolve("refs")) || !skipped(changed))) {
                     try {
                         registerTree(changed);
                     } catch (IOException | RuntimeException e) {

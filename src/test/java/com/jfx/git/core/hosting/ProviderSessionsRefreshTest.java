@@ -39,6 +39,10 @@ class ProviderSessionsRefreshTest {
 
     @BeforeEach
     void seams() {
+        // From a clean slate, not only after: a test class before this one in the same JVM
+        // can leave a provider waiting to retry, timed by the real clock - well after NOW,
+        // so the first exchange here would never be tried.
+        ProviderSessions.useDefaults();
         Settings.useFile(tempDir.resolve("settings.properties"));
         ProviderSessions.clock = Clock.fixed(NOW, ZoneOffset.UTC);
         ProviderSessions.store = new ProviderSessions.Store() {

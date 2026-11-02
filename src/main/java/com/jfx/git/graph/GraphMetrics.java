@@ -43,8 +43,14 @@ public final class GraphMetrics {
     /** The widest the column can be dragged; beyond this it is eating the messages. */
     static final double MAX_RAIL = 360;
 
-    /** How much of the list's width the ref column may take for itself. */
-    private static final double RAIL_SHARE = 0.22;
+    /**
+     * How much of the list's width the ref column may take for itself.
+     *
+     * <p>0.22 fitted {@code feature/login-redesign} in a 1480-pixel window on Windows, but
+     * Linux's default sans-serif is about a fifth wider than Segoe UI, and there it came
+     * out three pixels short of the name.
+     */
+    private static final double RAIL_SHARE = 0.24;
 
     /** What the widest chip on the page needs, padding included; 0 for a page with none. */
     private double railWanted;
