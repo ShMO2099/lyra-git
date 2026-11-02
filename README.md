@@ -2,7 +2,7 @@
 
 A Git desktop client in JavaFX, backed by swappable git engines.
 
-![Java](https://img.shields.io/badge/Java-25-blue) ![JavaFX](https://img.shields.io/badge/JavaFX-23-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-blue)
+![Java](https://img.shields.io/badge/Java-25-blue) ![JavaFX](https://img.shields.io/badge/JavaFX-27-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-blue)
 
 ## What it is
 
@@ -12,8 +12,7 @@ in the sidebar, a 50-step undo driven by the reflog, and a built-in file editor 
 TextMate-grammar syntax highlighting. A commit's changed files read as a flat path list
 or as a folder tree, the composer commits or stashes under a name you choose, and every
 operation lands in an activity log with its duration (`Ctrl+Shift+L`). The interface
-vocabulary and gestures follow the commercial Git clients; where Lyra deliberately differs
-(or exceeds them), see the parity tables in `code-review.md`.
+vocabulary and gestures follow the commercial Git clients.
 
 ## Building & running
 
@@ -56,7 +55,22 @@ automatic module is consulted. Set `SIGNTOOL_CERT` to have it sign what it produ
 
 The same approach as on Windows, run on Linux (jpackage builds only for the platform it
 runs on). `--deb` needs `dpkg-deb` and `fakeroot`, `--rpm` needs `rpmbuild`. Both scripts
-smoke-test the packaged image with its own runtime; CI builds the `.deb` on every push.
+smoke-test the packaged image with its own runtime.
+
+### Releases
+
+Pushing a version tag runs `.github/workflows/release.yml`, which tests, packages on Windows
+and Linux, and publishes a GitHub release with the MSI, a Windows zip, the `.deb`, a Linux
+tarball, `SHA256SUMS.txt`, and the source of the GPL-licensed components the packages carry:
+
+```bash
+git tag -a v1.0.0 -m "Lyra 1.0.0"
+git push origin v1.0.0
+```
+
+A suffix (`v1.0.0-beta.1`) makes it a pre-release. For a dry run, start the workflow from the
+Actions tab (Release > Run workflow) with a version: it builds the same assets into a draft
+release, which creates no tag and stays hidden until someone publishes it.
 
 ## Architecture
 
@@ -151,18 +165,17 @@ it: `mvnw -o test -Dtest=UiTourTest -DexcludedTestGroups= -Dtour.themes=paper` (
 
 | Document | Contents |
 |---|---|
-| `code-review.md` | Engineering review: defects, engine-parity tables, and the commercial-client parity roadmap |
 | `THIRD-PARTY-NOTICES.md` | Every bundled third-party component: version, license, copyright notices, where its source is |
 | `src/main/resources/grammars/NOTICE.md` | Grammar provenance & licenses |
 | `src/main/resources/native/README.md` | Bundled libgit2 binaries: upstream version, build recipe and checksums |
-| `docs/history/` | Superseded planning documents, kept for context only — not current |
 | `create-git-repo.sh` | Builds a branchy throwaway repository for looking at the graph by hand. Nothing runs it; the test suites build their own fixtures |
 
 ## License
 
 Lyra is licensed under the [Apache License 2.0](LICENSE). The third-party components it
 bundles keep their own licenses: [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) lists them
-with their copyright notices, and [`NOTICE`](NOTICE) carries the notices the Apache-licensed ones
-require. The packaging scripts copy those two into the application image, under `app/legal`;
-`LICENSE` stays out of the packages until Lyra's own licence is settled. Releases are published
-to a separate public repository (see `.github/workflows/release.yml`).
+with their copyright notices and says where each one's source is, and [`NOTICE`](NOTICE)
+carries the notices the Apache-licensed ones require. The packaging scripts copy `LICENSE`,
+`NOTICE`, `THIRD-PARTY-NOTICES.md` and the EPL-2.0 and libgit2 licence texts into the
+application image, under `app/legal`; the Java runtime keeps its own licence in
+`runtime/legal`.

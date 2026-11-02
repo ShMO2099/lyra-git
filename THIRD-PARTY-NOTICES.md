@@ -4,15 +4,20 @@ Lyra is distributed with the third-party components below, each under its own li
 lists them, reproduces the copyright notices and licence texts those licences require, and
 says where to get the source of each component whose licence asks for that.
 
-Other notices that ship with the application:
+Other notices that ship with the application. A packaged build carries the first four in
+its `app/legal` directory (`lib/app/legal` on Linux), beside this file:
 
+- [`LICENSE`](LICENSE) is Lyra's own licence, Apache-2.0, and the Apache-2.0 text the bundled
+  Apache-licensed components require a copy of.
 - [`NOTICE`](NOTICE) reproduces the NOTICE files of the bundled Apache-licensed components.
+- [`third-party/tm4e/EPL-2.0.txt`](third-party/tm4e/EPL-2.0.txt) is the Eclipse Public License
+  2.0, which covers Eclipse TM4E core.
 - [`src/main/resources/grammars/NOTICE.md`](src/main/resources/grammars/NOTICE.md) and
   [`src/main/resources/grammars/tm/NOTICE.txt`](src/main/resources/grammars/tm/NOTICE.txt)
   cover the bundled TextMate grammars. Both are inside the application jar, under `grammars/`.
 - [`src/main/resources/native/LICENSE-libgit2.txt`](src/main/resources/native/LICENSE-libgit2.txt)
   and `AUTHORS-libgit2.txt` cover libgit2 and the code it bundles (zlib, PCRE2, xdiff and
-  others). Both are inside the application jar, under `native/`.
+  others). Both are inside the application jar, under `native/`, and in `app/legal`.
 - A packaged build's Java runtime is made by `jlink` from the JDK, which writes the JDK's own
   licence and notices into the runtime's `legal` directory.
 
@@ -25,6 +30,7 @@ section.
 
 | Component | Version | Licence | Source |
 |---|---|---|---|
+| Java runtime: Eclipse Temurin JDK, the modules `jlink` keeps (packaged builds only) | the build's JDK 25; the runtime's `release` file and `bin/java -version` name it | GPL-2.0 with the Classpath Exception | <https://github.com/adoptium/jdk25u> |
 | OpenJFX (`javafx-base`, `javafx-graphics`, `javafx-controls`) | 27 | GPL-2.0 with the Classpath Exception | <https://github.com/openjdk/jfx> |
 | Eclipse JGit (`org.eclipse.jgit`, `.ssh.apache`, `.ssh.apache.agent`) | 7.2.1.202505142326-r | Eclipse Distribution License 1.0 (BSD-3-Clause) | <https://github.com/eclipse-jgit/jgit> |
 | Eclipse TM4E core (`org.eclipse.tm4e.core`), modified: one class changed | 0.18.0-20260827.121906-2-jfxgit1, from upstream build 0.18.0-20260827.121906-2 | EPL-2.0 | <https://github.com/eclipse-tm4e/tm4e> |
@@ -48,13 +54,23 @@ section.
 | UndoFX | 2.1.1 | BSD-2-Clause | <https://github.com/FXMisc/UndoFX> |
 | WellBehavedFX | 0.3.3 | BSD-2-Clause | <https://github.com/FXMisc/WellBehavedFX> |
 | commonmark-java (with the `autolink`, `gfm-strikethrough` and `gfm-tables` extensions) | 0.24.0 | BSD-2-Clause | <https://github.com/commonmark/commonmark-java> |
-| TextMate grammars | see their notices | MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC, MPL-2.0 | see [`grammars/NOTICE.md`](src/main/resources/grammars/NOTICE.md) |
+| TextMate grammars | see their notices | MIT, Apache-2.0, Apache-2.0 with the LLVM Exception, BSD-2-Clause, BSD-3-Clause, ISC, MPL-2.0, the TextMate bundle licence | see [`grammars/NOTICE.md`](src/main/resources/grammars/NOTICE.md) |
 
 All of these are bundled unmodified, except Eclipse TM4E core (below) and the grammar
 files whose repairs `grammars/NOTICE.md` and `grammars/tm/NOTICE.txt` record.
 
 ## Source code for the copyleft components
 
+Every GitHub release of Lyra carries, as assets beside the packages, the complete source of
+each GPL-licensed component those packages contain: `source-libgit2-<version>.tar.gz`,
+`source-openjfx-<version>.tar.gz` and `source-temurin-jdk-<version>.tar.gz`, the last for the
+exact JDK build the runtime was linked from. They are offered from the same place as the
+packages, as GPL-2.0 section 3 asks. The upstream locations are below.
+
+- **Java runtime** (GPL-2.0 with the Classpath Exception): Eclipse Temurin, built from
+  <https://github.com/adoptium/jdk25u> at the tag of its version (`jdk-25.0.5+8`, for
+  example). Adoptium publishes each build's source as `OpenJDK25U-jdk-sources_*.tar.gz`
+  with its binaries, <https://github.com/adoptium/temurin25-binaries/releases>.
 - **OpenJFX 27** (GPL-2.0 with the Classpath Exception): <https://github.com/openjdk/jfx/tree/27-ga>.
   The jars are the ones published to Maven Central as `org.openjfx:javafx-*:27`.
 - **Eclipse TM4E core** (EPL-2.0), a modified build. Upstream's source is
@@ -184,14 +200,15 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ### Eclipse Public License 2.0: Eclipse TM4E core
 
-The full text is at <https://www.eclipse.org/legal/epl-2.0/>. The source, including the
-changed class, is available under EPL-2.0 as set out above.
+The full text is in [`third-party/tm4e/EPL-2.0.txt`](third-party/tm4e/EPL-2.0.txt), and in
+a packaged build's `app/legal/EPL-2.0.txt`; it is also at <https://www.eclipse.org/legal/epl-2.0/>.
+The source, including the changed class, is available under EPL-2.0 as set out above.
 
-### GPL-2.0 with the Classpath Exception: OpenJFX
+### GPL-2.0 with the Classpath Exception: the Java runtime and OpenJFX
 
-The full text is at <https://openjdk.org/legal/gplv2+ce.html>. A packaged build's Java
-runtime carries the same text in `legal/java.base/LICENSE`. The source is available as set
-out above.
+A packaged build's Java runtime carries the full text in `runtime/legal/java.base/LICENSE`
+(`lib/runtime/legal/java.base/LICENSE` on Linux); it is also at
+<https://openjdk.org/legal/gplv2+ce.html>. The source is available as set out above.
 
 ### GPL-2.0 with a linking exception: libgit2
 

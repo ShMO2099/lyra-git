@@ -128,8 +128,10 @@ version of the GPL the project accepts is v2 exactly — not v2.2 or v3.
 
 The GPL also asks a distributor to point to the source of the binaries. All four are
 built unmodified from <https://github.com/libgit2/libgit2/tree/v1.9.7>, and the
-repository's `THIRD-PARTY-NOTICES.md` says so. When the binaries move to another tag,
-update the table above and that file together.
+repository's `THIRD-PARTY-NOTICES.md` says so; each GitHub release also carries that tag's
+source as `source-libgit2-<version>.tar.gz`, which the release workflow takes from the
+version named in the first sentence of "What is here". When the binaries move to another
+tag, update the table above, that sentence and `THIRD-PARTY-NOTICES.md` together.
 
 ## Runtime notes
 

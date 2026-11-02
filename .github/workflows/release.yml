@@ -1,0 +1,266 @@
+name: Release
+
+# Pushing a version tag builds both packages and publishes them as a GitHub Release of
+# this repository:
+#
+#   git tag -a v1.2.0 -m "..." && git push origin v1.2.0
+#
+# A tag with a suffix (v1.2.0-beta.1) is published as a pre-release. jpackage takes
+# only numbers, so the installers carry 1.2.0 either way; the application itself, in
+# About and in the update check, reports the whole version. An annotated tag's message
+# becomes the release notes.
+#
+# Run by hand instead (Actions > Release > Run workflow, with a version), it builds and
+# uploads exactly the same, but as a draft release: visible only to people who can push
+# here, and with no tag until someone publishes it. That is the dry run.
+#
+# Release assets do not count against the Actions storage allowance; the artifacts
+# passed between the jobs below do, which is why they are kept for a day only.
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version of the draft release, e.g. 1.2.0 or 1.2.0-beta.1'
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.parse.outputs.tag }}
+      version: ${{ steps.parse.outputs.version }}
+      number: ${{ steps.parse.outputs.number }}
+      prerelease: ${{ steps.parse.outputs.prerelease }}
+      draft: ${{ steps.parse.outputs.draft }}
+    steps:
+      - id: parse
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = workflow_dispatch ]; then
+            tag="v${INPUT_VERSION#v}"; draft=true
+          else
+            tag="$GITHUB_REF_NAME"; draft=false
+          fi
+          version="${tag#v}"
+          number="${version%%-*}"
+          [[ "$number" =~ ^[0-9]+(\.[0-9]+){0,2}$ && "$version" =~ ^[0-9A-Za-z.-]+$ ]] || {
+            echo "::error::$tag is not v<major>[.<minor>[.<patch>]][-suffix]"; exit 1; }
+          {
+            echo "tag=$tag"
+            echo "version=$version"
+            echo "number=$number"
+            echo "draft=$draft"
+            [ "$version" = "$number" ] && echo "prerelease=false" || echo "prerelease=true"
+          } >> "$GITHUB_OUTPUT"
+
+      # Checked before the packages are built rather than after.
+      - name: Not released yet
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.parse.outputs.tag }}
+        run: |
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            echo "::error::a release (or draft) named $TAG already exists; delete it or pick another version"
+            exit 1
+          fi
+
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+      - run: ./mvnw -B -ntp verify -Pfast
+
+  linux:
+    needs: [version, test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      jdk: ${{ steps.jdk.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+
+      # The jar's manifest carries the project version, which is what About and the
+      # update check read. Left at the pom's -SNAPSHOT, a release would report itself as
+      # older than its own tag and offer itself as an update forever.
+      - name: Version
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+        run: mvn -B -ntp -q versions:set -DnewVersion="$VERSION" -DgenerateBackupPoms=false
+
+      # Built and smoke-tested inside its own runtime image, which is the only place a
+      # JDK module missing from the jlink list shows.
+      - name: Package
+        env:
+          APP_VERSION: ${{ needs.version.outputs.number }}
+          # Bitbucket's OAuth client secret; empty (Bitbucket sign-in disabled in the
+          # package) where the repository secret is not set.
+          LYRA_BITBUCKET_CLIENT_SECRET: ${{ secrets.LYRA_BITBUCKET_CLIENT_SECRET }}
+        run: ./package-linux.sh --deb
+
+      # The exact JDK build the runtime was linked from, for its source archive.
+      - id: jdk
+        run: |
+          v="$(java -XshowSettings:properties -version 2>&1 | sed -n 's/^ *java\.runtime\.version = //p')"
+          echo "version=${v%-LTS}" >> "$GITHUB_OUTPUT"
+
+      - name: Archive the app image
+        run: tar -C target/dist -czf "target/dist/Lyra-${{ needs.version.outputs.tag }}-linux-x86_64.tar.gz" Lyra
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-linux
+          path: |
+            target/dist/*.deb
+            target/dist/*.tar.gz
+          retention-days: 1
+
+  windows:
+    needs: [version, test]
+    runs-on: windows-latest
+    timeout-minutes: 40
+    outputs:
+      jdk: ${{ steps.jdk.outputs.version }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+
+      # jpackage builds the MSI with WiX 3. Its binaries run without installing.
+      - name: Install WiX 3
+        shell: pwsh
+        run: |
+          Invoke-WebRequest https://github.com/wixtoolset/wix3/releases/download/wix3141rtm/wix314-binaries.zip -OutFile wix.zip
+          Expand-Archive wix.zip -DestinationPath "$env:RUNNER_TEMP\wix"
+          "$env:RUNNER_TEMP\wix" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
+
+      # See the linux job.
+      - name: Version
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+        run: mvn -B -ntp -q versions:set -DnewVersion="$VERSION" -DgenerateBackupPoms=false
+
+      # Unsigned: SmartScreen warns about it until a certificate is set up (see the
+      # signing notes in package-windows.sh).
+      - name: Package
+        env:
+          APP_VERSION: ${{ needs.version.outputs.number }}
+          LYRA_BITBUCKET_CLIENT_SECRET: ${{ secrets.LYRA_BITBUCKET_CLIENT_SECRET }}
+        run: bash package-windows.sh --installer
+
+      - id: jdk
+        run: |
+          v="$(java -XshowSettings:properties -version 2>&1 | tr -d '\r' | sed -n 's/^ *java\.runtime\.version = //p')"
+          echo "version=${v%-LTS}" >> "$GITHUB_OUTPUT"
+
+      - name: Archive the app image
+        shell: pwsh
+        run: Compress-Archive -Path target/dist/Lyra -DestinationPath "target/dist/Lyra-${{ needs.version.outputs.tag }}-windows-x86_64.zip"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-windows
+          path: |
+            target/dist/*.msi
+            target/dist/*.zip
+          retention-days: 1
+
+  publish:
+    needs: [version, linux, windows]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      # For the libgit2 and OpenJFX versions, and the tag's own message.
+      - uses: actions/checkout@v4
+
+      - name: Release notes
+        env:
+          TAG: ${{ needs.version.outputs.tag }}
+          DRAFT: ${{ needs.version.outputs.draft }}
+        run: |
+          if [ "$DRAFT" = false ]; then
+            git fetch --depth=1 origin "+refs/tags/$TAG:refs/tags/$TAG"
+            # An annotated tag's message, without a signature; a lightweight tag has none,
+            # and the commit messages are not published.
+            if [ "$(git cat-file -t "$TAG")" = tag ]; then
+              git tag -l --format='%(contents:subject)%0a%0a%(contents:body)' "$TAG" > notes.md
+            fi
+          fi
+          [ -s notes.md ] || echo "Lyra $TAG" > notes.md
+          cat notes.md
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          merge-multiple: true
+          path: assets
+
+      # GPL-2.0 asks that the source of the GPL-licensed binaries in the packages be
+      # offered from the same place as the packages: libgit2, OpenJFX, and the JDK the
+      # runtime was linked from (THIRD-PARTY-NOTICES.md). Upstream's own archives of the
+      # exact versions, renamed so they sort together.
+      - name: Source of the GPL components
+        env:
+          JDK_LINUX: ${{ needs.linux.outputs.jdk }}
+          JDK_WINDOWS: ${{ needs.windows.outputs.jdk }}
+        run: |
+          set -euo pipefail
+          fetch() { echo "$2 <- $1"; curl -fsSL --retry 3 -o "assets/$2" "$1"; }
+
+          # The version the bundled binaries are built from; see src/main/resources/native/README.md.
+          libgit2="$(sed -n 's/^All four are \*\*libgit2 \([0-9.]*\)\*\*.*/\1/p' src/main/resources/native/README.md)"
+          [ -n "$libgit2" ] || { echo "::error::no libgit2 version in native/README.md"; exit 1; }
+          fetch "https://github.com/libgit2/libgit2/archive/refs/tags/v$libgit2.tar.gz" "source-libgit2-$libgit2.tar.gz"
+
+          openjfx="$(sed -n 's:.*<javafx.version>\(.*\)</javafx.version>.*:\1:p' pom.xml)"
+          [ -n "$openjfx" ] || { echo "::error::no javafx.version in pom.xml"; exit 1; }
+          fetch "https://github.com/openjdk/jfx/archive/refs/tags/$openjfx-ga.tar.gz" "source-openjfx-$openjfx.tar.gz"
+
+          for jdk in $(printf '%s\n' "$JDK_LINUX" "$JDK_WINDOWS" | sort -u); do
+            [[ "$jdk" =~ ^[0-9][0-9.]*\+[0-9]+$ ]] || { echo "::error::unexpected JDK version '$jdk'"; exit 1; }
+            major="${jdk%%[.+]*}"
+            fetch "https://github.com/adoptium/temurin$major-binaries/releases/download/jdk-${jdk/+/%2B}/OpenJDK${major}U-jdk-sources_${jdk/+/_}.tar.gz" \
+                  "source-temurin-jdk-${jdk/+/_}.tar.gz"
+          done
+
+      - name: Checksums
+        run: cd assets && sha256sum * > SHA256SUMS.txt && cat SHA256SUMS.txt
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.version.outputs.tag }}
+          DRAFT: ${{ needs.version.outputs.draft }}
+          PRERELEASE: ${{ needs.version.outputs.prerelease }}
+        run: |
+          flags=()
+          [ "$PRERELEASE" = true ] && flags+=(--prerelease)
+          # A draft names its tag but makes it only when published, from this commit.
+          [ "$DRAFT" = true ] && flags+=(--draft --target "$GITHUB_SHA")
+          gh release create "$TAG" assets/* \
+            --repo "$GITHUB_REPOSITORY" --title "Lyra $TAG" --notes-file notes.md "${flags[@]}"

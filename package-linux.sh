@@ -88,11 +88,11 @@ for jar in target/deps/*.jar; do
   esac
 done
 
-# The third-party notices go in the image (app/legal): the bundled components'
-# licences require them in a binary distribution. Lyra's own LICENSE stays out until
-# its licence is settled; shipping it would license the packages under it.
+# The licences and notices go in the image (lib/app/legal); see package-windows.sh.
 mkdir -p target/pkg-input/legal
-cp NOTICE THIRD-PARTY-NOTICES.md target/pkg-input/legal/
+cp LICENSE NOTICE THIRD-PARTY-NOTICES.md third-party/tm4e/EPL-2.0.txt \
+  src/main/resources/native/LICENSE-libgit2.txt src/main/resources/native/AUTHORS-libgit2.txt \
+  target/pkg-input/legal/
 
 ls target/pkg-input/fx/javafx-*-linux.jar > /dev/null 2>&1 || {
   echo "error: no Linux JavaFX jars were resolved; is this a Linux build of the dependencies?" >&2

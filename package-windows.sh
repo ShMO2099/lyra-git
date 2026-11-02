@@ -76,11 +76,21 @@ for jar in target/deps/*.jar; do
   esac
 done
 
-# The third-party notices go in the image (app/legal): the bundled components'
-# licences require them in a binary distribution. Lyra's own LICENSE stays out until
-# its licence is settled; shipping it would license the packages under it.
+# The licences and notices go in the image (app/legal), because the bundled
+# components' licences require them in a binary distribution:
+#   LICENSE                 Lyra's own licence, Apache-2.0 - and the Apache-2.0 text that
+#                           MINA SSHD, Commons Codec, Gson and the other Apache-licensed
+#                           jars require a copy of
+#   NOTICE                  those jars' NOTICE files
+#   THIRD-PARTY-NOTICES.md  every component, its licence, copyright lines and source
+#   EPL-2.0.txt             TM4E core
+#   *-libgit2.txt           libgit2 and the code it bundles (also in the jar, under native/)
+# The JDK's and OpenJFX's licence, GPL-2.0 with the Classpath Exception, is in the
+# runtime's own legal directory, which jlink writes.
 mkdir -p target/pkg-input/legal
-cp NOTICE THIRD-PARTY-NOTICES.md target/pkg-input/legal/
+cp LICENSE NOTICE THIRD-PARTY-NOTICES.md third-party/tm4e/EPL-2.0.txt \
+  src/main/resources/native/LICENSE-libgit2.txt src/main/resources/native/AUTHORS-libgit2.txt \
+  target/pkg-input/legal/
 
 # JavaFX's native libraries, unpacked next to the jars. Left inside the jars, JavaFX
 # extracts them to ~/.openjfx/cache on first launch and, on every launch after, reads

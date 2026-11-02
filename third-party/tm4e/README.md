@@ -66,3 +66,10 @@ machine that has built the project before.
 To move to a newer TM4E: update `UPSTREAM_VERSION` and `UPSTREAM_SHA1` in `build.sh`,
 start `src/` from that build's `OnigRegExp.java`, reapply the change (the cache and the
 static helpers), bump the suffix, and rebuild.
+
+## Licence
+
+TM4E is licensed under the Eclipse Public License 2.0, and so is the changed class in `src/`
+(its header says so). The full text is in [`EPL-2.0.txt`](EPL-2.0.txt), which the packaging
+scripts also copy into the application image's `legal` directory. The upstream source of
+the rest of the jar is at the commit named above.

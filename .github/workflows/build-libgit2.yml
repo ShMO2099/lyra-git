@@ -1,0 +1,147 @@
+name: Build bundled libgit2
+
+# Produces the four native libraries under src/main/resources/native/.
+#
+# Run this instead of copying binaries from somewhere else: it is the provenance record
+# the bundled binaries did not previously have. Every artefact is traceable to a libgit2
+# tag, a runner image, and the flags below.
+#
+# Trigger it manually from the Actions tab, then download the `libgit2-native` artifact
+# and unpack it over src/main/resources/native/.
+
+on:
+  workflow_dispatch:
+    inputs:
+      libgit2_ref:
+        description: 'libgit2 tag to build'
+        required: true
+        default: 'v1.9.7'
+
+permissions:
+  contents: read
+
+env:
+  # Network transport is delegated to the git CLI and JGit, never to libgit2, so both
+  # transport backends are dead weight here.
+  #
+  #   USE_SSH=OFF        drops libssh2 and the transport the 1.8.7 / 1.9.7 advisory
+  #                      concerned, so the code is not merely unused but absent.
+  #   USE_HTTPS=OFF      drops the OpenSSL dependency entirely. Without it the build
+  #                      fails outright on a manylinux image, which has no OpenSSL
+  #                      headers: "Unable to autodetect a usable HTTPS backend".
+  #   REGEX_BACKEND=builtin
+  #                      bundles PCRE rather than linking the system one. CMake
+  #                      otherwise finds libpcre.so.1, and PCRE1 is deprecated -- many
+  #                      current distributions ship only PCRE2, so the binary would
+  #                      fail to load on them.
+  #
+  # The result needs only libz and core libc on Linux.
+  COMMON_CMAKE_FLAGS: >-
+    -DBUILD_SHARED_LIBS=ON
+    -DBUILD_TESTS=OFF
+    -DBUILD_CLI=OFF
+    -DBUILD_EXAMPLES=OFF
+    -DUSE_SSH=OFF
+    -DUSE_HTTPS=OFF
+    -DREGEX_BACKEND=builtin
+    -DCMAKE_BUILD_TYPE=Release
+
+jobs:
+  windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x64
+            target: windows-x86_64
+          # MSVC cross-compiles to ARM64 from an x64 host, so this needs no ARM runner.
+          - arch: ARM64
+            target: windows-aarch64
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: libgit2/libgit2
+          ref: ${{ inputs.libgit2_ref }}
+
+      - name: Configure
+        run: cmake -B build -G "Visual Studio 17 2022" -A ${{ matrix.arch }} ${{ env.COMMON_CMAKE_FLAGS }}
+
+      - name: Build
+        run: cmake --build build --config Release --parallel
+
+      - name: Stage
+        shell: bash
+        run: |
+          mkdir -p out/${{ matrix.target }}
+          cp build/Release/git2.dll out/${{ matrix.target }}/git2.dll
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ matrix.target }}
+          path: out/
+
+  linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            target: linux-x86_64
+            image: quay.io/pypa/manylinux_2_28_x86_64
+          - runner: ubuntu-24.04-arm
+            target: linux-aarch64
+            image: quay.io/pypa/manylinux_2_28_aarch64
+    runs-on: ${{ matrix.runner }}
+    # Built inside manylinux so the result runs on older glibc than the runner's.
+    # Building on the bare runner produces a .so that silently requires its glibc.
+    container: ${{ matrix.image }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: libgit2/libgit2
+          ref: ${{ inputs.libgit2_ref }}
+
+      - name: Configure
+        run: cmake -B build ${{ env.COMMON_CMAKE_FLAGS }}
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Stage
+        run: |
+          mkdir -p out/${{ matrix.target }}
+          cp "$(readlink -f build/libgit2.so)" out/${{ matrix.target }}/libgit2.so
+          echo "--- glibc versions required ---"
+          objdump -T out/${{ matrix.target }}/libgit2.so \
+            | grep -oE 'GLIBC_[0-9.]+' | sort -Vu | tail -3
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ matrix.target }}
+          path: out/
+
+  collect:
+    needs: [windows, linux]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: native-*
+          merge-multiple: true
+          path: native
+
+      - name: Checksums
+        run: |
+          echo "libgit2 ${{ inputs.libgit2_ref }}" > native/BUILD-INFO.txt
+          echo "built by ${{ github.repository }} run ${{ github.run_id }}" >> native/BUILD-INFO.txt
+          echo "flags: ${{ env.COMMON_CMAKE_FLAGS }}" >> native/BUILD-INFO.txt
+          echo >> native/BUILD-INFO.txt
+          find native -type f \( -name '*.dll' -o -name '*.so' \) \
+            -exec sha256sum {} + | sed 's|native/||' >> native/BUILD-INFO.txt
+          cat native/BUILD-INFO.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: libgit2-native
+          path: native/

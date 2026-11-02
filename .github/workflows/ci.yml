@@ -1,0 +1,60 @@
+name: CI
+
+# Builds and tests the application on every push and pull request.
+#
+# Only the fast selection runs here (the `fast` Maven profile): the whole suite takes
+# over 90 minutes, nearly all of it in the robot tests and BackendConformanceTest, and
+# on a private repository every minute comes out of the account's monthly allowance.
+# Those run locally before a merge, and here on demand: Actions > CI > Run workflow,
+# suite "full".
+#
+# The robot tests render off-screen through Monocle (configured in the pom's surefire
+# block), so no xvfb or display service is needed. The same command reproduces a
+# failure locally:
+#
+#   ./mvnw verify -Pfast
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: 'Which tests to run'
+        type: choice
+        options: [fast, full]
+        default: fast
+
+permissions:
+  contents: read
+
+# A newer push to the same branch makes the older run pointless; stop paying for it.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.suite == 'full' && 180 || 25 }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+
+      - name: Build and test
+        run: ./mvnw -B -ntp verify ${{ inputs.suite == 'full' && '' || '-Pfast' }}
+
+      - name: Upload test reports on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: target/surefire-reports/
+          retention-days: 7

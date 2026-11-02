@@ -12,12 +12,12 @@ original source; fixes should go to that upstream project, not to the copies her
 | `JSON.tmLanguage.json`      | [microsoft/vscode-JSON.tmLanguage](https://github.com/microsoft/vscode-JSON.tmLanguage) | MIT | Copyright (c) Microsoft |
 | `cpp.tmLanguage.json`       | [jeff-hykin/better-cpp-syntax](https://github.com/jeff-hykin/better-cpp-syntax) via microsoft/vscode `extensions/cpp` | MIT | Copyright (c) jeff-hykin |
 | `csharp.tmLanguage.json`    | [dotnet/csharp-tmLanguage](https://github.com/dotnet/csharp-tmLanguage) via microsoft/vscode `extensions/csharp` | MIT | .NET Foundation |
-| `go.tmLanguage.json`        | [worlpaker/go-syntax](https://github.com/worlpaker/go-syntax) via microsoft/vscode `extensions/go` | MIT | See upstream |
+| `go.tmLanguage.json`        | [worlpaker/go-syntax](https://github.com/worlpaker/go-syntax) via microsoft/vscode `extensions/go` | MIT | Copyright (c) 2023 Furkan Ozalp |
 | `rust.tmLanguage.json`      | [dustypomerleau/rust-syntax](https://github.com/dustypomerleau/rust-syntax) via microsoft/vscode `extensions/rust` | MIT | Copyright (c) dustypomerleau |
 | `swift.tmLanguage.json`     | [jtbandes/swift-tmlanguage](https://github.com/jtbandes/swift-tmlanguage) via microsoft/vscode `extensions/swift` | MIT | Copyright (c) Jacob Bandes-Storch |
 | `JavaScript.tmLanguage.json` | [microsoft/TypeScript-TmLanguage](https://github.com/microsoft/TypeScript-TmLanguage) via microsoft/vscode `extensions/javascript` | MIT | Copyright (c) Microsoft |
 | `TypeScript.tmLanguage.json` | [microsoft/TypeScript-TmLanguage](https://github.com/microsoft/TypeScript-TmLanguage) via microsoft/vscode `extensions/typescript-basics` | MIT | Copyright (c) Microsoft |
-| `yaml.tmLanguage.plist`     | TextMate YAML bundle, vendored as a test fixture by [eclipse-tm4e/tm4e](https://github.com/eclipse-tm4e/tm4e) | MIT | Original TextMate authors |
+| `yaml.tmLanguage.plist`     | [textmate/yaml.tmbundle](https://github.com/textmate/yaml.tmbundle), vendored as a test fixture by [eclipse-tm4e/tm4e](https://github.com/eclipse-tm4e/tm4e) | TextMate bundle licence (below) | The yaml.tmbundle authors |
 | `markdown.tmLanguage.json`  | [microsoft/vscode-markdown-tm-grammar](https://github.com/microsoft/vscode-markdown-tm-grammar) | MIT | Copyright (c) Microsoft 2018 |
 | `xml.tmLanguage.json`       | [atom/language-xml](https://github.com/atom/language-xml)                        | MIT | Copyright (c) Atom/GitHub |
 | `shell.tmLanguage.json`     | [jeff-hykin/better-shell-syntax](https://github.com/jeff-hykin/better-shell-syntax) | MIT | Copyright (c) jeff-hykin  |
@@ -71,16 +71,40 @@ brings such a pattern back needs the same kind of repair, recorded here.
   emits only its root scope under TM4E — no tokens at all — so YAML was silently
   unhighlighted. Replaced by the plist grammar TM4E itself tests against.
 
-## MIT License (representative text)
+## Licence texts
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this
-software and associated documentation files, to deal in the software without
-restriction, including without limitation the rights to use, copy, modify, merge,
-publish, distribute, sublicense, and/or sell copies of the Software, subject to including
-the above copyright notice and this permission notice in all copies or substantial
-portions of the Software.
+The MIT-licensed files above are distributed under the copyright notices in the table and
+this permission notice:
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+```
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+`yaml.tmLanguage.plist` is distributed under the licence of the TextMate bundle it comes
+from:
+
+```
+Permission to copy, use, modify, sell and distribute this
+software is granted. This software is provided "as is" without
+express or implied warranty, and with no claim as to its
+suitability for any purpose.
+```
 
 ## The catalogue: `tm/`
 
