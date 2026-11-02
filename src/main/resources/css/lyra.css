@@ -1,0 +1,1782 @@
+/* No box. These lists sit inside a panel that already has an edge, under a heading that
+   already says what they are; a border round each one was a box inside a box. */
+.sidebar-list {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+/* A submodule that is missing or behind the commit the superproject records.
+   Amber rather than red: it is a "you have work to do", not a failure. */
+.submodule-stale {
+    -fx-text-fill: -color-warning-fg;
+}
+
+/* The tree you are looking at, versus one whose directory has gone missing. */
+.worktree-main {
+    -fx-font-weight: bold;
+}
+
+.worktree-missing {
+    -fx-text-fill: -color-danger-fg;
+}
+
+/* ---- Dialogs ----
+
+   The shell every dialog is built on (JfxDialog.shell): a header with an icon tile, the
+   body, and a footer strip that holds the actions. 20px at the sides throughout, so the
+   tile, the fields and the buttons share one left and one right edge. */
+
+.jfx-dialog > .content {
+    -fx-padding: 16 20 20 20;
+}
+
+/* The footer: its own strip on the subtle ground with a hairline above, so the actions
+   read as the end of the window rather than as one more row floating in the body. */
+.jfx-dialog > .button-bar {
+    -fx-background-color: -color-border-muted, -color-bg-subtle;
+    -fx-background-insets: 0, 1 0 0 0;
+}
+
+.jfx-dialog > .button-bar > .container {
+    -fx-padding: 12 20 12 20;
+}
+
+/* A message dialog (Dialogs.confirm and the rest): the message starts under the title,
+   past the 32px tile and its 12px gap, so the header and what it says read as one block. */
+.jfx-dialog.jfx-alert > .content {
+    -fx-padding: 12 20 20 64;
+}
+
+.jfx-dialog.jfx-alert > .content.jfx-alert-empty {
+    -fx-padding: 0 0 8 0;
+}
+
+.jfx-dialog.jfx-alert > .expandable-content {
+    -fx-padding: 0 20 16 64;
+}
+
+.jfx-alert-message {
+    -fx-text-fill: -color-fg-default;
+}
+
+/* What an action touches - commits, files, branches - framed, one per row, monospace so
+   a SHA and the subject after it line up down the list. */
+.jfx-affected {
+    -fx-background-color: -color-border-default, -color-bg-default;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 6, 5;
+    -fx-padding: 4 0 4 0;
+}
+
+.jfx-affected-row {
+    -fx-padding: 3 12 3 12;
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-text-fill: -color-fg-default;
+}
+
+/* One fact to check or paste - a fingerprint, a command - in a well, with Copy. */
+.jfx-code-well {
+    -fx-background-color: -color-border-muted, -color-bg-inset;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 6, 5;
+    -fx-padding: 6 6 6 10;
+    -fx-alignment: center-left;
+}
+
+.jfx-code-text {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-text-fill: -color-fg-default;
+}
+
+/* git's own output behind Show Details: columns that line up. */
+.jfx-details {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+}
+
+/* What is wrong with a field, under it. */
+.jfx-field-error {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-danger-fg;
+}
+
+/* An option as a card: its name and what choosing it does, the whole card a target. The
+   chosen one is outlined in the accent on the accent's tint. */
+.jfx-option-card {
+    -fx-background-color: -color-border-default, -color-bg-default;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 6, 5;
+    -fx-padding: 8 12 8 12;
+    -fx-cursor: hand;
+}
+
+/* Three layers, not two: the dark theme's accent-subtle is translucent, so laid straight
+   on the accent border colour it showed that colour through and the card became a solid
+   accent block with its caption unreadable on it. The opaque ground in between keeps it a
+   tint in both themes. */
+.jfx-option-card.selected {
+    -fx-background-color: -color-accent-emphasis, -color-bg-default, -color-accent-subtle;
+    -fx-background-insets: 0, 1, 1;
+    -fx-background-radius: 6, 5, 5;
+}
+
+.jfx-option-card > .t-caption {
+    -fx-padding: 0 0 0 26;
+}
+
+/* Primer gives a radio button an opaque ground of its own, which drew a box behind the
+   option's name on a tinted card. */
+.jfx-option-radio {
+    -fx-background-color: transparent;
+    -fx-font-weight: bold;
+    -fx-text-fill: -jfx-fg-bright;
+}
+
+/* ---- Dialog parts (DialogParts) ---- */
+
+/* "(optional)" after a field's label: part of the label, quieter. */
+.jfx-field-optional {
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* A heading between groups of fields; a little more room above than between fields. */
+.jfx-section {
+    -fx-padding: 4 0 0 0;
+}
+
+/* A checkbox's description sits under its label, past the box. */
+.jfx-toggle-row > .t-caption {
+    -fx-padding: 0 0 0 26;
+}
+
+/* A list in a frame: rows with an icon, a name, a second line and tags. */
+.jfx-framed-list {
+    -fx-background-color: -color-border-default, -color-bg-default;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 6, 5;
+    -fx-padding: 1;
+}
+
+.jfx-framed-list > .virtual-flow > .clipped-container > .sheet > .list-cell {
+    -fx-padding: 0 12 0 12;
+    -fx-background-color: transparent;
+}
+
+.jfx-framed-list > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:hover {
+    -fx-background-color: -color-neutral-subtle;
+}
+
+.jfx-framed-list > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected {
+    -fx-background-color: -color-accent-subtle;
+}
+
+.jfx-row-primary {
+    -fx-text-fill: -color-fg-default;
+}
+
+.list-cell:selected .jfx-row-primary {
+    -fx-text-fill: -jfx-fg-bright;
+    -fx-font-weight: bold;
+}
+
+.jfx-row-secondary {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+.jfx-pill {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+    -fx-padding: 1 7 1 7;
+    -fx-background-color: -color-border-default, -color-bg-default;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 9, 8;
+}
+
+/* What an empty list says: loading, nothing there, or failed. */
+.jfx-list-message {
+    -fx-text-fill: -color-fg-muted;
+}
+
+.jfx-list-failed {
+    -fx-text-fill: -color-danger-fg;
+}
+
+.jfx-spinner {
+    -fx-pref-width: 14;
+    -fx-pref-height: 14;
+    -fx-max-width: 14;
+    -fx-max-height: 14;
+}
+
+/* A dialog acting in place says what is happening at the left of its footer: muted while
+   it runs, green when it is done and the dialog stays, red when it did not work. */
+.jfx-footer-status > .label {
+    -fx-text-fill: -color-fg-muted;
+}
+
+.jfx-footer-status.ok > .label {
+    -fx-text-fill: -color-success-fg;
+}
+
+.jfx-footer-status.failed > .label {
+    -fx-text-fill: -color-danger-fg;
+}
+
+/* A workspace (JfxDialog.workspace): a toolbar strip edge to edge under the header, so
+   the pane gives up its own padding and the body brings it back. */
+.jfx-dialog.jfx-workspace > .content {
+    -fx-padding: 0;
+}
+
+.jfx-toolbar {
+    -fx-min-height: 40;
+    -fx-padding: 6 20 6 20;
+    -fx-background-color: -color-border-muted, -color-bg-subtle;
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+.jfx-workspace-body {
+    -fx-padding: 16 20 20 20;
+}
+
+/* A key on a toolbar's legend: boxed like the key it names, the bottom edge heavier. */
+.jfx-kbd {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+    -fx-padding: 0 5 0 5;
+    -fx-background-color: -color-border-default, -color-bg-default;
+    -fx-background-insets: 0, 1 1 2 1;
+    -fx-background-radius: 4, 3;
+}
+
+.jfx-key-hint > .t-caption {
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* A sentence on a tinted ground with an icon: what a plan produces, what is wrong with it.
+   The tone is a second class; without one it is the accent's information. */
+.jfx-callout {
+    -fx-padding: 8 12 8 12;
+    -fx-background-color: -color-accent-muted, -color-bg-default, -color-accent-subtle;
+    -fx-background-insets: 0, 1, 1;
+    -fx-background-radius: 6, 5, 5;
+}
+
+.jfx-callout > .label {
+    -fx-text-fill: -color-fg-default;
+}
+
+.jfx-callout .icon-line { -fx-stroke: -color-accent-fg; }
+
+.jfx-callout.caution {
+    -fx-background-color: -color-warning-muted, -color-bg-default, -color-warning-subtle;
+}
+
+.jfx-callout.caution .icon-line { -fx-stroke: -color-warning-fg; }
+
+.jfx-callout.danger {
+    -fx-background-color: -color-danger-muted, -color-bg-default, -color-danger-subtle;
+}
+
+.jfx-callout.danger .icon-line { -fx-stroke: -color-danger-fg; }
+
+.jfx-callout.muted {
+    -fx-background-color: -color-border-muted, -color-bg-default, -color-bg-subtle;
+}
+
+.jfx-callout.muted > .label { -fx-text-fill: -color-fg-muted; }
+
+.jfx-callout.muted .icon-line { -fx-stroke: -color-fg-subtle; }
+
+/* The same body and footer for a window built as a Stage rather than a Dialog
+   (provider sign-in), which lays the three parts out itself. */
+.jfx-dialog-body {
+    -fx-padding: 16 20 20 20;
+}
+
+.jfx-dialog-footer {
+    -fx-background-color: -color-border-muted, -color-bg-subtle;
+    -fx-background-insets: 0, 1 0 0 0;
+    -fx-padding: 12 20 12 20;
+}
+
+/* Header: the tile, then the title and its subtitle. The text column starts 6px down so
+   a one-line title sits level with the middle of the 32px tile. */
+.jfx-dialog-header {
+    -fx-padding: 20 20 0 20;
+}
+
+.jfx-dialog-header.ruled {
+    -fx-padding: 20 20 16 20;
+    -fx-border-color: transparent transparent -color-border-muted transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.jfx-dialog-header-text {
+    -fx-padding: 6 0 0 0;
+}
+
+.jfx-dialog-title-text {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-fill: -jfx-fg-bright;
+}
+
+.jfx-dialog-subtitle-text {
+    -fx-font-size: 13px;
+    -fx-fill: -color-fg-muted;
+}
+
+/* A SHA or a path inside a title or subtitle. */
+.jfx-dialog-mono {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+}
+
+/* The icon tile: the subject's glyph, coloured by how risky the question is. It replaced
+   JavaFX's glossy "?" and "!" bitmaps, which said only that something was being asked. */
+.jfx-dialog-tile {
+    -fx-background-radius: 6;
+    -fx-background-color: -color-accent-subtle;
+}
+
+.jfx-dialog-tile .icon-line  { -fx-stroke: -color-accent-fg; }
+.jfx-dialog-tile .icon-solid { -fx-fill: -color-accent-fg; }
+
+.jfx-dialog-tile.tone-caution { -fx-background-color: -color-warning-subtle; }
+.jfx-dialog-tile.tone-caution .icon-line  { -fx-stroke: -color-warning-fg; }
+.jfx-dialog-tile.tone-caution .icon-solid { -fx-fill: -color-warning-fg; }
+
+.jfx-dialog-tile.tone-destructive { -fx-background-color: -color-danger-subtle; }
+.jfx-dialog-tile.tone-destructive .icon-line  { -fx-stroke: -color-danger-fg; }
+.jfx-dialog-tile.tone-destructive .icon-solid { -fx-fill: -color-danger-fg; }
+
+.jfx-dialog-tile.tone-success { -fx-background-color: -color-success-subtle; }
+.jfx-dialog-tile.tone-success .icon-line  { -fx-stroke: -color-success-fg; }
+.jfx-dialog-tile.tone-success .icon-solid { -fx-fill: -color-success-fg; }
+
+.jfx-dialog-tile.tone-info { -fx-background-color: -color-neutral-muted; }
+.jfx-dialog-tile.tone-info .icon-line  { -fx-stroke: -color-fg-muted; }
+.jfx-dialog-tile.tone-info .icon-solid { -fx-fill: -color-fg-muted; }
+
+/* The default button is ringed, not filled. Primer fills whichever button is the
+   default, so a dialog that made Cancel the default for safety - the force push, the
+   commit checks - painted Cancel as the recommended action and the real one grey. Here
+   only .btn-primary and .btn-danger are filled; Enter's target is shown by a ring.
+   The ring is an outer background layer, so it adds nothing to the button's size. */
+.jfx-dialog > .button-bar .button:default {
+    -color-button-bg: -color-bg-subtle;
+    -color-button-fg: -color-fg-default;
+    -color-button-border: -color-accent-emphasis;
+    -color-button-bg-hover: -color-base-6;
+    -color-button-fg-hover: -color-fg-default;
+    -color-button-border-hover: -color-accent-emphasis;
+    -color-button-bg-focused: -color-bg-subtle;
+    -color-button-fg-focused: -color-fg-default;
+    -color-button-border-focused: -color-accent-emphasis;
+    -color-button-bg-pressed: -color-bg-subtle;
+    -color-button-fg-pressed: -color-fg-default;
+    -fx-background-color: -color-accent-muted, -color-button-border, -color-button-bg;
+    -fx-background-insets: -3, 0, 1;
+    -fx-background-radius: 6, 4, 3;
+}
+
+/* Restated inside the footer, after the rule above, so a primary or danger button that
+   is also the default keeps its fill. Same specificity, later wins. */
+.jfx-dialog > .button-bar .button.btn-primary {
+    -color-button-bg: -color-accent-emphasis;
+    -color-button-fg: -color-fg-emphasis;
+    -color-button-border: -color-accent-emphasis;
+    -color-button-bg-hover: -color-accent-6;
+    -color-button-fg-hover: -color-fg-emphasis;
+    -color-button-border-hover: -color-accent-6;
+    -color-button-bg-focused: -color-accent-emphasis;
+    -color-button-fg-focused: -color-fg-emphasis;
+    -color-button-border-focused: -color-accent-fg;
+    -color-button-bg-pressed: -color-accent-6;
+    -color-button-fg-pressed: -color-fg-emphasis;
+}
+
+.jfx-dialog > .button-bar .button.btn-danger {
+    -color-button-bg: -color-danger-emphasis;
+    -color-button-fg: -color-fg-emphasis;
+    -color-button-border: -color-danger-emphasis;
+    -color-button-bg-hover: -color-danger-6;
+    -color-button-fg-hover: -color-fg-emphasis;
+    -color-button-border-hover: -color-danger-6;
+    -color-button-bg-focused: -color-danger-emphasis;
+    -color-button-fg-focused: -color-fg-emphasis;
+    -color-button-border-focused: -color-danger-fg;
+    -color-button-bg-pressed: -color-danger-6;
+    -color-button-fg-pressed: -color-fg-emphasis;
+    -fx-font-weight: bold;
+}
+
+/* A disabled primary reads as disabled, not as pressed. At Primer's 40% opacity the
+   accent fill became a navy block on the dark theme, darker than the enabled Cancel
+   beside it. Unfilled, the same opacity says "not yet" in both themes. */
+.jfx-dialog > .button-bar .button.btn-primary:disabled,
+.jfx-dialog > .button-bar .button.btn-danger:disabled {
+    -color-button-bg: -color-bg-subtle;
+    -color-button-fg: -color-fg-default;
+    -color-button-border: -color-border-default;
+}
+
+/* AtlantaFX Primer caps every .dialog-pane at 600px wide, which quietly overruled the
+   shell's LG and XL presets: the pane's minimum (three quarters of the preset) beat the
+   cap, so the merge tool opened 720 wide instead of 960 and cut its own toolbar. -1 is
+   USE_COMPUTED_SIZE, JavaFX's own default, under which a dialog pane has no maximum - a
+   preset is a starting point, not a ceiling, and a FIT dialog grows to its buttons
+   rather than cutting their labels. An alert's text still wraps: DialogPane gives its
+   content label a preferred width of 360 whatever the cap. */
+.dialog-pane.jfx-dialog {
+    -fx-max-width: -1;
+}
+
+/* ---- Preferences ---- */
+
+/* The categories: a list of places to go, not a list box. No frame; the selected one is
+   tinted and bold, the way a selected view is everywhere else. */
+.nav-list {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent -color-border-muted transparent transparent;
+    -fx-border-width: 0 1 0 0;
+    -fx-padding: 0 8 0 0;
+}
+
+.nav-list .list-cell {
+    -fx-padding: 6 10 6 10;
+    -fx-background-color: transparent;
+    -fx-background-radius: 4;
+    -fx-text-fill: -color-fg-muted;
+}
+
+.nav-list .list-cell:filled:hover {
+    -fx-background-color: -color-neutral-muted;
+    -fx-text-fill: -color-fg-default;
+}
+
+.nav-list .list-cell:filled:selected {
+    -fx-background-color: -color-accent-subtle;
+    -fx-text-fill: -color-accent-fg;
+    -fx-font-weight: bold;
+}
+
+/* The Settings and activity log tabs: a page of the application, on its own ground the
+   way the launchpad is, rather than the tab pane's. */
+.settings-root,
+.activity-log-root {
+    -fx-background-color: -color-bg-default;
+}
+
+.preferences-scroll {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.preferences-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.preferences-heading {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -jfx-fg-bright;
+}
+
+.preferences-section {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-fg-muted;
+}
+
+.preferences-hint {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* Brief message shown over the window when there is no status bar to use. */
+.transient-hint {
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: -color-border-default;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 8 14 8 14;
+    -fx-font-size: 13px;
+    -fx-text-fill: -color-fg-default;
+}
+
+/* Files in the repository browser that differ from HEAD, so switching to the full
+   tree does not lose what the changed-files list was showing. */
+.workspace-changed {
+    -fx-text-fill: -color-accent-fg;
+    -fx-font-weight: bold;
+}
+
+.text-area-transparent {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-border-color: transparent;
+}
+
+
+
+.list-dark {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: -color-bg-default;
+    -fx-border-color: transparent;
+}
+
+
+
+.dialog-root {
+    -fx-background-color: -color-bg-default;
+}
+
+.text-muted {
+    -fx-text-fill: -color-fg-default;
+}
+
+/* ---- Tab strip ----
+
+   Primer's tab strip is the content ground with a rule under it. The ground is a token so a
+   theme can lift the strip off the page (the green themes put it with the toolbar), and
+   the selected tab has its own for the same reason: against a lifted strip the content
+   ground reads as a hole, not as the page the tab opens onto. */
+.tab-pane {
+    -color-tab-bg-selected: -jfx-tabs-selected-bg;
+}
+
+.tab-pane > .tab-header-area {
+    -fx-background-color: -jfx-tabs-bg;
+}
+
+.tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color: -color-border-default, -jfx-tabs-bg;
+}
+
+/* ---- Status bar ---- */
+
+.status-bar {
+    -fx-background-color: -jfx-status-bg;
+    -fx-border-color: -color-border-default transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+}
+
+.status-message {
+    -fx-font-size: 11px;
+}
+
+.status-info {
+    -fx-text-fill: -color-fg-muted;
+}
+
+.status-warn {
+    -fx-text-fill: -color-warning-fg;
+    -fx-font-weight: bold;
+}
+
+.status-error {
+    -fx-text-fill: -color-danger-fg;
+    -fx-font-weight: bold;
+}
+
+.status-branch {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-accent-fg;
+    -fx-font-weight: bold;
+}
+
+/* ---- Commit graph rows ----
+
+   The row is a grid of fixed columns: edge strip, ref rail, lanes, message, author,
+   age, hash. Only the message column grows, so the text you actually read starts at
+   the same x on every row however long a branch name gets. */
+
+/* Column titles. Quiet on purpose - they are a legend for the columns, read once and
+   then ignored, so they must not compete with the history underneath them. */
+.graph-header {
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: transparent transparent -color-border-default transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-min-height: 22;
+    -fx-pref-height: 22;
+}
+
+.graph-header-title {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-subtle;
+    -fx-font-weight: bold;
+    -fx-padding: 0 8 0 8;
+}
+/* "+N" over the graph when lanes past the budget share its last column. The attention
+   colour, because it is the one thing in the header that says something is not shown. */
+.graph-lane-overflow {
+    -fx-text-fill: -jfx-attention;
+    -fx-padding: 0 4 0 0;
+}
+
+/* Sits over the right-hand end of the header strip. As quiet as the titles it sits
+   among until hovered, so it is findable without being the loudest thing up there. */
+.graph-columns-gear {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-fg-subtle;
+    -fx-font-size: 11px;
+    -fx-padding: 0 6 0 6;
+    -fx-min-height: 20;
+    -fx-pref-height: 20;
+    -fx-cursor: hand;
+}
+
+.graph-columns-gear:hover {
+    -fx-text-fill: -color-fg-default;
+    -fx-background-color: -color-bg-default;
+}
+
+/* The list's own ground, one token so the theme can give the history a ground of its own
+   (darker than the panels either side of it, in the green themes). The cells are
+   transparent and show it; GraphPalette.ground() is what the canvas cuts its dots out of. */
+.commit-graph {
+    -fx-background-color: -jfx-list-bg;
+    -color-cell-bg: -jfx-list-bg;
+}
+
+.commit-graph .list-cell {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}
+
+/* Every second row a step off the ground, where a theme asks for it. Before hover and
+   selection, which are the same specificity and must win over it. */
+.commit-graph .list-cell:filled:odd {
+    -fx-background-color: -jfx-list-alt-bg;
+}
+
+/* Hover and selection are painted on the cell, underneath the row's branch tint. The
+   tint is a low-alpha wash, so both still read through it. */
+.commit-graph .list-cell:filled:hover {
+    -fx-background-color: -color-neutral-muted;
+}
+
+.commit-graph .list-cell:filled:selected {
+    -fx-background-color: -jfx-selected-bg;
+}
+
+/* A bar as well as the fill, so a selected row stays identifiable when the list loses
+   focus and the accent wash goes quiet. Its own node laid over the row's leading edge -
+   not a border, which would push the selected row's columns sideways and break every
+   lane line at it. */
+.commit-graph .list-cell:filled:selected .graph-selection-bar {
+    -fx-background-color: -color-accent-emphasis;
+}
+
+.commit-graph .list-cell:filled:selected .graph-message {
+    -fx-font-weight: bold;
+}
+
+.graph-message {
+    -fx-text-fill: -jfx-fg-bright;
+    -fx-padding: 0 0 0 8;
+}
+
+/* The rest of the commit message, on the same line as the subject. Dimmed hard: it is
+   there to be glanced at, and it must never compete with the subject beside it. */
+.graph-body {
+    -fx-text-fill: -color-fg-subtle;
+    -fx-padding: 0 10 0 0;
+}
+
+.graph-rail {
+    -fx-padding: 0 7 0 4;
+}
+
+/* Age and hash are tabular data, so they get a monospaced face and sit hard right
+   against their column edge. */
+.graph-age, .graph-hash {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+    -fx-padding: 0 8 0 0;
+}
+
+.graph-hash {
+    -fx-text-fill: -color-fg-subtle;
+    -fx-cursor: hand;
+}
+
+/* The short hash is the field that gets pasted into a terminal, so hovering the row
+   promotes it from decoration to something you can see is clickable. */
+.commit-graph .list-cell:filled:hover .graph-hash {
+    -fx-text-fill: -color-accent-fg;
+    -fx-underline: true;
+}
+
+/* The WIP row's trash icon: quiet until you look for it, like the row it acts on. */
+.wip-discard {
+    -fx-font-size: 11px;
+    -fx-padding: 0 6 0 6;
+}
+
+.graph-wip {
+    -fx-text-fill: -jfx-attention;
+    -fx-font-weight: bold;
+}
+
+.graph-stash {
+    -fx-text-fill: -color-warning-fg;
+}
+
+/* The row standing in for history not yet walked. Muted rather than emphasised: it is
+   an offer, not a change, and it should not read as another commit. */
+.graph-load-more {
+    -fx-text-fill: -color-accent-fg;
+    -fx-font-style: italic;
+}
+
+/* ---- Ref chips ----
+
+   Outlined rather than filled. A rail of solid blocks beside a coloured graph is two
+   loud things next to each other; an outline lets the branch name read as a label on
+   the lane rather than competing with it. */
+
+/* 11px, not 10: at 10 a branch name is noticeably smaller than the commit message
+   beside it and reads as a footnote rather than as a label on the row. GraphMetrics
+   measures the rail at this size - change one and change the other. */
+.ref-chip {
+    -fx-padding: 0 6 0 6;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+    -fx-border-width: 1;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-fg-default;
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: -color-border-default;
+}
+
+.ref-chip-local {
+    -fx-border-color: -color-accent-emphasis;
+    -fx-background-color: -color-accent-subtle;
+    -fx-text-fill: -color-accent-fg;
+}
+
+/* The branch a hovered commit belongs to, shown where its chip would be if it were the
+   tip. Outlined and dimmed rather than filled: it is an answer to a question the pointer
+   asked, not a ref that is really there, and it must not be mistaken for one. */
+.ref-chip-ghost {
+    -fx-background-color: transparent;
+    -fx-border-color: -color-fg-muted;
+    -fx-border-style: dashed;
+    -fx-text-fill: -color-fg-muted;
+    -fx-opacity: 0.85;
+}
+
+/* HEAD is marked twice - a filled pip drawn into the text, and this - because one of
+   the two signals is colour and the other is not. */
+.ref-chip-head {
+    -fx-background-color: -color-accent-emphasis;
+    -fx-text-fill: -color-fg-emphasis;
+    -fx-border-color: -color-accent-emphasis;
+}
+
+/* A remote with no local counterpart on this commit: present, but not somewhere you
+   are working. Dashed, so it reads as provisional without needing its colour decoded.
+
+   Opaque rather than transparent: the chip expands over the graph and the message when
+   hovered, and a see-through one would have the commit subject running through it. */
+.ref-chip-remote {
+    -fx-border-color: -color-fg-subtle;
+    -fx-background-color: -color-bg-subtle;
+    -fx-text-fill: -color-fg-muted;
+    -fx-border-style: segments(3, 2);
+}
+
+/* A chip showing its full name over the row. Lifted with a shadow so it reads as
+   floating above the content it covers rather than as part of it. */
+.ref-chip-expanded {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.55), 8, 0, 1, 2);
+}
+
+/* The success green is bright in the dark theme and dark in the light one, so the
+   text on top of it has to flip the other way - hence its own token rather than
+   -color-fg-emphasis, which is white in both.
+
+   Shaped as well as coloured, for the same reason HEAD is marked twice: green alone
+   is the only thing separating a tag from a branch once the chip stops carrying a
+   tooltip saying so, and a reader who cannot decode the colour has nothing left. The
+   tapered right edge makes it a pennant hanging off the rail - square-ended chips are
+   branches. */
+.ref-chip-tag {
+    -fx-background-color: -color-success-fg;
+    -fx-border-color: -color-success-fg;
+    -fx-text-fill: -jfx-fg-on-success;
+    -fx-background-radius: 2 8 8 2;
+    -fx-border-radius: 2 8 8 2;
+}
+
+/* What did not fit in the rail. Muted and monospaced: it is a count, not a name. */
+.ref-chip-more {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-padding: 0 2 0 2;
+}
+
+/* ---- Staging area ----
+
+   A file row is a target, so it says so on hover: the directory brightens, the basename
+   picks up the accent and an underline, and the Stage / Discard buttons fade in. The
+   buttons are bound to hover rather than shown always - a list of two hundred changed
+   files otherwise carries four hundred buttons competing with the names. */
+
+.sidebar-list .list-cell {
+    -fx-padding: 2 8 2 8;
+    -fx-border-width: 0 0 0 2;
+    -fx-border-color: transparent;
+}
+
+.sidebar-list .list-cell:filled:hover {
+    -fx-background-color: -color-neutral-muted;
+    -fx-border-color: -color-accent-muted transparent transparent transparent;
+}
+
+.sidebar-list .list-cell:filled:selected {
+    -fx-background-color: -jfx-selected-bg;
+    -fx-border-color: -color-accent-emphasis transparent transparent transparent;
+}
+
+.file-dir {
+    -fx-text-fill: -color-fg-subtle;
+    -fx-font-size: 11px;
+}
+
+.sidebar-list .list-cell:filled:hover .file-dir {
+    -fx-text-fill: -color-fg-muted;
+}
+
+.sidebar-list .list-cell:filled:hover .file-normal {
+    -fx-text-fill: -color-accent-fg;
+    -fx-underline: true;
+}
+
+.file-normal {
+    -fx-text-fill: -jfx-fg-bright;
+}
+
+.file-conflicted {
+    -fx-text-fill: -color-danger-fg;
+    -fx-font-weight: bold;
+}
+
+.conflict-banner {
+    -fx-text-fill: -color-warning-fg;
+    -fx-font-weight: bold;
+    -fx-padding: 6;
+    -fx-background-color: -color-warning-subtle;
+    -fx-background-radius: 4;
+}
+
+/* ---- Conflict mode ----
+
+   A stopped merge, rebase, cherry-pick or revert, the way commercial Git clients lay it out: the
+   operation in words with its refs as chips, the conflicted files in a section of their
+   own, the resolved ones tagged among the staged, and a strip over the graph. */
+
+/* "Merging [feature] into [main]", over the in-progress banner's advice; inset as far as
+   the advice's own text, so the two start in line. */
+.operation-headline {
+    -fx-padding: 2 6 0 6;
+}
+
+.operation-headline-text {
+    -fx-font-weight: bold;
+    -fx-text-fill: -jfx-fg-bright;
+}
+
+/* A commit named where a branch chip would be: the neutral chip, in the monospace a hash
+   is read in everywhere else. */
+.ref-chip-commit {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+}
+
+/* The Conflicted files title and each conflicted row carry the warning mark. */
+.conflicted-title .icon-default.icon-line,
+.conflict-row-icon .icon-default.icon-line {
+    -fx-stroke: -color-warning-fg;
+}
+
+/* A staged file that was conflicted earlier in this operation. Outlined like the signature
+   badge: a fact about the row, not a control. */
+.resolved-tag {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-success-fg;
+    -fx-border-color: -color-success-fg;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-background-color: transparent;
+    -fx-padding: 0 4 0 4;
+}
+
+/* The strip over the graph's rows while an operation is stopped: the orange row commercial clients use.
+   A button, so it can be reached and pressed from the keyboard as well. */
+.graph-operation-banner {
+    -fx-background-color: -color-warning-subtle;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent transparent transparent -color-warning-emphasis;
+    -fx-border-width: 0 0 0 3;
+    -fx-text-fill: -color-warning-fg;
+    -fx-font-weight: bold;
+    -fx-padding: 5 10 5 9;
+    -fx-cursor: hand;
+    -fx-effect: null;
+}
+
+.graph-operation-banner:hover,
+.graph-operation-banner:focused {
+    -fx-background-color: -color-warning-muted;
+}
+
+.graph-operation-banner .icon-default.icon-line {
+    -fx-stroke: -color-warning-fg;
+}
+
+/* ---- Merge tool ---- */
+
+/* Each pane's header says whose text it is in git's colour for that side: ours the accent,
+   theirs amber, the ancestor neutral - the tints the result paints each side's lines in.
+   A 3px edge and the side's wash; the result's own header stays plain. */
+.merge-pane-header {
+    -fx-padding: 5 12 5 9;
+    -fx-background-color: -color-border-muted, -color-bg-subtle;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-border-color: transparent transparent transparent -color-border-default;
+    -fx-border-width: 0 0 0 3;
+}
+
+.merge-pane-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-fg-default;
+}
+
+.merge-pane-detail {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+.merge-pane-ours > .merge-pane-header {
+    -fx-background-color: -color-border-muted, -color-bg-default, -color-accent-subtle;
+    -fx-background-insets: 0, 0 0 1 0, 0 0 1 0;
+    -fx-border-color: transparent transparent transparent -color-accent-emphasis;
+}
+
+.merge-pane-ours .merge-pane-title {
+    -fx-text-fill: -color-accent-fg;
+}
+
+.merge-pane-theirs > .merge-pane-header {
+    -fx-background-color: -color-border-muted, -color-bg-default, -color-warning-subtle;
+    -fx-background-insets: 0, 0 0 1 0, 0 0 1 0;
+    -fx-border-color: transparent transparent transparent -color-warning-emphasis;
+}
+
+.merge-pane-theirs .merge-pane-title {
+    -fx-text-fill: -color-warning-fg;
+}
+
+.merge-pane-result > .merge-pane-header {
+    -fx-border-color: transparent;
+    -fx-padding: 5 12 5 12;
+    -fx-border-width: 0;
+}
+
+/* The buttons that keep one side's lines carry that side's colour. */
+.merge-side-dot-ours {
+    -fx-fill: -color-accent-emphasis;
+}
+
+.merge-side-dot-theirs {
+    -fx-fill: -color-warning-emphasis;
+}
+
+/* Panes meet the window's edges and each other along hairlines, with no grip drawn on
+   them: the stray grabber on the top boundary looked like a control of its own. */
+.merge-split > .split-pane-divider {
+    -fx-padding: 1;
+    -fx-background-color: -color-border-default;
+    -fx-opacity: 1;
+}
+
+.merge-split > .split-pane-divider > .horizontal-grabber,
+.merge-split > .split-pane-divider > .vertical-grabber {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}
+
+/* The three panes are code-area surfaces now, the same class the diff viewer uses, so
+   they take the theme's own background and monospace font rather than rendering as
+   black-on-white proportional text inside a dark dialog. */
+.merge-pane .code-area {
+    -fx-background-color: -color-bg-default;
+}
+
+/* Where you are among the conflicts, as a pill: amber while any are left - work in
+   progress, not an error - and green with a tick once none are. */
+.merge-conflict-count {
+    -fx-font-size: 13px;
+    -fx-padding: 2 8 2 8;
+    -fx-background-radius: 10;
+    -fx-text-fill: -color-fg-muted;
+}
+
+.merge-conflict-count.merge-conflicts-remaining {
+    -fx-text-fill: -color-warning-fg;
+    -fx-background-color: -color-warning-subtle;
+}
+
+.merge-conflict-count.merge-conflicts-resolved {
+    -fx-text-fill: -color-success-fg;
+    -fx-background-color: -color-success-subtle;
+}
+
+.merge-conflicts-resolved .icon-line {
+    -fx-stroke: -color-success-fg;
+}
+
+/* A comparison's toolbar: what "My edits | On disk now" choose, and how far apart they are. */
+.merge-start-from,
+.merge-difference-count {
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* "Base" switched on: tinted and outlined in the accent rather than filled with it, which
+   drew the accent-coloured eye on an accent ground where it vanished. */
+.merge-base-toggle:selected,
+.merge-base-toggle:selected:hover {
+    -fx-background-color: -color-accent-emphasis, -color-bg-default, -color-accent-subtle;
+    -fx-background-insets: 0, 1, 1;
+    -fx-text-fill: -color-accent-fg;
+}
+
+/* Which side each line came from - in the result, the lines a conflict was resolved with;
+   in the side panes, where each conflict is. A tint and an edge, like a diff row, so
+   syntax colour still shows through. Theirs is amber: Primer's "warning" tier, which is
+   GitHub's "attention" under AtlantaFX's name - -color-attention-* exists in neither, and
+   a missing token painted nothing at all. */
+.merge-ours-line {
+    -fx-background-color: -color-accent-subtle;
+    -fx-border-color: -color-accent-emphasis;
+    -fx-border-width: 0 0 0 3;
+}
+.merge-theirs-line {
+    -fx-background-color: -color-warning-subtle;
+    -fx-border-color: -color-warning-emphasis;
+    -fx-border-width: 0 0 0 3;
+}
+.merge-base-line {
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 0 0 0 3;
+}
+
+/* A conflict nobody has decided: the common ancestor's lines standing in for it, in the
+   "done" violet - neither side's colour, and apart from both in either theme. */
+.merge-unresolved-line {
+    -fx-background-color: -jfx-done-row;
+    -fx-border-color: -jfx-done-emphasis;
+    -fx-border-width: 0 0 0 3;
+}
+
+/* Typed over: resolved with whatever is there, by neither side. */
+.merge-edited-line {
+    -fx-background-color: -color-neutral-subtle;
+    -fx-border-color: -color-fg-subtle;
+    -fx-border-width: 0 0 0 3;
+}
+
+/* A conflict resolved to nothing - the side taken had deleted its lines: a rule where
+   they would be, so it can still be found and changed. */
+.merge-anchor-above {
+    -fx-border-color: -jfx-done-emphasis transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+}
+.merge-anchor-below {
+    -fx-border-color: transparent transparent -jfx-done-emphasis transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Beside the empty line that stands for a conflict with no lines of its own to show. */
+.merge-placeholder-caption {
+    -fx-text-fill: -jfx-done-fg;
+    -fx-font-style: italic;
+    -fx-padding: 0 0 0 10;
+}
+
+/* The tick box beside each line of a conflict in the side panes, sized to the row so
+   ticked lines are no taller than the rest; lines outside a conflict keep its room. */
+.merge-tick-cell {
+    -fx-min-width: 18;
+    -fx-pref-width: 18;
+    -fx-max-width: 18;
+    -fx-padding: 0 2 0 0;
+}
+.merge-tick {
+    -fx-padding: 0;
+    -fx-font-size: 11px;
+}
+.merge-tick > .box {
+    -fx-padding: 2;
+}
+.merge-pane-tick {
+    -fx-padding: 0;
+}
+
+/* Use ours, Use theirs or Use both, while the conflict's ticks are exactly that. */
+.merge-use > .button.merge-use-chosen {
+    -color-button-bg: -color-accent-subtle;
+    -color-button-fg: -color-accent-fg;
+    -color-button-border: -color-accent-emphasis;
+    -color-button-bg-hover: -color-accent-subtle;
+    -color-button-fg-hover: -color-accent-fg;
+    -color-button-border-hover: -color-accent-emphasis;
+    -color-button-bg-focused: -color-accent-subtle;
+    -color-button-fg-focused: -color-accent-fg;
+    -color-button-bg-pressed: -color-accent-muted;
+    -color-button-fg-pressed: -color-accent-fg;
+}
+
+
+/* ---- Command palette ---- */
+
+.palette-root {
+    -fx-border-color: -color-success-fg;
+    -fx-border-width: 2;
+}
+
+.palette-search {
+    -fx-font-size: 15px;
+    -fx-padding: 10;
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-fg-default;
+    -fx-border-color: -color-border-default;
+}
+
+/* ---- Welcome / new tab page ---- */
+
+.welcome-root {
+    -fx-background-color: -color-bg-default;
+}
+
+.welcome-scroll {
+    -fx-background-color: -color-bg-default;
+    -fx-background-insets: 0;
+}
+
+.welcome-scroll > .viewport {
+    -fx-background-color: -color-bg-default;
+}
+
+.welcome-heading {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -jfx-fg-bright;
+}
+
+.welcome-section {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-fg-subtle;
+}
+
+/* A card, not a button with a word on it: an icon, and beside it a title over one line
+   saying what choosing it involves. */
+.welcome-action {
+    -fx-background-color: -color-border-default, -color-bg-subtle;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 6, 5;
+    -fx-text-fill: -jfx-fg-bright;
+    -fx-padding: 12 16 12 16;
+    -fx-cursor: hand;
+    -fx-alignment: center-left;
+    -fx-content-display: graphic-only;
+    -fx-effect: none;
+}
+
+.welcome-action:hover {
+    -fx-background-color: -color-accent-emphasis, -color-bg-subtle;
+}
+
+.welcome-action:focused {
+    -fx-background-color: -color-accent-emphasis, -color-bg-subtle;
+    -fx-background-insets: 0, 2;
+}
+
+.welcome-card-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -jfx-fg-bright;
+}
+
+/* One step down and one step dimmer than the title, as everywhere else that a line
+   explains the line above it. */
+.welcome-card-detail {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+.welcome-search {
+    -fx-background-color: -color-bg-default;
+    -fx-border-color: -color-border-default;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-text-fill: -jfx-fg-bright;
+    -fx-prompt-text-fill: -color-fg-subtle;
+    -fx-padding: 8;
+}
+
+.welcome-recent-list {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-border-color: transparent;
+}
+
+.welcome-recent-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-background-radius: 4;
+    -fx-padding: 0 8 0 4;
+}
+
+.welcome-recent-list .list-cell:filled:hover {
+    -fx-background-color: -color-neutral-muted;
+}
+
+.welcome-recent-list .placeholder .label {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 11px;
+}
+
+.welcome-repo-name {
+    -fx-text-fill: -color-accent-fg;
+    -fx-font-weight: bold;
+}
+
+.welcome-repo-path {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 11px;
+}
+
+/* The star: an outline until the repository is a favorite, then filled, in the
+   attention colour - the one mark on the page that is state rather than furniture. */
+.welcome-favorite-star-active .icon-solid {
+    -fx-fill: -jfx-attention;
+}
+
+.welcome-favorite-star:hover .icon-default.icon-line {
+    -fx-stroke: -jfx-attention;
+}
+
+/* ---- Sidebar sections ---- */
+
+.sidebar-scroll {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.sidebar-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* A section title is a row you can click, not a bar: no fill until it is pointed at.
+   Six filled bars down the sidebar were the heaviest things in it. */
+.sidebar-sections .titled-pane > .title {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 6 8 6 8;
+}
+
+.sidebar-sections .titled-pane > .title:hover {
+    -fx-background-color: -color-neutral-muted;
+}
+
+/* SidebarPane.SECTION_CONTENT_PADDING is this bottom padding: the sections share the
+   sidebar's height to the pixel, so the two have to agree. */
+.sidebar-sections .titled-pane > *.content {
+    -fx-padding: 0 0 4 0;
+}
+
+.sidebar-sections .titled-pane > *.content {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* ---- Branch tree ---- */
+
+/* No box around the tree: it is the section's content, not a control inside it. */
+.branch-tree {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.branch-tree .tree-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-fg-default;
+    -fx-padding: 2 4 2 4;
+}
+
+.branch-tree .tree-cell:hover {
+    -fx-background-color: -color-bg-subtle;
+}
+
+.branch-folder {
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* ---- Integrations ---- */
+
+.provider-row {
+    -fx-padding: 12;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+/* ---- Interactive rebase editor ---- */
+
+.rebase-hash {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+    -fx-min-width: 60;
+}
+
+.rebase-message {
+    -fx-text-fill: -color-fg-default;
+}
+
+/* The handle a row is dragged by: quiet until the row is pointed at. */
+.rebase-grip .icon-solid {
+    -fx-fill: -color-fg-subtle;
+    -fx-opacity: 0.6;
+}
+
+.rebase-step-cell:hover .rebase-grip .icon-solid,
+.rebase-step-cell:selected .rebase-grip .icon-solid {
+    -fx-opacity: 1;
+}
+
+/* Up and down on the row being pointed at or worked on, not as a column of chevrons down
+   every row. Transparent rather than hidden, so the space is kept and they still answer
+   a click that lands where they will appear. */
+.rebase-step-cell .rebase-move {
+    -fx-opacity: 0;
+}
+
+.rebase-step-cell:hover .rebase-move,
+.rebase-step-cell:selected .rebase-move {
+    -fx-opacity: 1;
+}
+
+.rebase-step-cell:hover .rebase-move:disabled,
+.rebase-step-cell:selected .rebase-move:disabled {
+    -fx-opacity: 0.35;
+}
+
+/* Where a dragged row would land: a line at the top or bottom edge of this one. */
+.rebase-step-cell:drop-above {
+    -fx-border-color: -color-accent-emphasis transparent transparent transparent;
+    -fx-border-width: 2 0 0 0;
+}
+
+.rebase-step-cell:drop-below {
+    -fx-border-color: transparent transparent -color-accent-emphasis transparent;
+    -fx-border-width: 0 0 2 0;
+}
+
+/* The action as a pill in the colour of what it does: pick plain, reword and edit in the
+   accent, squash and fixup violet, drop red. Three layers so the dark theme's translucent
+   tints sit on an opaque ground rather than on the row's selection colour. */
+.combo-box.rebase-action {
+    -fx-pref-width: 92;
+    -fx-min-width: 92;
+    -fx-pref-height: 24;
+    -fx-min-height: 24;
+    -fx-max-height: 24;
+    -fx-padding: 0;
+    -fx-background-color: -color-border-default, -color-bg-default, -color-bg-subtle;
+    -fx-background-insets: 0, 1, 1;
+    -fx-background-radius: 12, 11, 11;
+}
+
+.combo-box.rebase-action > .list-cell {
+    -fx-padding: 0 0 0 10;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-default;
+}
+
+.combo-box.rebase-action > .arrow-button {
+    -fx-padding: 0 9 0 4;
+    -fx-background-color: transparent;
+}
+
+.combo-box.rebase-action > .arrow-button > .arrow {
+    -fx-background-color: -color-fg-muted;
+}
+
+.combo-box.rebase-action:focused {
+    -fx-background-color: -color-accent-emphasis, -color-bg-default, -color-bg-subtle;
+}
+
+.combo-box.rebase-action-reword, .combo-box.rebase-action-edit {
+    -fx-background-color: -color-accent-muted, -color-bg-default, -color-accent-subtle;
+}
+
+.combo-box.rebase-action-squash, .combo-box.rebase-action-fixup {
+    -fx-background-color: -jfx-done-subtle, -color-bg-default, -jfx-done-subtle;
+}
+
+.combo-box.rebase-action-drop {
+    -fx-background-color: -color-danger-muted, -color-bg-default, -color-danger-subtle;
+}
+
+.combo-box.rebase-action-reword:focused, .combo-box.rebase-action-edit:focused {
+    -fx-background-color: -color-accent-emphasis, -color-bg-default, -color-accent-subtle;
+}
+
+.combo-box.rebase-action-squash:focused, .combo-box.rebase-action-fixup:focused {
+    -fx-background-color: -color-accent-emphasis, -color-bg-default, -jfx-done-subtle;
+}
+
+.combo-box.rebase-action-drop:focused {
+    -fx-background-color: -color-accent-emphasis, -color-bg-default, -color-danger-subtle;
+}
+
+.combo-box.rebase-action-reword > .list-cell,
+.combo-box.rebase-action-edit > .list-cell { -fx-text-fill: -color-accent-fg; }
+.combo-box.rebase-action-reword > .arrow-button > .arrow,
+.combo-box.rebase-action-edit > .arrow-button > .arrow { -fx-background-color: -color-accent-fg; }
+
+.combo-box.rebase-action-squash > .list-cell,
+.combo-box.rebase-action-fixup > .list-cell { -fx-text-fill: -jfx-done-fg; }
+.combo-box.rebase-action-squash > .arrow-button > .arrow,
+.combo-box.rebase-action-fixup > .arrow-button > .arrow { -fx-background-color: -jfx-done-fg; }
+
+.combo-box.rebase-action-drop > .list-cell { -fx-text-fill: -color-danger-fg; }
+.combo-box.rebase-action-drop > .arrow-button > .arrow { -fx-background-color: -color-danger-fg; }
+
+/* In the open picker, what each action does, after its name. */
+.rebase-action-description {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* The commit a squash or fixup folds into, named on its row. */
+.rebase-into {
+    -fx-text-fill: -jfx-done-fg;
+    -fx-background-color: -jfx-done-subtle;
+    -fx-background-insets: 0;
+    -fx-background-radius: 8;
+}
+
+/* A dropped commit is struck through: the plan should read without being decoded. On the
+   label's text, not the label: Labeled has no strikethrough of its own, and set there the
+   line was never drawn. */
+.rebase-row-drop .rebase-message,
+.rebase-row-drop .rebase-hash {
+    -fx-opacity: 0.55;
+}
+
+.rebase-row-drop .rebase-message > .text,
+.rebase-row-drop .rebase-hash > .text {
+    -fx-strikethrough: true;
+}
+
+/* A folded commit is indented, so it reads as belonging to the one above it. */
+.rebase-row-fold {
+    -fx-padding: 0 0 0 18;
+}
+
+/* A reworded commit shows the summary it is being given, in the reword's colour. */
+.rebase-row-reword .rebase-message {
+    -fx-text-fill: -color-accent-fg;
+}
+
+/* A plan that changes anything rewrites the commits it touches, and its summary sits in
+   an amber callout. Amber rather than red: this is the state the dialog exists to
+   produce, not an error - but it is the one line that should catch the eye on the way to
+   the button. The callout carries the colour; the sentence stays readable on it. */
+.rebase-summary-warn {
+    -fx-text-fill: -color-fg-default;
+}
+
+/* A commit on some other branch used to be drawn at 0.55 opacity and italic. It is gone
+   deliberately: in any repository with real branching most commits are not on the current
+   one, so the rule dimmed most of the graph in its resting state - which is exactly the
+   "why is everything faded?" the fade-on-hover was meant to answer. Nothing fades unless
+   the pointer is asking a question. Which branch a commit belongs to is already said by
+   its lane colour and its ref chips. */
+
+/* Only the subject dims, and only while a branch is hovered: the lanes, the ref chips
+   and the avatar are the graph, and fading those would hide the shape the fade exists to
+   let you read. */
+.graph-message-faded {
+    -fx-opacity: 0.35;
+}
+
+/* ---- Reflog ---- */
+
+.reflog-selector, .reflog-ids {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+.reflog-comment {
+    -fx-text-fill: -color-fg-default;
+}
+
+.reflog-age {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+    -fx-min-width: 68;
+    -fx-alignment: center-right;
+}
+
+/* The rows worth finding: everything else is an ordinary commit already in the graph. */
+.reflog-rewrite .reflog-comment {
+    -fx-text-fill: -jfx-attention;
+    -fx-font-weight: bold;
+}
+
+/* Status-bar message controls. The bar is fixed at one line high, so a long git
+   error is shown as its first line with the rest behind Details; these two sit
+   next to it only while there is something to act on. */
+.status-details, .status-dismiss {
+    -fx-font-size: 11px;
+    -fx-padding: 1px 8px 1px 8px;
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+}
+
+.status-dismiss {
+    -fx-padding: 1px 6px 1px 6px;
+}
+
+/* The Author heading doubles as a filter dropdown, so it has to look pressable. Kept as
+   quiet as its neighbours until hovered: it is still a column title first. */
+.graph-header-filter:hover {
+    -fx-text-fill: -color-fg-default;
+    -fx-underline: true;
+}
+
+/* The graph's trailing edge, draggable. Invisible until hovered: it is a boundary, and a
+   permanent line there would read as a column rule the other columns do not have. */
+.graph-lane-resizer, .graph-rail-resizer {
+    -fx-background-color: transparent;
+}
+
+.graph-lane-resizer:hover, .graph-rail-resizer:hover {
+    -fx-background-color: -color-accent-emphasis;
+    -fx-opacity: 0.6;
+}
+
+/* While the boundary is actually being dragged. Solid rather than the hover wash, so the
+   line reads as a thing being placed rather than a thing being pointed at. */
+.graph-lane-resizer-active, .graph-rail-resizer-active {
+    -fx-background-color: -color-accent-emphasis;
+    -fx-opacity: 1;
+}
+
+/* ---- Repository toolbar ----
+
+   Quiet until pointed at: no fill and no outline on a button at rest, so the bar reads as
+   a row of labelled icons rather than a row of boxes. An icon over a one-word caption
+   while there is room; the icon alone (:compact) when there is not. */
+
+.repo-toolbar {
+    -fx-padding: 4 8 4 8;
+    -fx-spacing: 2;
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: transparent transparent -color-border-default transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.repo-toolbar .tool-button {
+    -fx-font-size: 11px;
+    -fx-graphic-text-gap: 3;
+    -fx-padding: 5 8 4 8;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 4;
+    -fx-text-fill: -color-fg-muted;
+    -fx-effect: none;
+}
+
+.repo-toolbar:compact .tool-button {
+    -fx-padding: 8;
+}
+
+.repo-toolbar .tool-button:hover {
+    -fx-background-color: -color-neutral-muted;
+    -fx-text-fill: -color-fg-default;
+    -fx-opacity: 1;
+}
+
+.repo-toolbar .tool-button:focused {
+    -fx-background-color: -color-accent-emphasis, -color-bg-subtle;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 4, 3;
+}
+
+/* A split button is one control: the caption and the arrow share the hover fill rather
+   than each being a box of its own. AtlantaFX pads the inner label as if it were a whole
+   button, which is what made Pull and Push half as wide again as their neighbours. */
+.repo-toolbar .split-menu-button.tool-button {
+    -fx-padding: 0;
+}
+
+.repo-toolbar .split-menu-button.tool-button > .label {
+    -fx-padding: 5 4 4 8;
+    -fx-font-size: 11px;
+    -fx-graphic-text-gap: 3;
+    -fx-text-fill: -color-fg-muted;
+}
+
+.repo-toolbar:compact .split-menu-button.tool-button > .label {
+    -fx-padding: 8 4 8 8;
+}
+
+.repo-toolbar .split-menu-button.tool-button:hover > .label {
+    -fx-text-fill: -color-fg-default;
+}
+
+/* No rule between the caption and the arrow: AtlantaFX draws one the height of the
+   control, which on a button with no outline of its own is a stray vertical bar. The
+   arrow's own hover fill is what says it is a separate target. */
+.repo-toolbar .split-menu-button.tool-button > .arrow-button {
+    -fx-padding: 0 6 0 2;
+    -fx-border-width: 0;
+    -fx-background-radius: 0 4 4 0;
+}
+
+.repo-toolbar .split-menu-button.tool-button:hover > .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.repo-toolbar .split-menu-button.tool-button > .arrow-button:hover {
+    -fx-background-color: -color-neutral-emphasis;
+    -fx-background-insets: 0;
+}
+
+.repo-toolbar .split-menu-button.tool-button > .arrow-button > .arrow {
+    -fx-background-color: -color-fg-muted;
+}
+
+/* A hairline between groups. A Region, not a Separator: a Separator in a horizontal
+   toolbar keeps its own horizontal orientation and draws as a stray dash. */
+.toolbar-divider {
+    -fx-background-color: -color-border-default;
+    -fx-min-width: 1;
+    -fx-pref-width: 1;
+    -fx-max-width: 1;
+    -fx-min-height: 20;
+    -fx-pref-height: 20;
+    -fx-max-height: 20;
+}
+
+/* The branch you are on: where everything else on the bar acts. Reads as a label until
+   pointed at, with the branch mark in front of the name. */
+.repo-toolbar .branch-switcher {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 4;
+    -fx-border-color: transparent;
+    -fx-font-weight: bold;
+}
+
+.repo-toolbar .branch-switcher:hover, .repo-toolbar .branch-switcher:showing {
+    -fx-background-color: -color-neutral-muted;
+}
+
+.repo-toolbar .branch-switcher:focused {
+    -fx-background-color: -color-accent-emphasis, -color-bg-subtle;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 4, 3;
+}
+
+/* ---- Pending work ----
+
+   The toolbar had no way to say a pull was worth making: every button looked identical
+   whether the branch was up to date or eleven commits behind, so the only way to find out
+   was to press one and read the status bar afterwards - which delivers the answer after
+   the decision.
+
+   The count goes in the caption and the button takes a colour: the accent for commits
+   to send, the attention colour for commits to bring in - the same two the sidebar and
+   the status bar use for ahead and behind. Not a fill. A filled Pull and a filled Push
+   were the two largest things in the window, for actions that were merely available. */
+
+.repo-toolbar .sync-pending,
+.repo-toolbar .split-menu-button.sync-pending > .label {
+    -fx-font-weight: bold;
+}
+
+.repo-toolbar .sync-ahead,
+.repo-toolbar .split-menu-button.sync-ahead > .label,
+.repo-toolbar .split-menu-button.sync-ahead:hover > .label {
+    -fx-text-fill: -color-accent-fg;
+}
+
+.repo-toolbar .sync-ahead .icon-default.icon-line {
+    -fx-stroke: -color-accent-fg;
+}
+
+.repo-toolbar .sync-behind,
+.repo-toolbar .split-menu-button.sync-behind > .label,
+.repo-toolbar .split-menu-button.sync-behind:hover > .label {
+    -fx-text-fill: -jfx-attention;
+}
+
+.repo-toolbar .sync-behind .icon-default.icon-line {
+    -fx-stroke: -jfx-attention;
+}
+
+/* ---- Current branch ----
+
+   Bold text alone had to carry "this is the one you are on", which is the same signal the
+   list uses for a selected row. A rail down the left edge says it structurally instead:
+   it cannot be confused with selection, because selection is a fill.
+
+   The accent, not green. Green here was the same green the status letters use for an
+   added file and the tags use in the graph, so it said three things within one glance;
+   the accent already marks HEAD's chip in the graph, and this is the same fact. */
+
+.branch-current {
+    -fx-font-weight: bold;
+    -fx-text-fill: -jfx-current-fg;
+    -fx-border-color: -color-accent-emphasis transparent transparent transparent;
+    -fx-border-width: 0 0 0 2;
+    -fx-padding: 0 0 0 6;
+}
+
+.branch-current .branch-name {
+    -fx-text-fill: -jfx-current-fg;
+}
+
+/* The row itself, in the themes that fill it (the green themes' own green); transparent, so
+   no different, in the rest. More specific than the tree cell's own transparent ground and
+   its hover, so the branch you are on keeps its fill under the pointer. */
+.branch-tree .tree-cell.branch-current {
+    -fx-background-color: -jfx-current-bg;
+}

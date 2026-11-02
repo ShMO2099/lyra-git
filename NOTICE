@@ -1,0 +1,30 @@
+Lyra
+Copyright 2025-2026 ShMO2099
+
+This product bundles third-party components under their own licences, listed with their
+copyright notices in THIRD-PARTY-NOTICES.md. The NOTICE files of the bundled
+Apache-licensed components that have one are reproduced below.
+
+------------------------------------------------------------------------------
+
+Apache Commons Codec
+Copyright 2002-2025 The Apache Software Foundation
+
+This product includes software developed at
+The Apache Software Foundation (https://www.apache.org/).
+
+------------------------------------------------------------------------------
+
+Apache MINA SSHD (sshd-osgi)
+Copyright 2008-2025 The Apache Software Foundation
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
+
+------------------------------------------------------------------------------
+
+Apache MINA SSHD (sshd-sftp)
+Copyright 2018-2025 The Apache Software Foundation
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).

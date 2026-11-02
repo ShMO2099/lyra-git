@@ -1,0 +1,12 @@
+# The licences the New Repository dialog offers, in the order it lists them.
+# One per line: the name shown, a tab, and the file beside this one that holds its text.
+# [year] and [fullname] in a text are filled in; a text without them is written as it is.
+MIT License	mit.txt
+Apache License 2.0	apache-2.0.txt
+GNU General Public License v3.0	gpl-3.0.txt
+GNU Lesser General Public License v3.0	lgpl-3.0.txt
+GNU Affero General Public License v3.0	agpl-3.0.txt
+Mozilla Public License 2.0	mpl-2.0.txt
+BSD 3-Clause License	bsd-3-clause.txt
+The Unlicense	unlicense.txt
+Creative Commons Zero v1.0 Universal	cc0-1.0.txt

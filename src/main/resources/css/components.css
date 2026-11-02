@@ -1,0 +1,1301 @@
+/* ---- Shared component vocabulary ----
+
+   Loaded between the theme tokens and lyra.css: it may use every -color- and -jfx-
+   token, and anything here can be overridden by a more specific rule in lyra.css.
+
+   The application used to set type at 10, 10.5, 11, 12, 13, 14, 16, 18 and 26px with
+   nothing behind the choices, and .panel-header did two unrelated jobs — a person's name
+   in the details pane and "Unstaged Files (3)" above a list. Six steps, one job each,
+   and nothing outside this file picks a font size of its own.
+
+   That last sentence was aspiration rather than fact for a while: the scale existed and
+   twelve sizes were in use beside it, because a rule that wanted "slightly smaller" wrote
+   10.5px instead of naming a step. Those are gone — every -fx-font-size in this file and
+   in lyra.css is now one of the six below.
+
+   Why classes and not custom properties: JavaFX resolves looked-up values for colours
+   only. A -fx-font-size pointing at a made-up -jfx-fs-body silently leaves the node at
+   the inherited default — verified, not assumed — while the identical mechanism resolves
+   a colour correctly. So colours are tokens and sizes are classes; both give a caller the
+   same contract, which is to name the step and never the number.
+
+   The numeric values are duplicated in UiScale so Java-side layout can agree with the
+   stylesheet. Change one and change the other; UiScaleTest fails the build otherwise.
+
+   Four sizes, not six. With six the steps were a pixel apart - 10, 11, 12, 13 - and a
+   pixel is not a difference anyone reads as rank; it reads as a mistake. Rank below the
+   body size is carried by weight and colour instead: a label is body-sized and bold, a
+   caption is small and muted, an eyebrow is small, bold and dimmer still. */
+
+/* Everything unclassed starts at the body size. AtlantaFX's Primer sets the root at
+   14px, one step above any size this application names, so every list cell, checkbox
+   and plain button that carried no class of its own out-sized the headings above it -
+   the staging list's file names were larger than "Unstaged" itself. Author sheets load
+   after the user-agent one, so this wins; a dialog's pane is its scene's root, so it
+   applies there too. */
+.root {
+    -fx-font-size: 13px;
+}
+
+/* ---- Type scale ---- */
+
+/* The largest step: a dialog's own title, the launchpad heading. One per window. */
+.t-display {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -jfx-fg-bright;
+}
+
+/* A heading inside a panel: a commit subject, a person's name. */
+.t-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -jfx-fg-bright;
+}
+
+/* Running content: commit bodies, file paths, list rows. */
+.t-body {
+    -fx-font-size: 13px;
+    -fx-text-fill: -color-fg-default;
+}
+
+/* Something that labels a region or an action: section titles, form labels, mode
+   headers. The body size in bold - weight, not a smaller pixel, is what makes it a label. */
+.t-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -jfx-fg-bright;
+}
+
+/* A secondary fact about the thing beside it: dates, emails, counts, hints. */
+.t-caption {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* Column titles, section eyebrows, form section names. Read once, then ignored - so it
+   must not compete. */
+.t-eyebrow {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-fg-subtle;
+}
+
+/* Anything whose digits line up in a column, or that gets pasted into a terminal. */
+.t-mono {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+}
+
+/* ---- Panel shell ----
+
+   One header for all four modes the detail panel has (working tree, commit, stash,
+   comparison). Before this the panel simply became different with nothing naming what
+   you were looking at. */
+
+.mode-header {
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: transparent transparent -color-border-default transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 7 12 7 12;
+}
+
+.mode-header-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -jfx-fg-bright;
+}
+
+/* The commit or stash the header names. Regular weight beside the bold title: it is
+   the object, not the label. */
+.mode-header-subject {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* The mark for a stash borrows the amber the graph draws stash rows in, so the header
+   agrees with the row that was clicked. */
+.mode-header-glyph-stash .icon-default.icon-line {
+    -fx-stroke: -color-warning-fg;
+}
+
+/* ---- Section header ----
+
+   Title, count, and the action that applies to the whole section. Replaces .panel-header
+   at 16px, which was the same size as a person's name and read as a page heading. */
+
+.section-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -jfx-fg-bright;
+}
+
+/* A count belonging to the title beside it. A chip rather than a bare number, so
+   "REMOTE 412" reads as one component instead of a title with a digit after it. */
+.count-badge {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+    -fx-background-color: -color-neutral-muted;
+    -fx-background-radius: 9px;
+    -fx-padding: 1 7 1 7;
+}
+
+/* ---- Identity ---- */
+
+.identity-name {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -jfx-fg-bright;
+}
+
+.identity-mail, .identity-when {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* The absolute timestamp, beside the relative one that is actually being read. */
+.identity-when-exact {
+    -fx-text-fill: -color-fg-subtle;
+}
+
+/* ---- Hash ----
+
+   The graph already teaches that a short hash is clickable: it underlines on row hover.
+   Everywhere else the same string was inert grey text, so the lesson stopped applying
+   the moment you looked right. */
+
+.hash-chip {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+    -fx-border-color: -color-border-muted;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-background-color: transparent;
+    -fx-padding: 1 6 1 6;
+    -fx-cursor: hand;
+}
+
+.hash-chip:hover {
+    -fx-text-fill: -color-accent-fg;
+    -fx-border-color: -color-accent-emphasis;
+    -fx-background-color: -color-accent-subtle;
+}
+
+.parent-link {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-accent-fg;
+    -fx-cursor: hand;
+}
+
+.parent-link:hover {
+    -fx-underline: true;
+}
+
+/* ---- Signature badge ----
+
+   Present only when a commit is actually signed - see RightPanelManager.identityLine's
+   own note on why an "Unsigned" chip on every ordinary commit would be noise rather
+   than information. Green for anything the engine reports as good (verified or not -
+   SignatureStatus.isProblem() is what decides which style, not isSigned() alone);
+   amber for a signature that failed verification or came from a revoked key. */
+
+.signature-badge {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-success-fg;
+    -fx-border-color: -color-success-fg;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-background-color: transparent;
+    -fx-padding: 1 6 1 6;
+}
+
+.signature-badge-bad {
+    -fx-font-size: 11px;
+    -fx-text-fill: -jfx-attention;
+    -fx-border-color: -jfx-attention;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-background-color: transparent;
+    -fx-padding: 1 6 1 6;
+}
+
+/* ---- File rows ----
+
+   Status letter, dimmed directory, bright basename, line counts. The same treatment
+   wherever a changed file appears: the staging list had it, the commit details list
+   rendered the identical data as a plain string. */
+
+.status-letter {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-background-radius: 2;
+    -fx-min-width: 16;
+    -fx-pref-width: 16;
+}
+
+/* Modified is the common case and gets the quietest colour of the four; added and
+   deleted borrow the diff's own green and red. */
+.status-letter-m { -fx-text-fill: -color-warning-fg; }
+.status-letter-a { -fx-text-fill: -color-success-fg; }
+.status-letter-d { -fx-text-fill: -color-danger-fg; }
+.status-letter-r { -fx-text-fill: -color-accent-fg; }
+.status-letter-c { -fx-text-fill: -color-accent-fg; }
+.status-letter-t { -fx-text-fill: -color-fg-muted; }
+
+/* A PR/MR list row's CI status - unstyled (muted) means "no CI configured" or "not
+   fetched yet"; a first pass does not need to tell those two apart. */
+.pr-status { -fx-text-fill: -color-fg-muted; -fx-opacity: 0.5; }
+.pr-status-passed { -fx-text-fill: -color-success-fg; -fx-opacity: 1; }
+.pr-status-pending { -fx-text-fill: -color-warning-fg; -fx-opacity: 1; }
+.pr-status-failed { -fx-text-fill: -color-danger-fg; -fx-opacity: 1; }
+
+.stat-add {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-success-fg;
+}
+
+.stat-del {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-danger-fg;
+}
+
+/* ---- Pills ----
+
+   The status bar's engine badge and branch label were each styled once, privately.
+   Both are the same component. */
+
+.pill {
+    -fx-font-size: 11px;
+    -fx-padding: 1 8 1 8;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 1px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+.pill:hover {
+    -fx-background-color: -color-neutral-muted;
+    -fx-text-fill: -color-fg-default;
+}
+
+.pill-branch {
+    -fx-text-fill: -color-accent-fg;
+    -fx-border-color: -color-accent-muted;
+    -fx-font-weight: bold;
+}
+
+/* Ahead of and behind the upstream. Blue is work you have that origin does not; amber
+   is work origin has that you do not, which is the one that costs you a merge. */
+.track-ahead {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-accent-fg;
+}
+
+.track-behind {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -jfx-attention;
+}
+
+/* "gone": the branch's upstream was deleted on the remote. Dim, beside where the counts
+   would be - a hint that the branch is probably finished with, not an alarm. */
+.branch-gone {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-subtle;
+}
+
+/* Hide & Solo: the eye toggle at the end of a local branch row, and the row it hides.
+
+   The eye is there when the row is pointed at, and whenever the branch is hidden - then
+   it is the one thing saying why that branch is missing from the graph. Opacity rather
+   than visibility, so its place is kept and pointing at a row does not shift the row. */
+.branch-eye-toggle {
+    -fx-opacity: 0;
+    -fx-cursor: hand;
+}
+
+.tree-cell:hover .branch-eye-toggle,
+.branch-eye-toggle:focused {
+    -fx-opacity: 1;
+}
+
+.branch-hidden .branch-eye-toggle,
+.branch-solo .branch-eye-toggle {
+    -fx-opacity: 1;
+}
+
+/* The row's own state is on the cell; the name is a label inside it, and a label does
+   not take its colour from its parent, so each state names the label. */
+.branch-name {
+    -fx-text-fill: -color-fg-default;
+}
+
+.branch-hidden .branch-name,
+.branch-hidden .icon-default.icon-line {
+    -fx-opacity: 0.5;
+}
+
+.branch-solo .branch-name {
+    -fx-text-fill: -jfx-attention;
+    -fx-font-weight: bold;
+}
+
+/* Remote rows still carry their name as the cell's own text. */
+.branch-hidden {
+    -fx-text-fill: -color-fg-subtle;
+}
+
+.branch-solo {
+    -fx-text-fill: -jfx-attention;
+    -fx-font-weight: bold;
+}
+
+/* ---- Icons ----
+
+   One set, one colour. JavaFX has no colour-font support, so drawn shapes are the only
+   way to put an icon in a button at all - and they used to be coloured by family: blue
+   for remotes, green for branches, amber for the stash, violet for history. Each hue
+   already meant something elsewhere, which was the argument for it and also what was
+   wrong with it: five hues in one toolbar, beside diff lines and status letters in the
+   same hues, and colour no longer said where to look.
+
+   So an icon is an outline in the muted foreground and brightens when its control is
+   hovered. Colour is state: .icon-accent is for a mark that is itself saying something,
+   like the dot beside the checked-out branch.
+
+   Tone classes come first and role classes second: they have equal specificity, so the
+   later rule is what decides which of fill and stroke each shape actually uses. */
+
+.icon-default { -fx-fill: -color-fg-muted;  -fx-stroke: -color-fg-muted; }
+.icon-accent  { -fx-fill: -color-accent-fg; -fx-stroke: -color-accent-fg; }
+
+.icon-line {
+    -fx-fill: transparent;
+    -fx-stroke-width: 1.5;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+}
+
+/* A dot, a filled star: solid rather than outlined. */
+.icon-solid {
+    -fx-stroke: transparent;
+}
+
+/* The 12px sidebar marks. A 1.5 stroke at that size is heavier than the branch name
+   beside it, which puts the emphasis on the mark rather than on the name being read. */
+.icon-line-small {
+    -fx-stroke-width: 1.2;
+}
+
+/* Under the pointer, or in a control that is switched on, the icon takes the text colour
+   of the control around it. Role by role, so an outline is never given a fill. */
+.button:hover .icon-default.icon-line,
+.toggle-button:hover .icon-default.icon-line,
+.menu-button:hover .icon-default.icon-line,
+.split-menu-button:hover .icon-default.icon-line {
+    -fx-stroke: -color-fg-default;
+}
+
+.button:hover .icon-default.icon-solid,
+.toggle-button:hover .icon-default.icon-solid,
+.menu-button:hover .icon-default.icon-solid,
+.split-menu-button:hover .icon-default.icon-solid {
+    -fx-fill: -color-fg-default;
+}
+
+.toggle-button:selected .icon-default.icon-line { -fx-stroke: -color-accent-fg; }
+.toggle-button:selected .icon-default.icon-solid { -fx-fill: -color-accent-fg; }
+
+/* An icon on a filled primary button reads in the button's own text colour. */
+.btn-primary .icon-default.icon-line { -fx-stroke: -color-fg-emphasis; }
+.btn-primary .icon-default.icon-solid { -fx-fill: -color-fg-emphasis; }
+
+.button:disabled .icon-line,
+.toggle-button:disabled .icon-line,
+.menu-button:disabled .icon-line,
+.split-menu-button:disabled .icon-line {
+    -fx-stroke: -color-fg-subtle;
+}
+
+.button:disabled .icon-solid,
+.toggle-button:disabled .icon-solid {
+    -fx-fill: -color-fg-subtle;
+}
+
+/* ---- Buttons ----
+
+   Four tiers, told apart by fill rather than by outline. The window used to outline
+   nearly every action it had - Stage all, Unstage all, Add co-author, Path, Tree, All
+   files, Blame, History - so no control ranked above another and the panels read as a
+   form. Now:
+
+     .btn-primary  the one action a region exists for (Commit, a dialog's OK). Filled.
+     .button       an ordinary action. AtlantaFX's own quiet default.
+     .btn-ghost    a secondary action beside content: no fill, no border until hovered.
+     .btn-danger   the confirming button of something destructive, and nothing else.
+
+   Each tier is AtlantaFX's own -color-button-* variables set per class, so hover, focus
+   and pressed states come with it rather than being repainted here one by one.
+
+   Height is padding, not a fixed size, so a two-line card still grows: 5px above and
+   below 13px text is a 28px control; .btn-sm and .row-action are 24px. */
+
+.button, .toggle-button {
+    -fx-padding: 5 12 5 12;
+}
+
+/* A menu button's height is its label's. AtlantaFX pads the label and the arrow as if
+   each were a whole button (8px), so padding the control too, as a button is padded,
+   made it 42px beside 28px buttons and fields. The control carries no padding; its label
+   and arrow carry a button's 5px. */
+.menu-button, .split-menu-button {
+    -fx-padding: 0;
+}
+
+.menu-button > .label, .split-menu-button > .label {
+    -fx-padding: 5 8 5 12;
+}
+
+.menu-button > .arrow-button {
+    -fx-padding: 5 12 5 0;
+}
+
+.split-menu-button > .arrow-button {
+    -fx-padding: 5 10 5 10;
+}
+
+/* A toggle answers the pointer as a button does. AtlantaFX 2.0.1 declares a toggle
+   button's hover colours but has no rule that uses them, so every toggle in the window
+   sat still under the pointer - the find bar's options, the selected half of every
+   switch. Placed before the classes that dress their own toggles, so a class's own
+   :hover rule, later in the file, still wins; each of those has a selected one too. */
+.toggle-button:hover {
+    -fx-background-color: -color-button-border-hover, -color-button-bg-hover;
+}
+
+.toggle-button:selected:hover {
+    -fx-background-color: -color-accent-emphasis, -color-accent-6;
+}
+
+/* A checkbox or radio answers wherever it is pointed at, its label included. AtlantaFX
+   lights the box only while the pointer is on the box itself: a 16px target beside a
+   label several times its width, which is where people point. */
+.check-box:hover > .box {
+    -fx-background-color: -color-fg-subtle, -color-bg-subtle;
+}
+
+.check-box:selected:hover > .box {
+    -fx-background-color: -color-accent-6, -color-accent-6;
+}
+
+.radio-button:hover > .radio {
+    -fx-background-color: -color-fg-muted, -color-bg-subtle;
+}
+
+.radio-button:selected:hover > .radio {
+    -fx-background-color: -color-accent-6, -color-accent-6;
+}
+
+.text-field {
+    -fx-padding: 5 8 5 8;
+}
+
+/* Dropdowns are the same height as the fields and buttons they sit in a row with. On
+   AtlantaFX's own padding a choice box stood six pixels taller than the text field
+   beside it, so no two controls in a form shared a baseline. */
+.choice-box {
+    -fx-padding: 5 8 5 10;
+}
+
+.combo-box > .list-cell {
+    -fx-padding: 5 4 5 10;
+}
+
+.combo-box-base > .arrow-button {
+    -fx-padding: 5 10 5 6;
+}
+
+.btn-primary {
+    -color-button-bg: -color-accent-emphasis;
+    -color-button-fg: -color-fg-emphasis;
+    -color-button-border: -color-accent-emphasis;
+    -color-button-bg-hover: -color-accent-6;
+    -color-button-fg-hover: -color-fg-emphasis;
+    -color-button-border-hover: -color-accent-6;
+    -color-button-bg-focused: -color-accent-emphasis;
+    -color-button-fg-focused: -color-fg-emphasis;
+    -color-button-border-focused: -color-accent-fg;
+    -color-button-bg-pressed: -color-accent-6;
+    -color-button-fg-pressed: -color-fg-emphasis;
+    -color-button-border-pressed: transparent;
+    -fx-font-weight: bold;
+}
+
+.btn-ghost {
+    -color-button-fg: -color-fg-muted;
+    -color-button-fg-hover: -color-fg-default;
+    -color-button-fg-focused: -color-fg-default;
+    -color-button-fg-pressed: -color-fg-default;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 4;
+    -fx-effect: none;
+}
+
+/* Spelled out as fills rather than through AtlantaFX's variables. It paints a button's
+   border as the lower of two background layers, so a transparent fill on top lets the
+   border colour show through the whole control: a "transparent" button with an accent
+   focus border became a solid accent block the moment it took focus. A real -fx-border
+   is no answer either - it adds its width to the control, and an icon button stops being
+   the square the row was laid out for. So the focus ring is the lower layer and an
+   opaque surface is the upper one. */
+.btn-ghost:hover, .btn-ghost:pressed, .btn-ghost:armed {
+    -fx-background-color: -color-neutral-muted;
+}
+
+.btn-ghost:focused {
+    -fx-background-color: -color-accent-emphasis, -color-bg-subtle;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 4, 3;
+}
+
+.btn-danger {
+    -color-button-bg: -color-danger-emphasis;
+    -color-button-fg: -color-fg-emphasis;
+    -color-button-border: -color-danger-emphasis;
+    -color-button-bg-hover: -color-danger-6;
+    -color-button-fg-hover: -color-fg-emphasis;
+    -color-button-border-hover: -color-danger-6;
+    -color-button-bg-focused: -color-danger-emphasis;
+    -color-button-fg-focused: -color-fg-emphasis;
+    -color-button-border-focused: -color-danger-fg;
+    -color-button-bg-pressed: -color-danger-6;
+    -color-button-fg-pressed: -color-fg-emphasis;
+    -color-button-border-pressed: transparent;
+}
+
+/* A comparison read newer → older. The plain button is the usual direction; once swapped
+   it stays in the warning colours until swapped back, so a diff drawn backwards - every
+   addition shown as a deletion - never passes for the ordinary reading. */
+/* A solid fill under bright text, as .btn-danger is: the subtle tint with warning-coloured
+   text read well on the light theme and was amber on amber on the dark one. */
+.compare-swap-reversed {
+    -color-button-bg: -color-warning-emphasis;
+    -color-button-fg: -color-fg-emphasis;
+    -color-button-border: -color-warning-emphasis;
+    -color-button-bg-hover: -color-warning-6;
+    -color-button-fg-hover: -color-fg-emphasis;
+    -color-button-border-hover: -color-warning-6;
+    -color-button-bg-focused: -color-warning-emphasis;
+    -color-button-fg-focused: -color-fg-emphasis;
+    -color-button-border-focused: -color-warning-fg;
+    -color-button-bg-pressed: -color-warning-6;
+    -color-button-fg-pressed: -color-fg-emphasis;
+    -color-button-border-pressed: transparent;
+}
+
+/* A smaller control inside a panel: a row's action, a switch in a section header. Same
+   13px text as the rows it sits among - it is shorter, not smaller-lettered. */
+.btn-sm, .row-action {
+    -fx-padding: 3 8 3 8;
+}
+
+/* A control that is only an icon: square, the icon centred. */
+.btn-icon {
+    -fx-padding: 6;
+    -fx-content-display: graphic-only;
+}
+
+.btn-icon.btn-sm {
+    -fx-padding: 4;
+}
+
+/* A dialog's own buttons keep a floor, so OK and Cancel are a pair of equal targets and a
+   short label never makes a sliver. Everywhere else a button is as wide as its label -
+   the 88px floor this replaced applied to every button in the window, which is what made
+   a toolbar of nine buttons need 800px before it had drawn a single icon, and put a slab
+   the size of a word behind the sidebar's eye toggle. A control that must not lose its
+   label when squeezed says so itself (setMinWidth(USE_PREF_SIZE)). */
+.dialog-pane .button-bar .button {
+    -fx-min-width: 80px;
+}
+
+/* ---- Search field ---- */
+
+.search-field {
+    -fx-background-color: -color-bg-default;
+    -fx-border-color: -color-border-default;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.search-field:focused {
+    -fx-border-color: -color-accent-emphasis;
+}
+
+.search-hits {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-subtle;
+}
+
+/* Which fields the filter is matching against. Off by default reads as "not applied",
+   so the unselected state is an outline rather than a fill. */
+.scope-chip {
+    -fx-font-size: 11px;
+    -fx-padding: 1 7 1 7;
+    -fx-background-radius: 9;
+    -fx-border-radius: 9;
+    -fx-border-color: -color-border-default;
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-fg-subtle;
+    -fx-cursor: hand;
+}
+
+.scope-chip:hover {
+    -fx-background-color: -color-neutral-muted;
+    -fx-text-fill: -color-fg-default;
+}
+
+.scope-chip:selected {
+    -fx-border-color: -color-accent-emphasis;
+    -fx-background-color: -color-accent-subtle;
+    -fx-text-fill: -color-accent-fg;
+}
+
+.scope-chip:selected:hover {
+    -fx-background-color: -color-accent-muted;
+}
+
+/* Filtering a history that has only been walked as far as the first page can report
+   "nothing found" about commits it never looked at. */
+.search-truncated {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-warning-fg;
+}
+
+/* Results of a search over the whole history, under the filter bar. A panel of its own
+   rather than more graph rows: the matches can be anywhere in history, and drawing them
+   as a graph would mean loading everything in between first. */
+.history-search {
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: -color-border-default;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 4 6 4 6;
+    -fx-spacing: 4;
+}
+
+.history-search-summary {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+.history-search-results {
+    -fx-background-color: -color-bg-default;
+    -fx-border-color: -color-border-muted;
+}
+
+.history-search-hash {
+    -fx-text-fill: -color-accent-fg;
+}
+
+.history-search-subject {
+    -fx-text-fill: -color-fg-default;
+}
+
+/* ---- Commit composer ----
+
+   The prompt text already said "summary, blank line, description" - a convention with
+   nothing making it visible. The ruler marks where the subject should end; the counter
+   turns amber past the point where git log stops showing the rest. */
+
+.composer {
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: -color-border-default transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 10 12 10 12;
+}
+
+/* A staging row whose move git refused, and the way to try again. */
+.row-failed {
+    -fx-text-fill: -color-danger-fg;
+    -fx-font-weight: bold;
+}
+.row-progress {
+    -fx-progress-color: -color-accent-emphasis;
+}
+
+.composer-hint {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-subtle;
+}
+
+.composer-counter {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-subtle;
+}
+
+/* Past the length a subject should be: still fits, but git log --oneline will be long. */
+.composer-counter-warn {
+    -fx-text-fill: -jfx-attention;
+}
+
+/* Past the length most tools show at all. */
+.composer-counter-over {
+    -fx-text-fill: -color-danger-fg;
+    -fx-font-weight: bold;
+}
+
+/* Names the commit being amended, so ticking the box stops being a surprise that
+   silently replaces whatever you had typed. */
+.amend-target {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* The commit being amended is already on its upstream: amending rewrites published
+   history, so the label turns to a warning rather than staying quiet grey text. */
+.amend-target.amend-target-published {
+    -fx-text-fill: -color-warning-fg;
+}
+
+.amend-target-published .icon-default.icon-line {
+    -fx-stroke: -color-warning-fg;
+}
+
+/* An icon inside a coloured badge or banner takes the colour of the text beside it. */
+.signature-badge .icon-default.icon-line { -fx-stroke: -color-success-fg; }
+.signature-badge-bad .icon-default.icon-line { -fx-stroke: -jfx-attention; }
+.conflict-banner .icon-default.icon-line { -fx-stroke: -color-warning-fg; }
+
+/* A staging row whose move git refused: the mark is a warning, in the danger colour. */
+.row-failed .icon-default.icon-line {
+    -fx-stroke: -color-danger-fg;
+}
+
+/* ---- Pieces the panels assemble from ---- */
+
+/* A hairline between two parts of a panel. Border rather than a filled Region so it
+   stays one physical pixel at any scaling. */
+.panel-divider {
+    -fx-background-color: -color-border-muted;
+}
+
+/* The rest of a commit message, under its subject. Dimmed hard: it is there to be
+   glanced at and must never compete with the subject above it - the same relationship
+   .graph-body has to .graph-message one column to the left. */
+.commit-body {
+    -fx-font-size: 13px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* The commit message's scroller (CommitMessagePane): no frame of its own - it is the
+   panel's text, not a field - and a handle under it to drag its height, drawn as the
+   panel's ordinary hairline until pointed at. */
+.commit-message-scroll,
+.commit-message-scroll > .viewport {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+}
+.commit-message-handle {
+    -fx-background-color: transparent, -color-border-default;
+    -fx-background-insets: 0, 3 0 3 0;
+}
+.commit-message-handle:hover,
+.commit-message-handle:dragging {
+    -fx-background-color: transparent, -color-accent-emphasis;
+    -fx-background-insets: 0, 2 0 2 0;
+}
+
+/* The proportion bar beside a diffstat. */
+.stat-square-add {
+    -fx-background-color: -color-success-fg;
+    -fx-background-radius: 1;
+}
+
+.stat-square-del {
+    -fx-background-color: -color-danger-fg;
+    -fx-background-radius: 1;
+}
+
+/* The commit message box. Bordered rather than transparent: it is the one control on
+   the panel you type into, and it should look like it. */
+.composer-message {
+    -fx-font-size: 13px;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-border-color: -color-border-default;
+}
+
+.composer-message:focused {
+    -fx-border-color: -color-accent-emphasis;
+}
+
+/* The summary line of the commit box. Slightly larger than the body below it: the
+   subject is what every git log view shows, so it gets the visual weight too. */
+.composer-summary {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+/* A key cap on the cheat-sheet: boxed like the physical key it names. */
+.shortcut-key {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-background-color: -color-bg-subtle;
+    -fx-background-radius: 3;
+    -fx-border-color: -color-border-default;
+    -fx-border-radius: 3;
+    -fx-padding: 2 7 2 7;
+}
+
+/* ---- Sidebar ---- */
+
+/* An eyebrow: it names a group and is then read past. */
+.sidebar-section-title {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* The one filter above the sections: it narrows every section at once. */
+.sidebar-filter {
+    -fx-font-size: 11px;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-border-color: -color-border-default;
+    -fx-background-color: -color-bg-default;
+}
+
+.sidebar-filter:focused {
+    -fx-border-color: -color-accent-emphasis;
+}
+
+/* No branch matched the filter - said out loud, because an empty tree looks the same
+   as a section that failed to load. */
+.sidebar-empty {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-subtle;
+    -fx-padding: 4 8 4 8;
+}
+
+/* ---- Activity log ---- */
+
+/* Fixed-width throughout: the log is a column of timestamps and durations, and a
+   proportional font makes a column of numbers stop looking like one. */
+.activity-log-list .list-cell {
+    -fx-padding: 0 8 0 8;
+}
+
+.activity-log-time {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+    -fx-min-width: 62;
+}
+
+.activity-log-text {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+}
+
+.activity-log-ok {
+    -fx-text-fill: -color-fg-default;
+}
+
+.activity-log-warned {
+    -fx-text-fill: -jfx-attention;
+}
+
+.activity-log-failed {
+    -fx-text-fill: -color-danger-fg;
+}
+
+/* The one number anyone scans the log for: how long that took. */
+.activity-log-duration {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-accent-fg;
+}
+
+/* The Commit / Stash switch at the top of the composer. Reads as a segmented control
+   rather than two buttons: they are two names for one slot, not two actions. */
+.composer-tab {
+    -color-button-fg: -color-fg-muted;
+    -color-button-fg-hover: -color-fg-default;
+    -fx-padding: 3 10 3 10;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 4;
+    -fx-border-color: -color-border-default;
+    -fx-border-radius: 4;
+    -fx-effect: none;
+}
+
+.composer-tab:hover {
+    -fx-background-color: -color-neutral-muted;
+}
+
+/* Selected is a tint, not a fill: this is a view switch, and a solid accent block would
+   out-rank the Commit button it sits above. */
+.composer-tab:selected, .composer-tab:selected:focused {
+    -fx-background-color: -color-accent-subtle;
+    -fx-background-insets: 0;
+    -fx-border-color: -color-accent-muted;
+    -fx-text-fill: -color-accent-fg;
+}
+
+/* The tint deepens under the pointer, as every selected switch's does. */
+.composer-tab:selected:hover {
+    -fx-background-color: -color-accent-muted;
+}
+
+/* Folder tally in the changed-files tree: how much of a commit landed under here. */
+.tree-tally-mod {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -jfx-attention;
+}
+
+/* ---- Status bar: facts and controls ----
+
+   The bar carried four identical pills: the branch and the last fetch, which are facts
+   you read, beside the engine and the zoom, which are menus you open. Same shape, same
+   hover, so nothing said which of them would do anything if clicked — and the two that
+   do nothing still lit up under the pointer, which is the wrong promise.
+
+   A fact is bare text in the mono family the rest of the bar's data uses. A control keeps
+   the pill and its hover, and adds the caret that says a menu is behind it. */
+
+.status-fact {
+    -fx-font-size: 11px;
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-text-fill: -color-fg-muted;
+    -fx-padding: 1 2 1 2;
+}
+
+/* The branch is the one fact worth colouring: it is what every operation acts on. */
+.status-fact-branch {
+    -fx-text-fill: -color-accent-fg;
+}
+
+.status-control {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+}
+
+/* Separates what you read from what you can change. */
+.status-sep {
+    -fx-min-width: 1px;
+    -fx-pref-width: 1px;
+    -fx-max-width: 1px;
+    -fx-min-height: 14px;
+    -fx-pref-height: 14px;
+    -fx-background-color: -color-border-default;
+}
+
+/* ---- Provider cards ----
+
+   Was a row of four peers: a fixed-width name, a sentence of status and two buttons, none
+   of which said which part could give way. That is why it truncated. A card has a rank -
+   the mark and name identify, the host is detail, the state is a chip. */
+
+.provider-mark {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-fg-default;
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: -color-border-default;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+    -fx-alignment: center;
+}
+
+/* Each provider's own colour, which is the second thing that tells the three cards
+   apart once the initials tell them apart at all. GitHub keeps the default foreground:
+   its brand is monochrome, and inventing a hue for it would be decoration. */
+.provider-mark-gitlab {
+    -fx-text-fill: #fc6d26;
+    -fx-border-color: #7a3a12;
+}
+
+.provider-mark-bitbucket {
+    -fx-text-fill: #2684ff;
+    -fx-border-color: #1b4b85;
+}
+
+.provider-mark-gitea {
+    -fx-text-fill: #609926;
+    -fx-border-color: #3d6118;
+}
+
+/* A caveat on a provider card or the sign-in window - Forgejo's sign-in granting the
+   whole account. The attention colour, as a hook that needs work uses it. */
+.provider-note-warn {
+    -fx-text-fill: -jfx-attention;
+}
+
+/* The device-flow code the user types on the provider's page: read character by
+   character, so monospace, where 0 and O, 1 and I cannot be confused. */
+.sign-in-code {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+}
+
+.provider-name {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -jfx-fg-bright;
+}
+
+/* The connection state. A chip rather than a sentence, so "connected" is a colour before
+   it is a word - and so it cannot be the part of the row that gets shortened. */
+/* A state chip: one fact about the thing beside it, carried as colour before it is read
+   as a word. Shared rather than per-surface - a provider's connection and a hook's
+   executability are the same kind of statement, and two vocabularies for that is how
+   .panel-header and .reflog-heading came to exist. */
+.state-chip {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+    -fx-border-color: -color-border-default;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 2 9 2 9;
+}
+
+.state-chip-ok {
+    -fx-text-fill: -color-success-fg;
+    -fx-border-color: -color-success-fg;
+}
+
+/* Not an error: a hook that is present but not executable is a "you have work to do",
+   which is what -jfx-attention already means everywhere else in this application. */
+.state-chip-warn {
+    -fx-text-fill: -jfx-attention;
+    -fx-border-color: -jfx-attention;
+}
+
+/* Card actions. The 88px floor and AtlantaFX's default padding turned Connect and
+   Server into slabs taller than the 30px mark beside them - correct for a dialog footer,
+   wrong inside a row. Still wider than "Disconnect" needs, so the floor's purpose
+   survives: this trades size for proportion, not for truncation. */
+.card-action {
+    -fx-font-size: 13px;
+    /* 84, not 76. At 76 this shaved 0.7px off "Connect…" and IntegrationRowTest caught
+       it - which is the floor doing its job on the very rule that lowered it. */
+    -fx-min-width: 84px;
+    -fx-min-height: 26px;
+    -fx-pref-height: 26px;
+    -fx-max-height: 26px;
+    -fx-padding: 0 12 0 12;
+}
+
+/* A footer carries a rule so it reads as the end of the window rather than as one more
+   row of content. */
+.dialog-footer {
+    -fx-border-color: -color-border-default transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 12 0 0 0;
+}
+
+/* ---- Command palette ----
+
+   The category is a column, not a prefix. Every row used to begin "Git: " or "File: ",
+   so the repeated half was the part the eye hit first and the command started at a
+   different offset on every line. */
+
+.palette-category {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-subtle;
+    -fx-min-width: 56;
+    -fx-alignment: center-left;
+}
+
+.palette-command {
+    -fx-font-size: 13px;
+    -fx-text-fill: -color-fg-default;
+}
+
+
+/* ---- Notifications ----
+
+   Cards in the bottom-right of a tab, newest lowest. A coloured mark at the leading edge
+   says what kind - the card itself stays the panel colour, so four of them stacked are
+   still quieter than one modal alert. */
+
+.toast {
+    -fx-background-color: -color-border-default, -color-bg-overlay;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 6, 5;
+    -fx-padding: 8 8 8 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 12, 0, 0, 3);
+    -fx-min-width: 280;
+    -fx-max-width: 520;
+}
+
+.toast-mark {
+    -fx-min-width: 4;
+    -fx-pref-width: 4;
+    -fx-max-width: 4;
+    -fx-min-height: 20;
+    -fx-background-radius: 999;
+    -fx-background-color: -color-accent-emphasis;
+}
+
+.toast-success .toast-mark { -fx-background-color: -color-success-emphasis; }
+.toast-warning .toast-mark { -fx-background-color: -jfx-attention; }
+.toast-error .toast-mark { -fx-background-color: -color-danger-emphasis; }
+
+.toast-message {
+    -fx-text-fill: -color-fg-default;
+    -fx-font-size: 13px;
+}
+
+/* ---- Status bar: progress, its cancel, what is waiting ---- */
+
+.status-cancel {
+    -fx-padding: 2 8 2 8;
+}
+
+.status-queue {
+    -fx-text-fill: -color-fg-muted;
+}
+
+.status-background, .tab-spinner, .tool-spinner, .graph-opening .progress-indicator {
+    -fx-progress-color: -color-accent-fg;
+}
+
+/* ---- The graph when it could not be read ---- */
+
+.graph-load-failed {
+    -fx-padding: 24;
+}
+
+
+/* ---- Where a dragged branch would land ---- */
+
+.ref-chip:drop-target {
+    -fx-border-color: -color-accent-emphasis;
+    -fx-border-width: 2;
+}
+
+.list-cell:drop-target, .tree-cell:drop-target {
+    -fx-background-color: -color-accent-subtle;
+    -fx-border-color: -color-accent-emphasis;
+    -fx-border-width: 1;
+}
+
+/* ---- Tab badges: uncommitted work, ahead, behind ---- */
+
+.tab-dirty {
+    -fx-min-width: 6;
+    -fx-min-height: 6;
+    -fx-max-width: 6;
+    -fx-max-height: 6;
+    -fx-background-radius: 999;
+    -fx-background-color: -jfx-attention;
+}
+
+.tab-sync {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* ---- Empty states with a way forward ---- */
+
+.graph-empty, .graph-load-failed {
+    -fx-padding: 24;
+}
+
+.palette-shortcut {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+}
+
+
+/* ---- The sidebar's one filter ---- */
+
+.sidebar-filter-header {
+    -fx-padding: 8 8 4 8;
+}
+
+.sidebar-filter-status {
+    -fx-text-fill: -color-accent-fg;
+}
+
+/* A count that is "what matched", not "how many there are". */
+.count-badge.count-filtered {
+    -fx-text-fill: -color-accent-fg;
+    -fx-graphic-text-gap: 2;
+}
+
+.count-filtered .icon-line {
+    -fx-stroke: -color-accent-fg;
+}
+
+/* The typed text, where it occurs in a name. */
+.filter-match {
+    -fx-text-fill: -color-accent-fg;
+    -fx-font-weight: bold;
+}
+
+/* ---- Repository views and tool tabs ----
+   A screen shown inside a repository's tab in place of its graph (RepoTab.showView), and
+   the app-wide tabs (Settings, Activity log): a header bar with the way back and the
+   title, then the screen. Ruled off below like the toolbar above it. */
+.repo-view-header,
+.tool-tab-header {
+    -fx-padding: 8 16 8 8;
+    -fx-border-color: transparent transparent -color-border-default transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.repo-view-body,
+.tool-tab-body {
+    -fx-padding: 12 16 12 16;
+}
+
+/* ---- Early conflict warning ----
+   The one status-bar pill in warning colours: it says a merge that has not happened yet
+   would stop, which is worth seeing before it is worth reading. */
+.status-conflict {
+    -fx-text-fill: -color-warning-fg;
+    -fx-border-color: -color-warning-emphasis;
+    -fx-background-color: -color-warning-subtle;
+}
+
+.status-conflict:hover {
+    -fx-background-color: -color-warning-subtle;
+    -fx-text-fill: -color-warning-fg;
+    -fx-underline: true;
+}
+
+/* ---- Snapshots ---- */
+.snapshot-reason {
+    -fx-font-weight: bold;
+}
+
+.snapshot-meta {
+    -fx-text-fill: -color-fg-muted;
+}
+
+/* A pattern in the conflict-prevention help: the part to type, then what it does. */
+.pattern-example {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-text-fill: -color-fg-default;
+}

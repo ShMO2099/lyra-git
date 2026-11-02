@@ -1,0 +1,201 @@
+/* ---- Dark Green theme tokens ----
+
+   A flat charcoal with green marks - the current branch, the first lane: four greys a step
+   apart rather than Primer's two, so the toolbar and tab strip sit one step above the
+   panels, the panels one above the history, and nothing needs a hard border to say where
+   it ends. Separation is by ground, which is why the borders here are quiet.
+
+   The greys began as samples of a desktop git client's dark theme (#1d1e22, #272a30,
+   #34373f) and were adjusted where a faithful copy failed on its own: the focus ring and the
+   HEAD chip's blue are a notch brighter than the sampled #114490, which is 1.7:1 against the
+   panel (a ring you cannot see), and the subtle text is lifted until it clears 4.5:1 on the
+   panel. The sampled greys themselves read as a white haze over the whole window - 11 to 20
+   per cent white in every channel, where Midnight carries 4 to 9 - so they are darkened to
+   Midnight's lightness (CIE L* 5.5, 8 and 12.5 for history, panels and chrome), each keeping
+   its hue and chroma, and the steps between them kept in order. ThemeReadabilityTest holds
+   the whiteness down and the steps visible.
+
+   Unlike theme-dark.css this file restates Primer's own colour names, because it is a
+   different ground and not only different accents. Defines the same tokens as every other
+   theme file (ThemeTokensTest holds them in step), the Primer ones included, so that a
+   theme never inherits a colour from the base it was not tuned against. */
+
+.root {
+    /* ---- Primer's semantic palette ---- */
+    -color-fg-default: #d5d8de;
+    -color-fg-muted: #a3a8b3;
+    -color-fg-subtle: #8b909c;
+    -color-fg-emphasis: #ffffff;
+
+    /* Default is the panels (sidebar, details, dialogs); subtle the chrome above them -
+       toolbar, headers, buttons, chips; inset the wells below them. */
+    -color-bg-default: #15181d;
+    -color-bg-subtle: #1e2128;
+    -color-bg-inset: #111216;
+    -color-bg-overlay: #1c1e25;
+
+    -color-border-default: #272a31;
+    -color-border-muted: #1c1f26;
+    -color-border-subtle: #191c21;
+    -color-shadow-default: #08090d;
+
+    -color-neutral-emphasis-plus: #6a707c;
+    -color-neutral-emphasis: #5d636f;
+    -color-neutral-muted: rgba(138, 145, 160, 0.3);
+    -color-neutral-subtle: rgba(138, 145, 160, 0.12);
+
+    -color-accent-fg: #6fa8f5;
+    -color-accent-emphasis: #1a5bb8;
+    -color-accent-muted: rgba(26, 91, 184, 0.4);
+    -color-accent-subtle: rgba(26, 91, 184, 0.15);
+    -color-success-fg: #5db37a;
+    -color-success-emphasis: #2e7d4f;
+    -color-success-muted: rgba(93, 179, 122, 0.4);
+    -color-success-subtle: rgba(93, 179, 122, 0.15);
+    -color-warning-fg: #e0a63a;
+    -color-warning-emphasis: #9a6b14;
+    -color-warning-muted: rgba(224, 166, 58, 0.4);
+    -color-warning-subtle: rgba(224, 166, 58, 0.15);
+    -color-danger-fg: #f0716b;
+    -color-danger-emphasis: #c4403a;
+    -color-danger-muted: rgba(240, 113, 107, 0.4);
+    -color-danger-subtle: rgba(240, 113, 107, 0.15);
+
+    /* The few ramp steps the stylesheets read directly: a hovered button's fill is the
+       sixth step of its colour, and Primer's own controls use the base ramp's sixth and
+       seventh for hover and selection. */
+    -color-base-6: #272a31;
+    -color-base-7: #1e2128;
+    -color-accent-6: #134a9a;
+    -color-success-6: #256b42;
+    -color-warning-6: #82590f;
+    -color-danger-6: #a2332e;
+
+    /* ---- Where each region's ground comes from ---- */
+    -jfx-tabs-bg: -color-bg-subtle;
+    -jfx-tabs-selected-bg: -color-bg-default;
+    -jfx-status-bg: -color-bg-default;
+    /* The history, a step below the panels either side of it. GraphPalette holds a copy of
+       #111216, which GraphPaletteTest checks against this. */
+    -jfx-list-bg: #111216;
+    -jfx-list-alt-bg: #121418;
+    -jfx-selected-bg: #1b4a50;
+    -jfx-current-bg: #36553d;
+    -jfx-current-fg: #f2f7f3;
+
+    /* ---- Application tokens ---- */
+    -jfx-attention: #f2994a;
+    -jfx-accent-alt: #a98ee8;
+    -jfx-done-fg: #b39ae8;
+    -jfx-done-emphasis: #7050c8;
+    -jfx-done-subtle: rgba(179, 154, 232, 0.15);
+    -jfx-done-row: rgba(179, 154, 232, 0.15);
+    -jfx-fg-bright: #eceef2;
+    /* Text drawn on -color-success-fg, which is bright here and dark in the light themes. */
+    -jfx-fg-on-success: #0f2418;
+
+    /* Colourblind diff palette: blue and amber, separated by lightness as well as hue. */
+    -jfx-cb-add-bg: #1a2c44;
+    -jfx-cb-add-edge: #5392d6;
+    -jfx-cb-add-inline: #25508a;
+    -jfx-cb-del-bg: #3a2c15;
+    -jfx-cb-del-edge: #cd922f;
+    -jfx-cb-del-inline: #9e6014;
+
+    /* Syntax, in the same role assignment as the other themes so a file reads the same
+       structure in any of them. */
+    -jfx-syntax-keyword: #c678dd;
+    -jfx-syntax-string: #98c379;
+    -jfx-syntax-number: #d19a66;
+    -jfx-syntax-annotation: #e5c07b;
+    -jfx-syntax-property: #56b6c2;
+    -jfx-syntax-literal: #d19a66;
+    -jfx-syntax-function: #61afef;
+    -jfx-syntax-type: #e5c07b;
+    -jfx-syntax-tag: #e06c75;
+
+    /* Find: every match, painted behind the text. */
+    -jfx-find-match: rgba(224, 166, 58, 0.40);
+
+    /* Syntax colours per TextMate scope: GitHub Dark Default's, recoloured into this theme's
+       palette. Generated: run scripts/derive-theme-syntax.mjs, do not edit. */
+    /* --- generated: syntax theme (scripts/derive-theme-syntax.mjs) - do not edit by hand --- */
+    -jfx-tm-comment: #7f8794;
+    -jfx-tm-constant: #56b6c2;
+    -jfx-tm-entity: #56b6c2;
+    -jfx-tm-keyword: #c678dd;
+    -jfx-tm-storage: #c678dd;
+    -jfx-tm-string: #98c379;
+    -jfx-tm-support: #56b6c2;
+    -jfx-tm-variable: #e5c07b;
+    -jfx-tm-carriage-return: #eceef2;
+    -jfx-tm-string-comment: #7f8794;
+    -jfx-tm-constant-character: #c678dd;
+    -jfx-tm-variable-language: #56b6c2;
+    -jfx-tm-entity-name: #e5c07b;
+    -jfx-tm-meta-block: #d5d8de;
+    -jfx-tm-storage-type: #c678dd;
+    -jfx-tm-meta-property-name: #56b6c2;
+    -jfx-tm-variable-other: #d5d8de;
+    -jfx-tm-invalid-broken: #e06c75;
+    -jfx-tm-invalid-deprecated: #e06c75;
+    -jfx-tm-invalid-illegal: #e06c75;
+    -jfx-tm-invalid-unimplemented: #e06c75;
+    -jfx-tm-message-error: #e06c75;
+    -jfx-tm-source-regexp: #98c379;
+    -jfx-tm-string-regexp: #98c379;
+    -jfx-tm-support-constant: #56b6c2;
+    -jfx-tm-support-variable: #56b6c2;
+    -jfx-tm-meta-module-reference: #56b6c2;
+    -jfx-tm-markup-heading: #56b6c2;
+    -jfx-tm-markup-quote: #73c7a4;
+    -jfx-tm-markup-italic: #d5d8de;
+    -jfx-tm-markup-bold: #d5d8de;
+    -jfx-tm-markup-deleted: #e06c75;
+    -jfx-tm-markup-inserted: #73c7a4;
+    -jfx-tm-markup-changed: #e5c07b;
+    -jfx-tm-markup-ignored: #111216;
+    -jfx-tm-markup-untracked: #111216;
+    -jfx-tm-meta-separator: #56b6c2;
+    -jfx-tm-meta-output: #56b6c2;
+    -jfx-tm-brackethighlighter-tag: #7f8794;
+    -jfx-tm-brackethighlighter-curly: #7f8794;
+    -jfx-tm-brackethighlighter-round: #7f8794;
+    -jfx-tm-brackethighlighter-square: #7f8794;
+    -jfx-tm-brackethighlighter-angle: #7f8794;
+    -jfx-tm-brackethighlighter-quote: #7f8794;
+    -jfx-tm-brackethighlighter-unmatched: #e06c75;
+    -jfx-tm-punctuation-definition-comment: #7f8794;
+    -jfx-tm-constant-other-placeholder: #c678dd;
+    -jfx-tm-entity-name-constant: #d5d8de;
+    -jfx-tm-variable-other-constant: #56b6c2;
+    -jfx-tm-variable-other-enummember: #56b6c2;
+    -jfx-tm-meta-export-default: #e5c07b;
+    -jfx-tm-meta-definition-variable: #e5c07b;
+    -jfx-tm-variable-parameter-function: #d5d8de;
+    -jfx-tm-meta-jsx-children: #d5d8de;
+    -jfx-tm-meta-tag-attributes: #d5d8de;
+    -jfx-tm-meta-object-member: #d5d8de;
+    -jfx-tm-meta-embedded-expression: #d5d8de;
+    -jfx-tm-entity-name-function: #61afef;
+    -jfx-tm-entity-name-tag: #73c7a4;
+    -jfx-tm-support-class-component: #73c7a4;
+    -jfx-tm-storage-modifier-package: #d5d8de;
+    -jfx-tm-storage-modifier-import: #d5d8de;
+    -jfx-tm-storage-type-java: #d5d8de;
+    -jfx-tm-string-regexp-character-class: #98c379;
+    -jfx-tm-markup-inline-raw: #56b6c2;
+    -jfx-tm-punctuation-definition-deleted: #e06c75;
+    -jfx-tm-punctuation-section-embedded: #c678dd;
+    -jfx-tm-punctuation-definition-inserted: #73c7a4;
+    -jfx-tm-punctuation-definition-changed: #e5c07b;
+    -jfx-tm-meta-diff-range: #61afef;
+    -jfx-tm-meta-diff-header: #56b6c2;
+    -jfx-tm-string-other-link: #98c379;
+    -jfx-tm-support-type-property-name-json: #73c7a4;
+    -jfx-tm-meta-diff-header-from-file: #e06c75;
+    -jfx-tm-meta-diff-header-to-file: #73c7a4;
+    -jfx-tm-constant-other-reference-link: #98c379;
+    -jfx-tm-punctuation-definition-list-begin-markdown: #e5c07b;
+    /* --- end generated --- */
+}

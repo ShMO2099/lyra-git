@@ -1,0 +1,38 @@
+# The .gitignore templates the New Repository dialog offers, in the order it lists them.
+# One per line: the name shown, a tab, and the file beside this one that holds it.
+# Adding a template is adding its file and its line here; nothing in the source names them.
+#
+# All but Java, macOS, Node, Python and Windows are from github.com/github/gitignore,
+# which is dedicated to the public domain under CC0 1.0.
+Android	android.gitignore
+C	c.gitignore
+C++	cpp.gitignore
+CMake	cmake.gitignore
+Dart	dart.gitignore
+.NET (Visual Studio)	dotnet.gitignore
+Elixir	elixir.gitignore
+Go	go.gitignore
+Godot	godot.gitignore
+Gradle	gradle.gitignore
+Haskell	haskell.gitignore
+Java	java.gitignore
+JetBrains IDEs	jetbrains.gitignore
+Kotlin	kotlin.gitignore
+Linux	linux.gitignore
+Lua	lua.gitignore
+macOS	macos.gitignore
+Maven	maven.gitignore
+Node	node.gitignore
+PHP (Composer)	php.gitignore
+Python	python.gitignore
+R	r.gitignore
+Ruby	ruby.gitignore
+Rust	rust.gitignore
+Scala	scala.gitignore
+Swift	swift.gitignore
+Terraform	terraform.gitignore
+TeX	tex.gitignore
+Unity	unity.gitignore
+Unreal Engine	unreal.gitignore
+VS Code	vscode.gitignore
+Windows	windows.gitignore

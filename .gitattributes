@@ -1,0 +1,8 @@
+# mvnw strips only line feeds from jvm.config: a CRLF checkout gave the JVM "-Xmx1g" plus a
+# carriage return, and Maven would not start.
+.mvn/jvm.config text eol=lf
+.mvn/maven.config text eol=lf
+
+# Maven checks every file in this repository against its .sha1/.md5: a pom checked out with
+# CRLF would no longer match the checksum taken of it.
+third-party/maven-repo/** -text

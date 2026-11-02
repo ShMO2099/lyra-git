@@ -1,0 +1,1158 @@
+/* ---- Diff line styling ----
+
+   A subtle tint plus a saturated 3px left edge, rather than a flood fill. The edge is
+   what the eye actually scans for, and it survives at a glance; the pale wash behind it
+   is easier over a long session and leaves the background free for syntax colour to
+   show through. The edge is drawn as a border, so it costs no extra node per row. */
+
+.diff-addition {
+    -fx-background-color: -color-success-subtle;
+    -fx-border-color: -color-success-emphasis;
+    -fx-border-width: 0 0 0 3;
+}
+.diff-addition .text {
+    -fx-fill: -color-fg-default;
+}
+.diff-deletion {
+    -fx-background-color: -color-danger-subtle;
+    -fx-border-color: -color-danger-emphasis;
+    -fx-border-width: 0 0 0 3;
+}
+.diff-deletion .text {
+    -fx-fill: -color-fg-default;
+}
+
+/* ---- Colourblind-safe palette ----
+
+   Blue and amber instead of red and green. They differ in lightness as well as hue, so
+   they hold up under every common form of colour blindness and in greyscale. Applied by
+   a class on the viewer root, so it overrides the rules above without duplicating them. */
+
+.diff-palette-cb .diff-addition {
+    -fx-background-color: -jfx-cb-add-bg;
+    -fx-border-color: -jfx-cb-add-edge;
+}
+.diff-palette-cb .diff-deletion {
+    -fx-background-color: -jfx-cb-del-bg;
+    -fx-border-color: -jfx-cb-del-edge;
+}
+.diff-palette-cb .diff-inline-add {
+    -rtfx-background-color: -jfx-cb-add-inline;
+}
+.diff-palette-cb .diff-inline-delete {
+    -rtfx-background-color: -jfx-cb-del-inline;
+}
+.diff-palette-cb .diff-gutter-add {
+    -fx-background-color: -jfx-cb-add-bg;
+}
+.diff-palette-cb .diff-gutter-delete {
+    -fx-background-color: -jfx-cb-del-bg;
+}
+
+/* ---- Density ---- */
+
+.diff-compact .code-area {
+    -fx-font-size: 11px;
+}
+.diff-compact .diff-line-number,
+.diff-compact .diff-marker,
+.diff-compact .blame-message,
+.diff-compact .blame-date {
+    -fx-font-size: 11px;
+}
+/* ---- Syntax ----
+
+   Syntax owns the foreground fill and nothing else. The diff owns paragraph
+   backgrounds and the word diff owns text backgrounds, so all three layers show at
+   once instead of overwriting one another. Hues are muted on purpose: they sit on top
+   of a red or green row and must not fight it.
+
+   Every selector carries the .code-area .text prefix on purpose. The base rule
+   ".code-area .text { -fx-fill }" that gives the buffer its foreground is a two-class
+   selector, which beats a bare ".syntax-keyword" no matter which stylesheet loads
+   first - so tokens were being computed correctly and painted over, line after line,
+   in the default foreground. Three classes win; nothing here may be shortened back. */
+
+.code-area .text.syntax-keyword {
+    -fx-fill: -jfx-syntax-keyword;
+}
+.code-area .text.syntax-string {
+    -fx-fill: -jfx-syntax-string;
+}
+.code-area .text.syntax-comment {
+    -fx-fill: -color-fg-muted;
+    -fx-font-style: italic;
+}
+.code-area .text.syntax-number {
+    -fx-fill: -jfx-syntax-number;
+}
+.code-area .text.syntax-annotation {
+    -fx-fill: -jfx-syntax-annotation;
+}
+.code-area .text.syntax-property {
+    -fx-fill: -jfx-syntax-property;
+}
+.code-area .text.syntax-literal {
+    -fx-fill: -jfx-syntax-literal;
+}
+
+/* ---- Grammar-backed syntax (TextMateTokenizer) ----
+
+   TextMateTokenizer emits one class per dot-separated prefix of a token's innermost
+   scope - "string.quoted.double.json" becomes tm-string, tm-string-quoted,
+   tm-string-quoted-double, tm-string-quoted-double-json all at once - so only the
+   broad categories below need a rule for every grammar's output to be coloured
+   sensibly; a later, more specific rule can still be added for one grammar without
+   the others needing to change. Same "fill only" convention, and the same mandatory
+   .code-area .text prefix, as .syntax-* above. */
+
+/* The colours are GitHub's own editor theme - GitHub Dark Default and GitHub Light
+   Default, from primer/github-vscode-theme (MIT) via the tm-themes package - the palette
+   the AtlantaFX Primer chrome around the text already uses. One rule per scope the theme
+   names, shallowest first so the most specific scope wins the cascade; the colours
+   themselves are -jfx-tm-* tokens in theme-dark.css and theme-light.css. Regenerate with
+   scripts/update-syntax-theme.mjs rather than editing between the markers. */
+/* --- generated: syntax theme (scripts/update-syntax-theme.mjs) - do not edit by hand --- */
+.code-area .text.tm-comment { -fx-fill: -jfx-tm-comment; }
+.code-area .text.tm-constant { -fx-fill: -jfx-tm-constant; }
+.code-area .text.tm-entity { -fx-fill: -jfx-tm-entity; }
+.code-area .text.tm-keyword { -fx-fill: -jfx-tm-keyword; }
+.code-area .text.tm-storage { -fx-fill: -jfx-tm-storage; }
+.code-area .text.tm-string { -fx-fill: -jfx-tm-string; }
+.code-area .text.tm-support { -fx-fill: -jfx-tm-support; }
+.code-area .text.tm-variable { -fx-fill: -jfx-tm-variable; }
+.code-area .text.tm-carriage-return { -fx-fill: -jfx-tm-carriage-return; -fx-font-style: italic; -fx-underline: true; }
+.code-area .text.tm-string-comment { -fx-fill: -jfx-tm-string-comment; }
+.code-area .text.tm-constant-character { -fx-fill: -jfx-tm-constant-character; }
+.code-area .text.tm-variable-language { -fx-fill: -jfx-tm-variable-language; }
+.code-area .text.tm-entity-name { -fx-fill: -jfx-tm-entity-name; }
+.code-area .text.tm-meta-block { -fx-fill: -jfx-tm-meta-block; }
+.code-area .text.tm-storage-type { -fx-fill: -jfx-tm-storage-type; }
+.code-area .text.tm-meta-property-name { -fx-fill: -jfx-tm-meta-property-name; }
+.code-area .text.tm-variable-other { -fx-fill: -jfx-tm-variable-other; }
+.code-area .text.tm-invalid-broken { -fx-fill: -jfx-tm-invalid-broken; -fx-font-style: italic; }
+.code-area .text.tm-invalid-deprecated { -fx-fill: -jfx-tm-invalid-deprecated; -fx-font-style: italic; }
+.code-area .text.tm-invalid-illegal { -fx-fill: -jfx-tm-invalid-illegal; -fx-font-style: italic; }
+.code-area .text.tm-invalid-unimplemented { -fx-fill: -jfx-tm-invalid-unimplemented; -fx-font-style: italic; }
+.code-area .text.tm-message-error { -fx-fill: -jfx-tm-message-error; }
+.code-area .text.tm-source-regexp { -fx-fill: -jfx-tm-source-regexp; }
+.code-area .text.tm-string-regexp { -fx-fill: -jfx-tm-string-regexp; }
+.code-area .text.tm-support-constant { -fx-fill: -jfx-tm-support-constant; }
+.code-area .text.tm-support-variable { -fx-fill: -jfx-tm-support-variable; }
+.code-area .text.tm-meta-module-reference { -fx-fill: -jfx-tm-meta-module-reference; }
+.code-area .text.tm-markup-heading { -fx-fill: -jfx-tm-markup-heading; -fx-font-weight: bold; }
+.code-area .text.tm-markup-quote { -fx-fill: -jfx-tm-markup-quote; }
+.code-area .text.tm-markup-italic { -fx-fill: -jfx-tm-markup-italic; -fx-font-style: italic; }
+.code-area .text.tm-markup-bold { -fx-fill: -jfx-tm-markup-bold; -fx-font-weight: bold; }
+.code-area .text.tm-markup-underline { -fx-underline: true; }
+.code-area .text.tm-markup-strikethrough { -fx-strikethrough: true; }
+.code-area .text.tm-markup-deleted { -fx-fill: -jfx-tm-markup-deleted; }
+.code-area .text.tm-markup-inserted { -fx-fill: -jfx-tm-markup-inserted; }
+.code-area .text.tm-markup-changed { -fx-fill: -jfx-tm-markup-changed; }
+.code-area .text.tm-markup-ignored { -fx-fill: -jfx-tm-markup-ignored; }
+.code-area .text.tm-markup-untracked { -fx-fill: -jfx-tm-markup-untracked; }
+.code-area .text.tm-meta-separator { -fx-fill: -jfx-tm-meta-separator; -fx-font-weight: bold; }
+.code-area .text.tm-meta-output { -fx-fill: -jfx-tm-meta-output; }
+.code-area .text.tm-brackethighlighter-tag { -fx-fill: -jfx-tm-brackethighlighter-tag; }
+.code-area .text.tm-brackethighlighter-curly { -fx-fill: -jfx-tm-brackethighlighter-curly; }
+.code-area .text.tm-brackethighlighter-round { -fx-fill: -jfx-tm-brackethighlighter-round; }
+.code-area .text.tm-brackethighlighter-square { -fx-fill: -jfx-tm-brackethighlighter-square; }
+.code-area .text.tm-brackethighlighter-angle { -fx-fill: -jfx-tm-brackethighlighter-angle; }
+.code-area .text.tm-brackethighlighter-quote { -fx-fill: -jfx-tm-brackethighlighter-quote; }
+.code-area .text.tm-brackethighlighter-unmatched { -fx-fill: -jfx-tm-brackethighlighter-unmatched; }
+.code-area .text.tm-punctuation-definition-comment { -fx-fill: -jfx-tm-punctuation-definition-comment; }
+.code-area .text.tm-constant-other-placeholder { -fx-fill: -jfx-tm-constant-other-placeholder; }
+.code-area .text.tm-entity-name-constant { -fx-fill: -jfx-tm-entity-name-constant; }
+.code-area .text.tm-variable-other-constant { -fx-fill: -jfx-tm-variable-other-constant; }
+.code-area .text.tm-variable-other-enummember { -fx-fill: -jfx-tm-variable-other-enummember; }
+.code-area .text.tm-meta-export-default { -fx-fill: -jfx-tm-meta-export-default; }
+.code-area .text.tm-meta-definition-variable { -fx-fill: -jfx-tm-meta-definition-variable; }
+.code-area .text.tm-variable-parameter-function { -fx-fill: -jfx-tm-variable-parameter-function; }
+.code-area .text.tm-meta-jsx-children { -fx-fill: -jfx-tm-meta-jsx-children; }
+.code-area .text.tm-meta-tag-attributes { -fx-fill: -jfx-tm-meta-tag-attributes; }
+.code-area .text.tm-meta-object-member { -fx-fill: -jfx-tm-meta-object-member; }
+.code-area .text.tm-meta-embedded-expression { -fx-fill: -jfx-tm-meta-embedded-expression; }
+.code-area .text.tm-entity-name-function { -fx-fill: -jfx-tm-entity-name-function; }
+.code-area .text.tm-entity-name-tag { -fx-fill: -jfx-tm-entity-name-tag; }
+.code-area .text.tm-support-class-component { -fx-fill: -jfx-tm-support-class-component; }
+.code-area .text.tm-storage-modifier-package { -fx-fill: -jfx-tm-storage-modifier-package; }
+.code-area .text.tm-storage-modifier-import { -fx-fill: -jfx-tm-storage-modifier-import; }
+.code-area .text.tm-storage-type-java { -fx-fill: -jfx-tm-storage-type-java; }
+.code-area .text.tm-string-regexp-character-class { -fx-fill: -jfx-tm-string-regexp-character-class; }
+.code-area .text.tm-markup-inline-raw { -fx-fill: -jfx-tm-markup-inline-raw; }
+.code-area .text.tm-punctuation-definition-deleted { -fx-fill: -jfx-tm-punctuation-definition-deleted; }
+.code-area .text.tm-punctuation-section-embedded { -fx-fill: -jfx-tm-punctuation-section-embedded; }
+.code-area .text.tm-punctuation-definition-inserted { -fx-fill: -jfx-tm-punctuation-definition-inserted; }
+.code-area .text.tm-punctuation-definition-changed { -fx-fill: -jfx-tm-punctuation-definition-changed; }
+.code-area .text.tm-meta-diff-range { -fx-fill: -jfx-tm-meta-diff-range; -fx-font-weight: bold; }
+.code-area .text.tm-meta-diff-header { -fx-fill: -jfx-tm-meta-diff-header; }
+.code-area .text.tm-string-other-link { -fx-fill: -jfx-tm-string-other-link; }
+.code-area .text.tm-support-type-property-name-json { -fx-fill: -jfx-tm-support-type-property-name-json; }
+.code-area .text.tm-meta-diff-header-from-file { -fx-fill: -jfx-tm-meta-diff-header-from-file; }
+.code-area .text.tm-meta-diff-header-to-file { -fx-fill: -jfx-tm-meta-diff-header-to-file; }
+.code-area .text.tm-constant-other-reference-link { -fx-fill: -jfx-tm-constant-other-reference-link; }
+.code-area .text.tm-punctuation-definition-list-begin-markdown { -fx-fill: -jfx-tm-punctuation-definition-list-begin-markdown; }
+/* --- end generated --- */
+
+/* Scopes GitHub's theme does not name, coloured with the nearest of its tokens. */
+/* Configuration files: [sections] read as structure. */
+.code-area .text.tm-entity-name-section {
+    -fx-fill: -jfx-tm-entity-name;
+}
+/* Markdown's raw and fenced text, like its inline raw. */
+.code-area .text.tm-markup-raw,
+.code-area .text.tm-markup-fenced-code {
+    -fx-fill: -jfx-tm-markup-inline-raw;
+}
+.code-area .text.tm-markup-underline-link {
+    -fx-fill: -jfx-tm-string-other-link;
+    -fx-underline: true;
+}
+
+/* Log files: the level is the thing to find. */
+.code-area .text.tm-log-error,
+.code-area .text.tm-log-exception {
+    -fx-fill: -color-danger-fg;
+}
+.code-area .text.tm-log-warning {
+    -fx-fill: -color-warning-fg;
+}
+.code-area .text.tm-log-info {
+    -fx-fill: -color-success-fg;
+}
+.code-area .text.tm-log-debug,
+.code-area .text.tm-log-verbose,
+.code-area .text.tm-log-date {
+    -fx-fill: -color-fg-muted;
+}
+.code-area .text.tm-log-constant,
+.code-area .text.tm-log-string {
+    -fx-fill: -jfx-syntax-string;
+}
+
+/* ---- In-place editor ----
+
+   A visible border and a warmer ground, so it is obvious at a glance that this pane
+   is now a buffer that accepts typing rather than a rendering of a file. */
+
+.diff-editing {
+    -fx-border-color: -color-accent-emphasis;
+    -fx-border-width: 0 0 0 2;
+}
+
+.diff-editing-badge {
+    -fx-text-fill: -color-accent-fg;
+    -fx-font-size: 11px;
+    -fx-font-style: italic;
+    -fx-padding: 0 4 0 4;
+}
+
+/* The dirty marker: same label, louder voice. Bold and upright so the change from
+   "editable" to "edited · unsaved" is legible in the corner of the eye. */
+.diff-editing-badge.diff-editing-dirty {
+    -fx-text-fill: -color-warning-fg;
+    -fx-font-style: normal;
+    -fx-font-weight: bold;
+}
+
+/* Quiet note when a file was too large to colour. */
+.diff-notice {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 11px;
+    -fx-padding: 0 0 0 6;
+}
+
+/* Intra-line highlight. The paragraph background says "this line changed"; these spans
+   say which words did. RichTextFX's -rtfx-background-color paints behind a text run,
+   which is the only way to tint part of a line without touching the paragraph. */
+.diff-inline-add {
+    -rtfx-background-color: -color-success-muted;
+}
+.diff-inline-delete {
+    -rtfx-background-color: -color-danger-muted;
+}
+
+/* Structural rows: the @@ ranges, file preambles and collapsed-context markers that
+   separate one hunk from the next now live in the text surface alongside the code. */
+.diff-hunk-header-row,
+.diff-file-header-row {
+    -fx-background-color: -color-accent-subtle;
+}
+.diff-hunk-header-row .text,
+.diff-file-header-row .text {
+    -fx-fill: -color-accent-fg;
+    -fx-font-size: 12px;
+}
+
+.diff-expander-row {
+    -fx-background-color: -color-bg-subtle;
+    -fx-cursor: hand;
+}
+.diff-expander-row .text {
+    -fx-fill: -color-accent-fg;
+    -fx-font-size: 12px;
+}
+
+/* Floats over the top of the viewport, naming the hunk and the definition the reader
+   has scrolled into. Opaque, because the text scrolls underneath it. */
+.diff-sticky-header {
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 0 0 1 0;
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+    -fx-padding: 3 10 3 10;
+    -fx-opacity: 0.96;
+}
+
+/* Padding rows in split view, where one side has no counterpart line. */
+.diff-blank {
+    -fx-background-color: derive(-color-bg-default, -3%);
+}
+
+/* Font size is not set here: DiffTextArea applies it inline, scaled by EditorZoom, so
+   there is exactly one place ("100%") is defined rather than two that can drift apart. */
+.code-area {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-background-color: -color-bg-default;
+}
+.code-area .text {
+    -fx-fill: -color-fg-default;
+}
+/* Scrolling beyond the last line is not styled here: the padding on the last paragraph
+   box is a literal pixel value that changes with the viewport, and JavaFX cannot take a
+   looked-up size in -fx-padding, so DiffTextArea installs a one-rule stylesheet of its
+   own for it (see DiffTextArea.tailStylesheet). */
+/* RichTextFX's own stylesheet sets the caret's blink rate and stroke width but never
+   a colour, and this control is not a TextInputControl, so it never picks up Modena's
+   usual caret-colour rule either - without this, the caret renders in whatever a bare
+   javafx.scene.shape.Shape defaults to, which is invisible against a dark background. */
+.code-area .caret {
+    -fx-stroke: -color-fg-default;
+}
+
+/* ---- Viewer chrome ---- */
+
+.diff-viewer {
+    -fx-background-color: -color-bg-default;
+}
+
+.diff-title-bar {
+    -fx-padding: 8 15 8 15;
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 0 0 1 0;
+}
+
+.diff-file-name {
+    -fx-text-fill: -color-fg-default;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+/* The folder: the part that gives way when the header is narrow. */
+.diff-file-dir {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 11px;
+}
+
+/* "Index → Working tree": which two versions the lines are between. */
+.diff-sides {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 11px;
+    -fx-padding: 1 6 1 6;
+    -fx-background-color: -color-neutral-muted;
+    -fx-background-radius: 4;
+}
+
+/* A state that changes what the diff shows, stated where the diff is. */
+.diff-chip {
+    -fx-text-fill: -color-fg-default;
+    -fx-font-size: 11px;
+    -fx-graphic-text-gap: 4;
+    -fx-padding: 1 6 1 8;
+    -fx-background-color: -color-accent-muted;
+    -fx-background-radius: 10;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+}
+.diff-chip:focused {
+    -fx-border-width: 1;
+    -fx-border-color: -color-accent-emphasis;
+    -fx-border-radius: 10;
+}
+
+.diff-change-counter {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 11px;
+    -fx-padding: 0 2 0 2;
+}
+
+.diff-toolbar-caption {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 11px;
+}
+
+/* Split view's column names, fixed above each column while it scrolls. */
+.diff-split-header {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 11px;
+    -fx-padding: 2 8 2 8;
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Encoding picker: reads as a label until hovered, so it does not compete with the
+   file path for attention, but is discoverable as the control it is. */
+.diff-encoding {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 4;
+    -fx-padding: 0;
+}
+
+.diff-encoding > .list-cell {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 11px;
+    -fx-background-color: transparent;
+    -fx-padding: 1 4 1 6;
+}
+
+.diff-encoding:hover {
+    -fx-background-color: -color-bg-subtle;
+}
+
+.diff-encoding:hover > .list-cell {
+    -fx-text-fill: -color-fg-default;
+}
+
+.diff-encoding > .arrow-button {
+    -fx-padding: 1 4 1 0;
+}
+
+.diff-encoding > .arrow-button > .arrow {
+    -fx-background-color: -color-fg-muted;
+    -fx-scale-x: 0.75;
+    -fx-scale-y: 0.75;
+}
+
+.diff-encoding .list-view .list-cell {
+    -fx-font-size: 11px;
+    -fx-padding: 5 14 5 14;
+}
+
+/* Hex dump: no diff colouring, and the ASCII column must line up. */
+.diff-hex .text {
+    -fx-fill: -color-fg-muted;
+}
+
+/* Icon buttons in the title bar: no chrome until pointed at, and a focus ring, which is
+   the point of their being buttons at all. */
+.diff-close, .diff-title-icon {
+    -fx-cursor: hand;
+    -fx-padding: 4;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 4;
+}
+.diff-close:hover, .diff-title-icon:hover {
+    -fx-background-color: -color-neutral-muted;
+}
+.diff-close:focused, .diff-title-icon:focused {
+    -fx-background-color: -color-accent-emphasis, -color-bg-subtle;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 4, 3;
+}
+
+/* ---- Recovered draft banner ----
+
+   Pinned over the top of the content rather than inserted above it, so it cannot shift the
+   text under the reader's eyes when it appears. Accent rather than danger: recovering work
+   is good news, and the colour should not read as an error. */
+
+.diff-draft-banner {
+    -fx-padding: 6 10 6 10;
+    -fx-background-color: -color-accent-muted;
+    -fx-border-color: -color-accent-emphasis;
+    -fx-border-width: 0 0 1 0;
+}
+
+.diff-draft-banner-text {
+    -fx-text-fill: -color-fg-default;
+    -fx-font-size: 13px;
+}
+
+/* ---- Editor status footer ----
+
+   The mirror of .diff-title-bar: same subdued fill, border on the top edge instead of the
+   bottom, so the pane reads as chrome / content / chrome. Cells copy the .status-fact
+   idiom from components.css - 11px mono, muted - because these are the same kind of thing
+   the repository bar shows, one level down. */
+
+.diff-status-footer {
+    -fx-padding: 2 10 2 10;
+    -fx-min-height: 22;
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 1 0 0 0;
+}
+
+.diff-status-cell {
+    -fx-font-size: 11px;
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-text-fill: -color-fg-muted;
+    -fx-padding: 1 2 1 2;
+}
+
+/* The one cell that is a control rather than a fact: it opens a menu. */
+.diff-status-control {
+    -fx-cursor: hand;
+}
+
+.diff-status-control:hover {
+    -fx-text-fill: -color-fg-default;
+}
+
+/* Something happened to the file underneath the editor. Coloured because the whole point
+   is that it be noticed before the next Ctrl+S. */
+.diff-status-warning {
+    -fx-text-fill: -color-danger-fg;
+    -fx-font-weight: bold;
+}
+
+.diff-toolbar {
+    -fx-padding: 6 15 6 15;
+    -fx-background-color: -color-bg-default;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* The diff's own controls are quiet: text or an icon, no outline, a fill only under the
+   pointer. They used to be accent-coloured text in outlined boxes - a row of eight
+   boxes, two rows deep, above the thing the reader came to look at. */
+.diff-tool-button {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 4;
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 13px;
+    -fx-graphic-text-gap: 5;
+    -fx-cursor: hand;
+    -fx-padding: 3 8 3 8;
+    -fx-effect: none;
+}
+.diff-tool-button:hover {
+    -fx-background-color: -color-neutral-muted;
+    -fx-text-fill: -color-fg-default;
+}
+.diff-tool-button:focused {
+    -fx-background-color: -color-accent-emphasis, -color-bg-default;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 4, 3;
+}
+.diff-tool-button:disabled {
+    -fx-opacity: 0.4;
+}
+
+/* An icon-only tool is square: the same height as its worded neighbours. */
+.diff-tool-button.btn-icon, .diff-tool-toggle.btn-icon {
+    -fx-padding: 4;
+}
+
+.diff-tool-toggle {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 4;
+    -fx-text-fill: -color-fg-muted;
+    -fx-cursor: hand;
+    -fx-padding: 3 8 3 8;
+    -fx-effect: none;
+}
+.diff-tool-toggle:hover {
+    -fx-background-color: -color-neutral-muted;
+}
+/* On is a tint and an accent icon: a display option, not an action in progress. */
+.diff-tool-toggle:selected, .diff-tool-toggle:selected:focused {
+    -fx-background-color: -color-accent-subtle;
+    -fx-background-insets: 0;
+    -fx-text-fill: -color-accent-fg;
+}
+.diff-tool-toggle:selected:hover {
+    -fx-background-color: -color-accent-muted;
+}
+.diff-tool-toggle:focused {
+    -fx-background-color: -color-accent-emphasis, -color-bg-default;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 4, 3;
+}
+
+/* "View options": what the diff tools fold into when the row is short. A menu button
+   dressed like its neighbours - AtlantaFX pads the inner label as a whole button, which
+   made this one control half as tall again as the row it sat in. */
+.diff-overflow-menu {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 4;
+    -fx-padding: 0;
+    -fx-effect: none;
+}
+.diff-overflow-menu > .label {
+    -fx-padding: 3 4 3 8;
+    -fx-font-size: 13px;
+    -fx-text-fill: -color-fg-muted;
+}
+.diff-overflow-menu > .arrow-button {
+    -fx-padding: 0 8 0 2;
+}
+.diff-overflow-menu > .arrow-button > .arrow {
+    -fx-background-color: -color-fg-muted;
+}
+.diff-overflow-menu:hover, .diff-overflow-menu:showing {
+    -fx-background-color: -color-neutral-muted;
+    -fx-opacity: 1;
+}
+.diff-overflow-menu:hover > .label {
+    -fx-text-fill: -color-fg-default;
+}
+.diff-overflow-menu:focused {
+    -fx-background-color: -color-accent-emphasis, -color-bg-default;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 4, 3;
+}
+
+/* Segmented File View / Diff View and unified / split pairs. One outlined strip; the
+   selected half is tinted. A solid accent fill made each of these the loudest thing on
+   the row, for a setting that is changed once and left. */
+.diff-segment {
+    -fx-background-color: -color-border-default, -color-bg-default;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 0;
+    -fx-text-fill: -color-fg-muted;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-padding: 3 12 3 12;
+    -fx-effect: none;
+}
+.diff-segment:hover {
+    -fx-background-color: -color-border-default, -color-neutral-muted;
+    -fx-text-fill: -color-fg-default;
+}
+.diff-segment:selected, .diff-segment:selected:focused {
+    -fx-background-color: -color-accent-muted, -color-accent-subtle;
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: -color-accent-fg;
+}
+/* The selected half answers the pointer too: its tint deepens. */
+.diff-segment:selected:hover {
+    -fx-background-color: -color-accent-muted, -color-accent-muted;
+}
+
+.diff-scroll {
+    -fx-background-color: -color-bg-default;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.diff-scroll > .viewport {
+    -fx-background-color: -color-bg-default;
+}
+
+.diff-content {
+    -fx-background-color: -color-bg-default;
+}
+
+.diff-empty {
+    -fx-text-fill: -color-fg-muted;
+    -fx-padding: 20;
+}
+
+/* ---- Hunk actions ---- */
+
+/* A bar on every visible hunk: Stage and Discard, and the line-level versions when there
+   is a selection. Opaque, because it sits over the text.
+
+   The words carry the colour - staging in the success colour, discarding in the danger
+   one, the same split commercial clients put on Stage and Discard - and the buttons are otherwise
+   plain until pointed at. They used to be solid green and solid red on every hunk in the
+   file: a twenty-hunk diff was forty saturated blocks down the right-hand edge, louder
+   than the changes they acted on. */
+.diff-revert-hunk {
+    -fx-font-size: 13px;
+    -fx-background-color: -color-border-default, -color-bg-default;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 4, 3;
+    -fx-text-fill: -color-danger-fg;
+    -fx-padding: 3 9 3 9;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 6, 0, 0, 1);
+}
+
+.diff-revert-hunk:hover {
+    -fx-background-color: -color-danger-emphasis, -color-danger-emphasis;
+    -fx-text-fill: -color-fg-emphasis;
+}
+
+/* Split view: a hairline between the before and after columns. */
+.diff-split {
+    -fx-background-color: -color-border-default;
+}
+
+/* The diff surface's scrollbar: a translucent thumb over marks saying where the changes
+   are (DiffScrollMap). Marks use the same saturated "emphasis"/"edge" tier the diff
+   rows' own left border uses above (not the gutter's paler "subtle" tier) - a strip
+   this thin needs the stronger colour to read at a glance, and the colourblind override
+   below keeps it theme-safe either way. The thumb is the neutral translucent tier so the
+   marks stay legible through it. */
+.diff-scroll-map {
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 0 0 0 1;
+}
+/* Translucent in every state, by opacity rather than by colour: Primer's emphasis tier
+   is opaque, and a thumb that went solid on hover hid the very marks it was over. */
+.diff-scroll-map-thumb {
+    -fx-background-color: -color-fg-muted;
+    -fx-background-radius: 3;
+    -fx-opacity: 0.25;
+}
+.diff-scroll-map-thumb:hover {
+    -fx-opacity: 0.38;
+}
+.diff-scroll-map-thumb:dragging {
+    -fx-opacity: 0.5;
+}
+.diff-scroll-map-add {
+    -fx-background-color: -color-success-emphasis;
+}
+.diff-scroll-map-delete {
+    -fx-background-color: -color-danger-emphasis;
+}
+.diff-palette-cb .diff-scroll-map-add {
+    -fx-background-color: -jfx-cb-add-edge;
+}
+.diff-palette-cb .diff-scroll-map-delete {
+    -fx-background-color: -jfx-cb-del-edge;
+}
+
+/* ---- Minimap (File view; Minimap) ----
+
+   The strip's own ground, a hairline off the text, and a slider that shows while the
+   pointer is over the map or holding it - VS Code's default - so the map reads as a
+   picture of the file until it is wanted as a control. The text itself is painted on a
+   canvas in the fills the editor's own .code-area .text rules resolve to. */
+.minimap {
+    -fx-background-color: -color-bg-default;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 0 0 0 1;
+}
+.minimap-slider {
+    -fx-background-color: -color-neutral-muted;
+    /* Faint until pointed at: always there to say where the viewport is, never loud
+       enough to hide the lines under it. */
+    -fx-opacity: 0.45;
+}
+.minimap:hover .minimap-slider,
+.minimap-slider:dragging {
+    -fx-opacity: 1;
+}
+
+/* ---- Gutter ---- */
+
+.diff-gutter {
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 0 1 0 0;
+    -fx-padding: 0 4 0 4;
+}
+.diff-gutter-add {
+    -fx-background-color: -color-success-subtle;
+}
+.diff-gutter-delete {
+    -fx-background-color: -color-danger-subtle;
+}
+
+.diff-line-number {
+    /* Width is set per file from the widest number present; see measureGutter. */
+    -fx-alignment: center-right;
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 12px;
+    -fx-padding: 0 4 0 0;
+}
+
+/* ---- Blame gutter ---- */
+
+/* One band per commit, coloured from its hash, so the boundaries between one person's
+   work and another's read down the edge of the file without any text at all. */
+.blame-band {
+    -fx-min-width: 4;
+    -fx-pref-width: 4;
+    -fx-max-width: 4;
+    -fx-min-height: 1;
+}
+
+.blame-message {
+    -fx-min-width: 210;
+    -fx-pref-width: 210;
+    -fx-max-width: 210;
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 12px;
+    -fx-padding: 0 8 0 4;
+}
+
+.blame-date {
+    -fx-min-width: 82;
+    -fx-pref-width: 82;
+    -fx-alignment: center-right;
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 12px;
+    -fx-padding: 0 10 0 0;
+}
+
+/* ---- File history view ---- */
+
+.file-history {
+    -fx-background-color: -color-bg-default;
+}
+
+.file-history-header {
+    -fx-padding: 10 15 10 15;
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 0 0 1 0;
+}
+
+.file-history-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-fg-default;
+}
+
+.file-history-list {
+    -fx-background-color: transparent;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 0 1 0 0;
+}
+
+.file-history-list .list-cell {
+    -fx-padding: 8 10 8 10;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 0 0 1 0;
+}
+
+.file-history-message {
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-fg-default;
+}
+
+.file-history-meta {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+.file-history-hash {
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-fg-muted;
+}
+
+.file-history-footer {
+    -fx-padding: 10;
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 11px;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 1 1 0 0;
+}
+
+.file-history-blame-bar {
+    -fx-padding: 6 15 6 15;
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 0 0 1 0;
+}
+
+.diff-marker {
+    -fx-min-width: 12;
+    -fx-pref-width: 12;
+    -fx-alignment: center;
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-family: 'Consolas', 'JetBrains Mono', monospace;
+    -fx-font-size: 12px;
+}
+
+/* The expander's own control, in the gutter where a line number would be. */
+.diff-expander-toggle {
+    -fx-min-width: 38;
+    -fx-pref-width: 38;
+    -fx-alignment: center;
+    -fx-text-fill: -color-accent-fg;
+    -fx-cursor: hand;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+.diff-expander-toggle:hover {
+    -fx-background-color: -color-accent-muted;
+}
+/* Keyboard focus has to be visible on a control that is now reachable by Tab. */
+.diff-expander-toggle:focused {
+    -fx-background-color: -color-accent-muted;
+    -fx-border-width: 1;
+    -fx-border-color: -color-accent-emphasis;
+}
+
+/* Staging shares the hunk bar with Discard: same shape, the success colour. */
+.diff-hunk-action {
+    -fx-font-size: 13px;
+    -fx-background-color: -color-border-default, -color-bg-default;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 4, 3;
+    -fx-text-fill: -color-success-fg;
+    -fx-padding: 3 9 3 9;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 6, 0, 0, 1);
+}
+
+.diff-hunk-action:hover {
+    -fx-background-color: -color-success-emphasis, -color-success-emphasis;
+    -fx-text-fill: -color-fg-emphasis;
+}
+
+/* Says why the hunk actions are missing ("Show whitespace to stage or revert"). It floats
+   over the diff text in the same bar as the buttons, so it needs their opaque backing to
+   stay legible, but in neutral colours: it is an explanation, not something to press. */
+.diff-hunk-note {
+    -fx-font-size: 11px;
+    -fx-background-color: -color-bg-subtle;
+    -fx-text-fill: -color-fg-muted;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 3 9 3 9;
+}
+
+/* Red against green is precisely what the colourblind palette exists to avoid, and these
+   two buttons are the app's most consequential pair - one stages, one destroys. Under
+   .diff-palette-cb they take the same blue/amber split the diff rows themselves use, so
+   the pairing stays legible rather than relying on the labels alone. */
+.diff-palette-cb .diff-hunk-action {
+    -fx-text-fill: -jfx-cb-add-edge;
+}
+
+.diff-palette-cb .diff-hunk-action:hover {
+    -fx-background-color: -jfx-cb-add-edge, -jfx-cb-add-edge;
+    -fx-text-fill: -color-fg-emphasis;
+}
+
+.diff-palette-cb .diff-revert-hunk {
+    -fx-text-fill: -jfx-cb-del-edge;
+}
+
+.diff-palette-cb .diff-revert-hunk:hover {
+    -fx-background-color: -jfx-cb-del-edge, -jfx-cb-del-edge;
+    -fx-text-fill: -color-fg-emphasis;
+}
+
+/* ---- Image diff ---- */
+
+.image-diff {
+    -fx-padding: 20;
+}
+
+.image-diff-heading {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+/* A checkered-feeling neutral ground, so transparency is not mistaken for white. */
+.image-diff-canvas {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 8, 0, 0, 2);
+}
+
+.image-diff-meta, .image-diff-summary {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 11px;
+}
+
+.image-diff-absent {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-style: italic;
+    -fx-padding: 40 20 40 20;
+}
+
+/* ---- Find bar ----
+
+   A strip between the toolbar and the text, the width of the pane. Quiet: it is a tool
+   laid over the document, not a second toolbar. */
+
+.find-bar {
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: transparent transparent -color-border-default transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 4 8 4 8;
+    -fx-spacing: 4;
+}
+
+.find-bar .text-field {
+    -fx-font-size: 13px;
+}
+
+/* The query is not a valid regular expression: its edge says so, the count says why. */
+.find-bar .text-field.find-error {
+    -fx-border-color: -color-danger-emphasis;
+    -fx-border-radius: 4;
+}
+
+.find-count {
+    -fx-min-width: 72;
+}
+
+/* Aa / Word / .* - pressed reads as "on". */
+.find-option:hover {
+    -fx-background-color: -color-border-default, -color-neutral-muted;
+}
+.find-option:selected, .find-option:selected:focused {
+    -fx-background-color: -color-accent-muted, -color-accent-subtle;
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: -color-accent-fg;
+}
+.find-option:selected:hover {
+    -fx-background-color: -color-accent-muted, -color-accent-muted;
+}
+
+/* Every match, behind the text. A RichTextFX selection is a Path, so it is filled, not
+   given a run background; the current match is the area's own selection on top. */
+.find-match {
+    -fx-fill: -jfx-find-match;
+    -fx-stroke: transparent;
+}
+
+/* ---- Markdown preview ---- */
+
+.markdown-view, .markdown-view > .viewport {
+    -fx-background-color: -color-bg-default;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.markdown-body {
+    -fx-background-color: -color-bg-default;
+}
+
+.markdown-body .md-run {
+    -fx-fill: -color-fg-default;
+    -fx-font-size: 13px;
+}
+
+.markdown-body .md-strong {
+    -fx-font-weight: bold;
+}
+
+.markdown-body .md-em {
+    -fx-font-style: italic;
+}
+
+.markdown-body .md-h1 .md-run {
+    -fx-fill: -jfx-fg-bright;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.markdown-body .md-h2 .md-run {
+    -fx-fill: -jfx-fg-bright;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.markdown-body .md-h3 .md-run, .markdown-body .md-h4 .md-run,
+.markdown-body .md-h5 .md-run, .markdown-body .md-h6 .md-run,
+.markdown-body .md-table-head .md-run {
+    -fx-fill: -jfx-fg-bright;
+    -fx-font-weight: bold;
+}
+
+/* On the wrapper, which also holds the rule under h1 and h2, not on the heading's text.
+   A padded text flow selects correctly too: its hit testing and shapes count the padding. */
+.markdown-body .md-heading-block {
+    -fx-padding: 8 0 0 0;
+}
+
+/* Selected text in the preview, painted behind it as a text area's selection is. */
+.markdown-body .md-selection {
+    -fx-fill: -color-accent-muted;
+    -fx-stroke: transparent;
+}
+
+.markdown-body .md-rule {
+    -fx-background-color: -color-border-default;
+}
+
+.markdown-body .md-inline-code {
+    -fx-fill: -color-fg-default;
+    -fx-font-size: 13px;
+}
+
+.markdown-body .md-code-block {
+    -fx-background-color: -color-bg-subtle;
+    -fx-background-radius: 6;
+}
+
+.markdown-body .md-code-text {
+    -fx-fill: -color-fg-default;
+    -fx-font-size: 13px;
+}
+
+/* A quote: a bar down its left edge, its text a step quieter. */
+.markdown-body .md-quote {
+    -fx-border-color: transparent transparent transparent -color-border-default;
+    -fx-border-width: 0 0 0 4;
+    -fx-padding: 0 0 0 12;
+}
+
+.markdown-body .md-quote .md-run {
+    -fx-fill: -color-fg-muted;
+}
+
+.markdown-body .md-list-marker {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 13px;
+    -fx-alignment: top-right;
+    -fx-padding: 0 4 0 0;
+}
+
+.markdown-body .md-link {
+    -fx-font-size: 13px;
+    -fx-text-fill: -color-accent-fg;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+.markdown-body .md-link:visited {
+    -fx-text-fill: -color-accent-fg;
+}
+
+/* A Text when known at once (a remote image), a Label when a read came back empty. */
+.markdown-body .md-image-alt {
+    -fx-fill: -color-fg-muted;
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-style: italic;
+    -fx-font-size: 13px;
+}
+
+.markdown-body .md-table {
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 1;
+}
+
+.markdown-body .md-table-head {
+    -fx-background-color: -color-bg-subtle;
+    -fx-border-color: transparent transparent -color-border-default transparent;
+}
+
+.markdown-body .md-table-cell {
+    -fx-border-color: transparent transparent -color-border-muted transparent;
+}

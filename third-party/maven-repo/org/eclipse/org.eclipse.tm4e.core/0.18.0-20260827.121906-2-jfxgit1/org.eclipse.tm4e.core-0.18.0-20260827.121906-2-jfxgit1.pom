@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  org.eclipse.tm4e.core 0.18.0-20260827.121906-2 with OnigRegExp patched to compile each
+  distinct pattern once. Built by third-party/tm4e/build.sh; see the README there.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.eclipse</groupId>
+  <artifactId>org.eclipse.tm4e.core</artifactId>
+  <version>0.18.0-20260827.121906-2-jfxgit1</version>
+  <licenses>
+    <license>
+      <name>EPL-2.0</name>
+      <url>https://www.eclipse.org/legal/epl-v20.html</url>
+    </license>
+  </licenses>
+  <dependencies>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.27.6</version>
+    </dependency>
+    <dependency>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+      <version>1.18.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.13.2</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.21.0</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.snakeyaml</groupId>
+      <artifactId>snakeyaml-engine</artifactId>
+      <version>2.10</version>
+    </dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,3417 @@
+[
+  {
+    "id": "actionscript-3",
+    "displayName": "ActionScript",
+    "scopeName": "source.actionscript.3",
+    "file": "actionscript-3.json",
+    "extensions": [
+      "as"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "actionscript",
+      "as3"
+    ],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/BowlerHatLLC/vscode-as3mxml/blob/11ccf88dc1ec08a55c262a96676d507b354f19b5/distribution/src/assembly/syntaxes/AS3.tmLanguage"
+  },
+  {
+    "id": "apache",
+    "displayName": "Apache Conf",
+    "scopeName": "source.apacheconf",
+    "file": "apache.json",
+    "extensions": [],
+    "fileNames": [
+      ".htaccess",
+      "httpd.conf",
+      "apache2.conf"
+    ],
+    "aliases": [],
+    "embedded": [],
+    "license": "BSD-2-Clause",
+    "source": "https://github.com/colinta/ApacheConf.tmLanguage/blob/1fdb47b6fe2cea20cfedbc522bff3ff1ed656c07/ApacheConf.tmLanguage"
+  },
+  {
+    "id": "apex",
+    "displayName": "Apex",
+    "scopeName": "source.apex",
+    "file": "apex.json",
+    "extensions": [
+      "trigger"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "BSD-3-Clause",
+    "source": "https://github.com/forcedotcom/apex-tmLanguage/blob/611becc66c4553876ac6fd0287f57135581e2e59/grammars/apex.tmLanguage"
+  },
+  {
+    "id": "applescript",
+    "displayName": "AppleScript",
+    "scopeName": "source.applescript",
+    "file": "applescript.json",
+    "extensions": [
+      "applescript"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "LicenseRef-TextMate-Bundle",
+    "source": "https://github.com/textmate/applescript.tmbundle/blob/4947cad7494eba084c21cfe04689b4efce96700f/Syntaxes/AppleScript.tmLanguage"
+  },
+  {
+    "id": "asciidoc",
+    "displayName": "AsciiDoc",
+    "scopeName": "text.asciidoc",
+    "file": "asciidoc.json",
+    "extensions": [
+      "adoc",
+      "asciidoc"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "adoc"
+    ],
+    "embedded": [
+      "html",
+      "yaml",
+      "csv",
+      "css",
+      "ini",
+      "java",
+      "lua",
+      "make",
+      "perl",
+      "r",
+      "ruby",
+      "php",
+      "sql",
+      "vb",
+      "xml",
+      "xsl",
+      "bat",
+      "clojure",
+      "coffee",
+      "c",
+      "cpp",
+      "diff",
+      "docker",
+      "git-commit",
+      "git-rebase",
+      "go",
+      "groovy",
+      "pug",
+      "javascript",
+      "json",
+      "jsonc",
+      "less",
+      "objective-c",
+      "swift",
+      "scss",
+      "raku",
+      "powershell",
+      "python",
+      "julia",
+      "regexp",
+      "rust",
+      "scala",
+      "shellscript",
+      "typescript",
+      "tsx",
+      "csharp",
+      "fsharp",
+      "dart",
+      "handlebars",
+      "markdown",
+      "log",
+      "erlang",
+      "elixir",
+      "latex",
+      "bibtex",
+      "rst",
+      "haskell",
+      "kotlin"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/asciidoctor/asciidoctor-vscode/blob/09c406fcd67a300cfc1f49267c70cc97db978986/syntaxes/asciidoc.tmLanguage.json"
+  },
+  {
+    "id": "asm",
+    "displayName": "Assembly",
+    "scopeName": "source.asm.x86_64",
+    "file": "asm.json",
+    "extensions": [
+      "asm",
+      "s",
+      "nasm"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/13xforever/x86_64-assembly-vscode/blob/5c1958f4283d260f5dc88fa4f5f31c620e061a5a/syntaxes/language-x86_64-assembly.tmLanguage"
+  },
+  {
+    "id": "astro",
+    "displayName": "Astro",
+    "scopeName": "source.astro",
+    "file": "astro.json",
+    "extensions": [
+      "astro"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "json",
+      "javascript",
+      "typescript",
+      "stylus",
+      "sass",
+      "css",
+      "scss",
+      "less",
+      "postcss",
+      "tsx"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/withastro/language-tools/blob/8e55c37cbcf134dedf0068781245da5a9d46d081/packages/vscode/syntaxes/astro.tmLanguage.src.yaml"
+  },
+  {
+    "id": "awk",
+    "displayName": "AWK",
+    "scopeName": "source.awk",
+    "file": "awk.json",
+    "extensions": [
+      "awk"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/luggage66/vscode-awk/blob/eff8c0f160ae16592c8d9963fd77046137fd2612/syntaxes/awk.tmLanguage"
+  },
+  {
+    "id": "ballerina",
+    "displayName": "Ballerina",
+    "scopeName": "source.ballerina",
+    "file": "ballerina.json",
+    "extensions": [
+      "bal"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/ballerina-platform/ballerina-grammar/blob/4bf70d328ae9e5a93219e44c031ab3776c76727a/syntaxes/ballerina.tmLanguage"
+  },
+  {
+    "id": "bat",
+    "displayName": "Batch File",
+    "scopeName": "source.batchfile",
+    "file": "bat.json",
+    "extensions": [
+      "bat",
+      "cmd"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "batch",
+      "cmd"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/df15c8e832a341633acd2e9bb26e1b275d09cfe0/extensions/bat/syntaxes/batchfile.tmLanguage.json"
+  },
+  {
+    "id": "beancount",
+    "displayName": "Beancount",
+    "scopeName": "text.beancount",
+    "file": "beancount.json",
+    "extensions": [
+      "beancount",
+      "bean"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/Lencerf/vscode-beancount/blob/60dcdbd3af273aca0ff628220f2828483101ca47/syntaxes/beancount.tmLanguage"
+  },
+  {
+    "id": "berry",
+    "displayName": "Berry",
+    "scopeName": "source.berry",
+    "file": "berry.json",
+    "extensions": [
+      "be"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "be"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/berry-lang/berry/blob/74611286b8d2d2c2ee16ea187029f2a9c4257f5f/tools/plugins/vscode/skiars.berry-1.2.0/syntaxes/berry.json"
+  },
+  {
+    "id": "bibtex",
+    "displayName": "BibTeX",
+    "scopeName": "text.bibtex",
+    "file": "bibtex.json",
+    "extensions": [
+      "bib"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/9a2c94d213696a4453b6d9988b003d98e7646e75/extensions/latex/syntaxes/Bibtex.tmLanguage.json"
+  },
+  {
+    "id": "bicep",
+    "displayName": "Bicep",
+    "scopeName": "source.bicep",
+    "file": "bicep.json",
+    "extensions": [
+      "bicep",
+      "bicepparam"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/Azure/bicep/blob/6252abb94141fc6e774a53652404be30f1cb9000/src/textmate/bicep.tmlanguage"
+  },
+  {
+    "id": "bsl",
+    "displayName": "1C (Enterprise)",
+    "scopeName": "source.bsl",
+    "file": "bsl.json",
+    "extensions": [
+      "bsl",
+      "os"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "1c"
+    ],
+    "embedded": [
+      "sdbl"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/1c-syntax/vsc-language-1c-bsl/blob/c93f87c76d8a536a494039e9dc78a684b14b4e4c/syntaxes/1c.tmLanguage.json"
+  },
+  {
+    "id": "c",
+    "displayName": "C",
+    "scopeName": "source.c",
+    "file": "c.json",
+    "extensions": [
+      "c"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/bd1abe08c38bb5deccf65610f8f3c03d2338d20d/extensions/cpp/syntaxes/c.tmLanguage.json"
+  },
+  {
+    "id": "c3",
+    "displayName": "C3",
+    "scopeName": "source.c3",
+    "file": "c3.json",
+    "extensions": [
+      "c3"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/c3lang/vscode-c3/blob/38dcc9ae665da32dea3e391f342478668d44e16f/syntaxes/c3.tmLanguage.json"
+  },
+  {
+    "id": "cadence",
+    "displayName": "Cadence",
+    "scopeName": "source.cadence",
+    "file": "cadence.json",
+    "extensions": [
+      "cdc"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "cdc"
+    ],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/onflow/vscode-cadence/blob/bc7e5d3bb613e01789584283d7911cfd6b616dc4/extension/language/syntaxes/cadence.tmGrammar.json"
+  },
+  {
+    "id": "cairo",
+    "displayName": "Cairo",
+    "scopeName": "source.cairo0",
+    "file": "cairo.json",
+    "extensions": [
+      "cairo"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "python"
+    ],
+    "license": "Apache-2.0",
+    "source": "https://github.com/starkware-libs/cairo-lang/blob/4ea4fe8e167845a3402ae2ea0a8b6004aad18dd5/src/starkware/cairo/lang/ide/vscode-cairo/syntaxes/cairo.tmLanguage.json"
+  },
+  {
+    "id": "chapel",
+    "displayName": "Chapel",
+    "scopeName": "source.chapel",
+    "file": "chapel.json",
+    "extensions": [
+      "chpl"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "chpl"
+    ],
+    "embedded": [
+      "c"
+    ],
+    "license": "Apache-2.0",
+    "source": "https://github.com/chapel-lang/chapel-vscode/blob/c933a6c379df844d564644ee6c6df4e6055ceb33/syntaxes/chapel.tmLanguage.json"
+  },
+  {
+    "id": "clarity",
+    "displayName": "Clarity",
+    "scopeName": "source.clar",
+    "file": "clarity.json",
+    "extensions": [
+      "clar"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/hirosystems/clarity.tmbundle/blob/623ab02ac06f3fc27172503f64726bf0b107e5ee/Syntaxes/clarity.JSON-tmLanguage"
+  },
+  {
+    "id": "clojure",
+    "displayName": "Clojure",
+    "scopeName": "source.clojure",
+    "file": "clojure.json",
+    "extensions": [
+      "clj",
+      "cljs",
+      "cljc",
+      "edn"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "clj"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/a1a4c0a63b1ad59e84f54b874744fe35dea9abe1/extensions/clojure/syntaxes/clojure.tmLanguage.json"
+  },
+  {
+    "id": "cmake",
+    "displayName": "CMake",
+    "scopeName": "source.cmake",
+    "file": "cmake.json",
+    "extensions": [
+      "cmake"
+    ],
+    "fileNames": [
+      "cmakelists.txt"
+    ],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/twxs/vs.language.cmake/blob/19b1b8fe2d68d72cf294d0c3c22f0a3fc54f8f6f/syntaxes/CMake.tmLanguage"
+  },
+  {
+    "id": "cobol",
+    "displayName": "COBOL",
+    "scopeName": "source.cobol",
+    "file": "cobol.json",
+    "extensions": [
+      "cob",
+      "cbl",
+      "cpy"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "html",
+      "java"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/spgennard/vscode_cobol/blob/7020540cc77e04fb2edc8503f906d51fa840bbe5/syntaxes/COBOL.tmLanguage.json"
+  },
+  {
+    "id": "codeowners",
+    "displayName": "CODEOWNERS",
+    "scopeName": "text.codeowners",
+    "file": "codeowners.json",
+    "extensions": [],
+    "fileNames": [
+      "codeowners"
+    ],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/jasonnutter/vscode-codeowners/blob/219dee0ab25c1bfad0b9de84180117e71221a653/syntaxes/codeowners.tmLanguage.json"
+  },
+  {
+    "id": "codeql",
+    "displayName": "CodeQL",
+    "scopeName": "source.ql",
+    "file": "codeql.json",
+    "extensions": [
+      "ql",
+      "qll"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "ql"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/github/vscode-codeql/blob/a6266bbcc88702619ceb580253a65e8f83333c1b/syntaxes/ql.tmLanguage.json"
+  },
+  {
+    "id": "coffee",
+    "displayName": "CoffeeScript",
+    "scopeName": "source.coffee",
+    "file": "coffee.json",
+    "extensions": [
+      "coffee"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "coffeescript"
+    ],
+    "embedded": [
+      "javascript"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/ff58f5083f57b50e6a100ab60454dfb72fe21e80/extensions/coffeescript/syntaxes/coffeescript.tmLanguage.json"
+  },
+  {
+    "id": "css",
+    "displayName": "CSS",
+    "scopeName": "source.css",
+    "file": "css.json",
+    "extensions": [
+      "css"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/af600487b1e94374d9f48f57cbf2cad24656b07f/extensions/css/syntaxes/css.tmLanguage.json"
+  },
+  {
+    "id": "csv",
+    "displayName": "CSV",
+    "scopeName": "text.csv",
+    "file": "csv.json",
+    "extensions": [
+      "csv"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/mechatroner/vscode_rainbow_csv/blob/3bdafafa12940a75166089b64bdd80b1d3b071db/syntaxes/csv.tmLanguage.json"
+  },
+  {
+    "id": "cue",
+    "displayName": "CUE",
+    "scopeName": "source.cue",
+    "file": "cue.json",
+    "extensions": [
+      "cue"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/cue-lang/vscode-cue/blob/a9ee96a7e61fb8acd39f7403144d0b6f45652987/extension/syntaxes/cue.tmLanguage.json"
+  },
+  {
+    "id": "cypher",
+    "displayName": "Cypher",
+    "scopeName": "source.cypher",
+    "file": "cypher.json",
+    "extensions": [
+      "cypher",
+      "cyp"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "cql"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/adam-cowley/neo4j-vscode/blob/ad90d275ac76c740018e78f78722343f730270e0/cypher/cypher.tmLanguage"
+  },
+  {
+    "id": "d",
+    "displayName": "D",
+    "scopeName": "source.d",
+    "file": "d.json",
+    "extensions": [
+      "d",
+      "di"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/Pure-D/code-d/blob/71992a1a52a3025f3333e4025eee0f255a8cda03/syntaxes/d.json"
+  },
+  {
+    "id": "dart",
+    "displayName": "Dart",
+    "scopeName": "source.dart",
+    "file": "dart.json",
+    "extensions": [
+      "dart"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/af600487b1e94374d9f48f57cbf2cad24656b07f/extensions/dart/syntaxes/dart.tmLanguage.json"
+  },
+  {
+    "id": "diff",
+    "displayName": "Diff",
+    "scopeName": "source.diff",
+    "file": "diff.json",
+    "extensions": [
+      "diff",
+      "patch"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/4549bd26c7b799284e0ebd8dc1e0310e6a8707a1/extensions/diff/syntaxes/diff.tmLanguage.json"
+  },
+  {
+    "id": "docker",
+    "displayName": "Dockerfile",
+    "scopeName": "source.dockerfile",
+    "file": "docker.json",
+    "extensions": [
+      "dockerfile"
+    ],
+    "fileNames": [
+      "dockerfile",
+      "containerfile"
+    ],
+    "aliases": [
+      "dockerfile"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/8270a86019db7551da42b71d15c6080a414d8c81/extensions/docker/syntaxes/docker.tmLanguage.json"
+  },
+  {
+    "id": "dotenv",
+    "displayName": "dotEnv",
+    "scopeName": "source.dotenv",
+    "file": "dotenv.json",
+    "extensions": [
+      "env"
+    ],
+    "fileNames": [
+      ".env"
+    ],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/dotenv-org/dotenv-vscode/blob/3b4caf3398b3958b5fef8ef723c332eb1f30dfbb/syntaxes/dotenv.tmLanguage.json"
+  },
+  {
+    "id": "edge",
+    "displayName": "Edge",
+    "scopeName": "text.html.edge",
+    "file": "edge.json",
+    "extensions": [
+      "edge"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "typescript",
+      "html",
+      "html-derivative"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/edge-js/edge-vscode/blob/04352c41981ca664598674556afa63bd393a10f3/syntaxes/edge.tmLanguage.json"
+  },
+  {
+    "id": "elixir",
+    "displayName": "Elixir",
+    "scopeName": "source.elixir",
+    "file": "elixir.json",
+    "extensions": [
+      "ex",
+      "exs"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "html"
+    ],
+    "license": "Apache-2.0",
+    "source": "https://github.com/elixir-editors/elixir-tmbundle/blob/43c8cd957d5ac6e1abbd8730fc7a08c81a6e76c9/Syntaxes/Elixir.tmLanguage"
+  },
+  {
+    "id": "elm",
+    "displayName": "Elm",
+    "scopeName": "source.elm",
+    "file": "elm.json",
+    "extensions": [
+      "elm"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/elm-tooling/elm-language-client-vscode/blob/c70351314682c2e0fae8a402ebb301da79821c37/syntaxes/elm-syntax.json"
+  },
+  {
+    "id": "emacs-lisp",
+    "displayName": "Emacs Lisp",
+    "scopeName": "source.emacs.lisp",
+    "file": "emacs-lisp.json",
+    "extensions": [
+      "el"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "elisp"
+    ],
+    "embedded": [],
+    "license": "ISC",
+    "source": "https://github.com/Alhadis/language-emacs-lisp/blob/b38b69f684e7750b35f370fe567e7d9431f5fbc8/grammars/emacs-lisp.cson"
+  },
+  {
+    "id": "erb",
+    "displayName": "ERB",
+    "scopeName": "text.html.erb",
+    "file": "erb.json",
+    "extensions": [
+      "erb"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "html",
+      "ruby"
+    ],
+    "license": "LicenseRef-TextMate-Bundle",
+    "source": "https://github.com/textmate/ruby.tmbundle/blob/ecf0f1df23984bcff9b51552e35d9696cb0d9539/Syntaxes/HTML%20(Ruby%20-%20ERB).tmLanguage"
+  },
+  {
+    "id": "erlang",
+    "displayName": "Erlang",
+    "scopeName": "source.erlang",
+    "file": "erlang.json",
+    "extensions": [
+      "erl",
+      "hrl"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "erl"
+    ],
+    "embedded": [
+      "markdown"
+    ],
+    "license": "Apache-2.0",
+    "source": "https://github.com/erlang-ls/grammar/blob/fe898becd3004bcb4947ab50d6b6b830fbfb9228/Erlang.plist"
+  },
+  {
+    "id": "fennel",
+    "displayName": "Fennel",
+    "scopeName": "source.fnl",
+    "file": "fennel.json",
+    "extensions": [
+      "fnl"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/kongeor/vsc-fennel/blob/664148923d7bd72531120d0cba712c6dba6f698d/syntaxes/fennel.tmLanguage.json"
+  },
+  {
+    "id": "fish",
+    "displayName": "Fish",
+    "scopeName": "source.fish",
+    "file": "fish.json",
+    "extensions": [
+      "fish"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/bmalehorn/vscode-fish/blob/8288b88c46ebe1ef2876fd4275450fc80c5a176a/syntaxes/fish.tmLanguage.json"
+  },
+  {
+    "id": "fluent",
+    "displayName": "Fluent",
+    "scopeName": "source.ftl",
+    "file": "fluent.json",
+    "extensions": [
+      "ftl"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "ftl"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/macabeus/vscode-fluent/blob/8544ea296a7769a359f43ddff4dc4b6c61f5cf59/syntaxes/fluent.tmLanguage.json"
+  },
+  {
+    "id": "fortran-fixed-form",
+    "displayName": "Fortran (Fixed Form)",
+    "scopeName": "source.fortran.fixed",
+    "file": "fortran-fixed-form.json",
+    "extensions": [
+      "f",
+      "f77",
+      "for"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "f",
+      "for",
+      "f77"
+    ],
+    "embedded": [
+      "fortran-free-form"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/fortran-lang/vscode-fortran-support/blob/002eaa90668fd7d63cd073e8ca21b1388357ed62/syntaxes/fortran_fixed-form.tmLanguage.json"
+  },
+  {
+    "id": "fortran-free-form",
+    "displayName": "Fortran (Free Form)",
+    "scopeName": "source.fortran.free",
+    "file": "fortran-free-form.json",
+    "extensions": [
+      "f90",
+      "f95",
+      "f03",
+      "f08",
+      "f18"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "f90",
+      "f95",
+      "f03",
+      "f08",
+      "f18"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/fortran-lang/vscode-fortran-support/blob/f5fbf935d709e165922b307885a6106e32624018/syntaxes/fortran_free-form.tmLanguage.json"
+  },
+  {
+    "id": "fsharp",
+    "displayName": "F#",
+    "scopeName": "source.fsharp",
+    "file": "fsharp.json",
+    "extensions": [
+      "fs",
+      "fsi",
+      "fsx",
+      "fsscript"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "f#",
+      "fs"
+    ],
+    "embedded": [
+      "markdown"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/e6cffb21362b6d7addb977ff7db14f0681228780/extensions/fsharp/syntaxes/fsharp.tmLanguage.json"
+  },
+  {
+    "id": "gdresource",
+    "displayName": "GDResource",
+    "scopeName": "source.gdresource",
+    "file": "gdresource.json",
+    "extensions": [
+      "tres",
+      "tscn"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "tscn",
+      "tres"
+    ],
+    "embedded": [
+      "gdshader",
+      "gdscript"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/godotengine/godot-vscode-plugin/blob/e7e2d0439dea0fb3a568378554c81e0a17348a84/syntaxes/GDResource.tmLanguage.json"
+  },
+  {
+    "id": "gdscript",
+    "displayName": "GDScript",
+    "scopeName": "source.gdscript",
+    "file": "gdscript.json",
+    "extensions": [
+      "gd"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "gd"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/godotengine/godot-vscode-plugin/blob/3f2860fd76c591a6010f0d35220490933e41d01d/syntaxes/GDScript.tmLanguage.json"
+  },
+  {
+    "id": "gdshader",
+    "displayName": "GDShader",
+    "scopeName": "source.gdshader",
+    "file": "gdshader.json",
+    "extensions": [
+      "gdshader"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/godotengine/godot-vscode-plugin/blob/e7e2d0439dea0fb3a568378554c81e0a17348a84/syntaxes/GDShader.tmLanguage.json"
+  },
+  {
+    "id": "genie",
+    "displayName": "Genie",
+    "scopeName": "source.genie",
+    "file": "genie.json",
+    "extensions": [
+      "gs"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/vala-lang/vala-vscode/blob/8f825e95648326df2572d0522632251cdff4a43b/syntaxes/genie.YAML-tmLanguage"
+  },
+  {
+    "id": "gherkin",
+    "displayName": "Gherkin",
+    "scopeName": "text.gherkin.feature",
+    "file": "gherkin.json",
+    "extensions": [
+      "feature"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/alexkrechik/VSCucumberAutoComplete/blob/fbb554addf81e8961b58b1577924af10fecf9694/syntaxes/feature.tmLanguage.json"
+  },
+  {
+    "id": "git-commit",
+    "displayName": "Git Commit Message",
+    "scopeName": "text.git-commit",
+    "file": "git-commit.json",
+    "extensions": [],
+    "fileNames": [
+      "commit_editmsg",
+      "merge_msg",
+      "tag_editmsg"
+    ],
+    "aliases": [],
+    "embedded": [
+      "diff"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/f8c3f89468fea14103d8790d59ea8594d6e644eb/extensions/git-base/syntaxes/git-commit.tmLanguage.json"
+  },
+  {
+    "id": "git-rebase",
+    "displayName": "Git Rebase Message",
+    "scopeName": "text.git-rebase",
+    "file": "git-rebase.json",
+    "extensions": [],
+    "fileNames": [
+      "git-rebase-todo"
+    ],
+    "aliases": [],
+    "embedded": [
+      "shellscript"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/e95c74c4c7af876e79ec58df262464467c06df28/extensions/git-base/syntaxes/git-rebase.tmLanguage.json"
+  },
+  {
+    "id": "gleam",
+    "displayName": "Gleam",
+    "scopeName": "source.gleam",
+    "file": "gleam.json",
+    "extensions": [
+      "gleam"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/gleam-lang/vscode-gleam/blob/aa487ed82aeaec8dbac62e796689daf55abf1aa9/syntaxes/gleam.tmLanguage.json"
+  },
+  {
+    "id": "glimmer-js",
+    "displayName": "Glimmer JS",
+    "scopeName": "source.gjs",
+    "file": "glimmer-js.json",
+    "extensions": [
+      "gjs"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "gjs"
+    ],
+    "embedded": [
+      "javascript",
+      "typescript",
+      "css",
+      "html"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/lifeart/vsc-ember-syntax/blob/76fce7b360ce09a78789e7d5217b8955d1a5d95f/syntaxes/source.gjs.json"
+  },
+  {
+    "id": "glimmer-ts",
+    "displayName": "Glimmer TS",
+    "scopeName": "source.gts",
+    "file": "glimmer-ts.json",
+    "extensions": [
+      "gts"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "gts"
+    ],
+    "embedded": [
+      "typescript",
+      "css",
+      "javascript",
+      "html"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/lifeart/vsc-ember-syntax/blob/76fce7b360ce09a78789e7d5217b8955d1a5d95f/syntaxes/source.gts.json"
+  },
+  {
+    "id": "gn",
+    "displayName": "GN",
+    "scopeName": "source.gn",
+    "file": "gn.json",
+    "extensions": [
+      "gn",
+      "gni"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/google/gn-language-server/blob/a77b96900dd5ad6395294e34c2c5833cc89d5af0/vscode-gn/syntaxes/gn.tmLanguage.json"
+  },
+  {
+    "id": "graphql",
+    "displayName": "GraphQL",
+    "scopeName": "source.graphql",
+    "file": "graphql.json",
+    "extensions": [
+      "graphql",
+      "gql"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "gql"
+    ],
+    "embedded": [
+      "javascript",
+      "typescript",
+      "jsx",
+      "tsx"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/prisma-labs/vscode-graphql/blob/4569aef2364b42b6acd8188e4a6ca9b0ba3c6a1d/grammars/graphql.json"
+  },
+  {
+    "id": "groovy",
+    "displayName": "Groovy",
+    "scopeName": "source.groovy",
+    "file": "groovy.json",
+    "extensions": [
+      "groovy",
+      "gvy",
+      "gradle"
+    ],
+    "fileNames": [
+      "jenkinsfile"
+    ],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/8fdf170a0850c1cc027382f31650aaf300d3ae2a/extensions/groovy/syntaxes/groovy.tmLanguage.json"
+  },
+  {
+    "id": "hack",
+    "displayName": "Hack",
+    "scopeName": "source.hack",
+    "file": "hack.json",
+    "extensions": [
+      "hack"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "html",
+      "sql"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/slackhq/vscode-hack/blob/f92d6a49ce03a4ed16d342e6bd9e8be65af0b623/syntaxes/hack.json"
+  },
+  {
+    "id": "haml",
+    "displayName": "Ruby Haml",
+    "scopeName": "text.haml",
+    "file": "haml.json",
+    "extensions": [
+      "haml"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "ruby",
+      "javascript",
+      "sass",
+      "coffee",
+      "markdown",
+      "css"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/karuna/haml-vscode/blob/aa45415aefd691af0a501ea4f98e434490623e0d/syntaxes/haml.json"
+  },
+  {
+    "id": "handlebars",
+    "displayName": "Handlebars",
+    "scopeName": "text.html.handlebars",
+    "file": "handlebars.json",
+    "extensions": [
+      "hbs",
+      "handlebars",
+      "mustache"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "hbs"
+    ],
+    "embedded": [
+      "html",
+      "css",
+      "javascript",
+      "yaml"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/af600487b1e94374d9f48f57cbf2cad24656b07f/extensions/handlebars/syntaxes/Handlebars.tmLanguage.json"
+  },
+  {
+    "id": "haskell",
+    "displayName": "Haskell",
+    "scopeName": "source.haskell",
+    "file": "haskell.json",
+    "extensions": [
+      "hs",
+      "lhs"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "hs"
+    ],
+    "embedded": [],
+    "license": "BSD-3-Clause",
+    "source": "https://github.com/octref/language-haskell/blob/ae87982aac2bf5cf6334c067e49c5ec8fc08b871/syntaxes/haskell.json"
+  },
+  {
+    "id": "haxe",
+    "displayName": "Haxe",
+    "scopeName": "source.hx",
+    "file": "haxe.json",
+    "extensions": [
+      "hx"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/vshaxe/haxe-TmLanguage/blob/7f2e6feda8aa74ae5edebb04607f63f762bfc365/haxe.YAML-tmLanguage"
+  },
+  {
+    "id": "hcl",
+    "displayName": "HashiCorp HCL",
+    "scopeName": "source.hcl",
+    "file": "hcl.json",
+    "extensions": [
+      "hcl"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MPL-2.0",
+    "source": "https://github.com/hashicorp/syntax/blob/2ec7cd10c9d6134e836bf85eb0f5aa010512bff4/syntaxes/hcl.tmGrammar.json"
+  },
+  {
+    "id": "hjson",
+    "displayName": "Hjson",
+    "scopeName": "source.hjson",
+    "file": "hjson.json",
+    "extensions": [
+      "hjson"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/hjson/textmate-hjson/blob/196075169c9a9f9ab04c8e7423b67ea72c976237/Syntaxes/Hjson.tmLanguage"
+  },
+  {
+    "id": "hlsl",
+    "displayName": "HLSL",
+    "scopeName": "source.hlsl",
+    "file": "hlsl.json",
+    "extensions": [
+      "hlsl",
+      "fx",
+      "fxh",
+      "hlsli"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/efa12b2f49ec6ee84ed1e7bbd948808efec452f6/extensions/hlsl/syntaxes/hlsl.tmLanguage.json"
+  },
+  {
+    "id": "html",
+    "displayName": "HTML",
+    "scopeName": "text.html.basic",
+    "file": "html.json",
+    "extensions": [
+      "html",
+      "htm",
+      "xhtml",
+      "shtml"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "javascript",
+      "css"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/45324363153075dab0482312ae24d8c068d81e4f/extensions/html/syntaxes/html.tmLanguage.json"
+  },
+  {
+    "id": "html-derivative",
+    "displayName": "HTML (Derivative)",
+    "scopeName": "text.html.derivative",
+    "file": "html-derivative.json",
+    "extensions": [],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "html"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/4064f172528461afc6944383d07521f6a30da89c/extensions/html/syntaxes/html-derivative.tmLanguage.json"
+  },
+  {
+    "id": "http",
+    "displayName": "HTTP",
+    "scopeName": "source.http",
+    "file": "http.json",
+    "extensions": [
+      "http",
+      "rest"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "shellscript",
+      "json",
+      "xml",
+      "graphql"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/Huachao/vscode-restclient/blob/6649589e4d3f97d9c0d68a4f7ffe03fa2919c4df/syntaxes/http.tmLanguage.json"
+  },
+  {
+    "id": "hxml",
+    "displayName": "HXML",
+    "scopeName": "source.hxml",
+    "file": "hxml.json",
+    "extensions": [
+      "hxml"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "haxe"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/vshaxe/haxe-TmLanguage/blob/365040ca52f480c5a9d7bfe87aaaead06fc08fed/hxml.YAML-tmLanguage"
+  },
+  {
+    "id": "hy",
+    "displayName": "Hy",
+    "scopeName": "source.hy",
+    "file": "hy.json",
+    "extensions": [
+      "hy"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/hylang/vscode-hy/blob/8f99630793b7483cf4cac10a655da6fed08a4f9f/syntaxes/hy.tmLanguage.json"
+  },
+  {
+    "id": "imba",
+    "displayName": "Imba",
+    "scopeName": "source.imba",
+    "file": "imba.json",
+    "extensions": [
+      "imba"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/imba/imba/blob/183643518e567f0e125046b47b6d81f1aa7bdbb1/packages/vscode-imba/syntaxes/imba.tmLanguage.json"
+  },
+  {
+    "id": "ini",
+    "displayName": "INI",
+    "scopeName": "source.ini",
+    "file": "ini.json",
+    "extensions": [
+      "ini",
+      "cfg",
+      "properties"
+    ],
+    "fileNames": [
+      ".editorconfig",
+      ".gitconfig",
+      ".gitmodules",
+      ".npmrc"
+    ],
+    "aliases": [
+      "properties"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/8fdf170a0850c1cc027382f31650aaf300d3ae2a/extensions/ini/syntaxes/ini.tmLanguage.json"
+  },
+  {
+    "id": "jinja",
+    "displayName": "Jinja",
+    "scopeName": "source.jinja",
+    "file": "jinja.json",
+    "extensions": [
+      "jinja",
+      "jinja2",
+      "j2"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "jinja-html"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/samuelcolvin/jinjahtml-vscode/blob/be729c88f723602e7b5df2e9dc5e8c016c31c38f/syntaxes/jinja.tmLanguage.json"
+  },
+  {
+    "id": "jinja-html",
+    "displayName": "jinja-html",
+    "scopeName": "text.html.jinja",
+    "file": "jinja-html.json",
+    "extensions": [],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "html"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/samuelcolvin/jinjahtml-vscode/blob/64ad369cd167bba2e614944db6d925b7dc6483b4/syntaxes/jinja-html.tmLanguage.json"
+  },
+  {
+    "id": "jison",
+    "displayName": "Jison",
+    "scopeName": "source.jison",
+    "file": "jison.json",
+    "extensions": [
+      "jison"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "javascript"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/cdibbs/language-jison/blob/9d4cb4b044832320a51fabb6e533fc299425f552/grammars/jison.cson"
+  },
+  {
+    "id": "json5",
+    "displayName": "JSON5",
+    "scopeName": "source.json5",
+    "file": "json5.json",
+    "extensions": [
+      "json5"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/mrmlnc/vscode-json5/blob/e884b89929103ff009322c393080ff45a4544e88/syntaxes/json5.json"
+  },
+  {
+    "id": "jsonc",
+    "displayName": "JSON with Comments",
+    "scopeName": "source.json.comments",
+    "file": "jsonc.json",
+    "extensions": [],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/0adddd82816db666c52038e8277312dc55da2756/extensions/json/syntaxes/JSONC.tmLanguage.json"
+  },
+  {
+    "id": "jsonl",
+    "displayName": "JSON Lines",
+    "scopeName": "source.json.lines",
+    "file": "jsonl.json",
+    "extensions": [
+      "jsonl",
+      "ndjson"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/0adddd82816db666c52038e8277312dc55da2756/extensions/json/syntaxes/JSONL.tmLanguage.json"
+  },
+  {
+    "id": "jsonnet",
+    "displayName": "Jsonnet",
+    "scopeName": "source.jsonnet",
+    "file": "jsonnet.json",
+    "extensions": [
+      "jsonnet",
+      "libsonnet"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/heptio/vscode-jsonnet/blob/39088f9cde9f483c8e0efeb67a3fd561cd873aad/syntaxes/jsonnet.tmLanguage.json"
+  },
+  {
+    "id": "jssm",
+    "displayName": "JSSM",
+    "scopeName": "source.jssm",
+    "file": "jssm.json",
+    "extensions": [
+      "jssm"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "fsl"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/StoneCypher/sublime-jssm/blob/2be02a59d284229bbbfb3dc6c2bdcec9b2c263ef/jssm.tmLanguage"
+  },
+  {
+    "id": "jsx",
+    "displayName": "JSX",
+    "scopeName": "source.js.jsx",
+    "file": "jsx.json",
+    "extensions": [
+      "jsx"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/210541906e5a96ab39f9c753f921b1bd35f4138b/extensions/javascript/syntaxes/JavaScriptReact.tmLanguage.json"
+  },
+  {
+    "id": "julia",
+    "displayName": "Julia",
+    "scopeName": "source.julia",
+    "file": "julia.json",
+    "extensions": [
+      "jl"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "jl"
+    ],
+    "embedded": [
+      "cpp",
+      "python",
+      "javascript",
+      "r",
+      "sql"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/af600487b1e94374d9f48f57cbf2cad24656b07f/extensions/julia/syntaxes/julia.tmLanguage.json"
+  },
+  {
+    "id": "just",
+    "displayName": "Just",
+    "scopeName": "source.just",
+    "file": "just.json",
+    "extensions": [
+      "just"
+    ],
+    "fileNames": [
+      "justfile"
+    ],
+    "aliases": [
+      "justfile"
+    ],
+    "embedded": [
+      "shellscript",
+      "javascript",
+      "typescript",
+      "perl",
+      "python",
+      "ruby"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/nefrob/vscode-just/blob/2253973135a5cdc34e44df876fecd30aff605150/syntaxes/just.tmLanguage.json"
+  },
+  {
+    "id": "kdl",
+    "displayName": "KDL",
+    "scopeName": "source.kdl",
+    "file": "kdl.json",
+    "extensions": [
+      "kdl"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/kdl-org/vscode-kdl/blob/b986286d526d3dba7f5121956a52ce300c3418f0/syntaxes/kdl.tmLanguage.json"
+  },
+  {
+    "id": "kotlin",
+    "displayName": "Kotlin",
+    "scopeName": "source.kotlin",
+    "file": "kotlin.json",
+    "extensions": [
+      "kt",
+      "kts"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "kt",
+      "kts"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/fwcd/vscode-kotlin/blob/626e20d5c51a4379c4c0ee293aa89e58b5232aec/syntaxes/kotlin.tmLanguage.json"
+  },
+  {
+    "id": "latex",
+    "displayName": "LaTeX",
+    "scopeName": "text.tex.latex",
+    "file": "latex.json",
+    "extensions": [
+      "tex",
+      "latex",
+      "sty",
+      "ltx"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "tex",
+      "shellscript",
+      "css",
+      "haskell",
+      "html",
+      "java",
+      "julia",
+      "javascript",
+      "lua",
+      "python",
+      "ruby",
+      "rust",
+      "typescript",
+      "xml",
+      "yaml",
+      "scala"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/af600487b1e94374d9f48f57cbf2cad24656b07f/extensions/latex/syntaxes/LaTeX.tmLanguage.json"
+  },
+  {
+    "id": "lean",
+    "displayName": "Lean 4",
+    "scopeName": "source.lean4",
+    "file": "lean.json",
+    "extensions": [
+      "lean"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "lean4"
+    ],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/leanprover/vscode-lean4/blob/2ca585c47d447682452bd72f528feffd03ef4971/vscode-lean4/syntaxes/lean4.json"
+  },
+  {
+    "id": "less",
+    "displayName": "Less",
+    "scopeName": "source.css.less",
+    "file": "less.json",
+    "extensions": [
+      "less"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/03dc55030b3b2b5c4779d4ac1e2e46cd1f5a6b7c/extensions/less/syntaxes/less.tmLanguage.json"
+  },
+  {
+    "id": "liquid",
+    "displayName": "Liquid",
+    "scopeName": "text.html.liquid",
+    "file": "liquid.json",
+    "extensions": [
+      "liquid"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "html",
+      "css",
+      "json",
+      "javascript"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/Shopify/liquid-tm-grammar/blob/099adcf0d4beacd078a22432eaeab08d6f1e6da5/grammars/liquid.tmLanguage.json"
+  },
+  {
+    "id": "llvm",
+    "displayName": "LLVM IR",
+    "scopeName": "source.llvm",
+    "file": "llvm.json",
+    "extensions": [
+      "ll"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "Apache-2.0 WITH LLVM-exception",
+    "source": "https://github.com/llvm/llvm-project/blob/c07bc2962c5f76ebcbd040c4e97fe5d129530087/llvm/utils/vscode/llvm/syntaxes/ll.tmLanguage.yaml"
+  },
+  {
+    "id": "log",
+    "displayName": "Log file",
+    "scopeName": "text.log",
+    "file": "log.json",
+    "extensions": [
+      "log"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/emilast/vscode-logfile-highlighter/blob/396c8552ff99d0e07142fdd940d75dae212dd28c/syntaxes/log.tmLanguage"
+  },
+  {
+    "id": "logo",
+    "displayName": "Logo",
+    "scopeName": "source.logo",
+    "file": "logo.json",
+    "extensions": [
+      "logo",
+      "lgo"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "LicenseRef-TextMate-Bundle",
+    "source": "https://github.com/textmate/logo.tmbundle/blob/3205e987ed2a2aa11accdd55a7d094832441f89c/Syntaxes/Logo.tmLanguage"
+  },
+  {
+    "id": "lua",
+    "displayName": "Lua",
+    "scopeName": "source.lua",
+    "file": "lua.json",
+    "extensions": [
+      "lua"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "c"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/c8fdd1650c06321d687ddfd1eff06aae4b616256/extensions/lua/syntaxes/lua.tmLanguage.json"
+  },
+  {
+    "id": "luau",
+    "displayName": "Luau",
+    "scopeName": "source.luau",
+    "file": "luau.json",
+    "extensions": [
+      "luau"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/JohnnyMorganz/Luau.tmLanguage/blob/2565337787d6d4df5cdfdc14bfb25521d55b7c4e/Luau.tmLanguage"
+  },
+  {
+    "id": "make",
+    "displayName": "Makefile",
+    "scopeName": "source.makefile",
+    "file": "make.json",
+    "extensions": [
+      "mk",
+      "mak",
+      "make"
+    ],
+    "fileNames": [
+      "makefile",
+      "gnumakefile"
+    ],
+    "aliases": [
+      "makefile"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/91db8ea85fee30ebb3c7a5e7939aa2a8d79811c5/extensions/make/syntaxes/make.tmLanguage.json"
+  },
+  {
+    "id": "markdown-nix",
+    "displayName": "markdown-nix",
+    "scopeName": "markdown.nix.codeblock",
+    "file": "markdown-nix.json",
+    "extensions": [],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/nix-community/vscode-nix-ide/blob/e2aff510787a01beb97c6227adbb96e38a60fac4/dist/injection.json"
+  },
+  {
+    "id": "markdown-vue",
+    "displayName": "markdown-vue",
+    "scopeName": "markdown.vue.codeblock",
+    "file": "markdown-vue.json",
+    "extensions": [],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/vuejs/language-tools/blob/784dd56026e07f1dadb9ef2498418eccbb3dee29/extensions/vscode/syntaxes/markdown-vue.json"
+  },
+  {
+    "id": "marko",
+    "displayName": "Marko",
+    "scopeName": "text.marko",
+    "file": "marko.json",
+    "extensions": [
+      "marko"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "css",
+      "less",
+      "scss",
+      "typescript"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/marko-js/language-server/blob/9b627df21b63f9aeecd04780b9336ac3b734fa17/packages/vscode/syntaxes/marko.tmLanguage.json"
+  },
+  {
+    "id": "mdc",
+    "displayName": "MDC",
+    "scopeName": "text.markdown.mdc.standalone",
+    "file": "mdc.json",
+    "extensions": [
+      "mdc"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "markdown",
+      "yaml",
+      "html-derivative"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/nuxt-content/vscode-mdc/blob/97c4924c847eea22e50188a5127d893262a66019/syntaxes/mdc.standalone.tmLanguage.json"
+  },
+  {
+    "id": "mdx",
+    "displayName": "MDX",
+    "scopeName": "source.mdx",
+    "file": "mdx.json",
+    "extensions": [
+      "mdx"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "tsx",
+      "toml",
+      "yaml",
+      "c",
+      "clojure",
+      "coffee",
+      "cpp",
+      "csharp",
+      "css",
+      "diff",
+      "docker",
+      "elixir",
+      "elm",
+      "erlang",
+      "go",
+      "graphql",
+      "haskell",
+      "html",
+      "ini",
+      "java",
+      "javascript",
+      "json",
+      "julia",
+      "kotlin",
+      "less",
+      "lua",
+      "make",
+      "markdown",
+      "objective-c",
+      "perl",
+      "python",
+      "r",
+      "ruby",
+      "rust",
+      "scala",
+      "scss",
+      "shellscript",
+      "shellsession",
+      "sql",
+      "xml",
+      "swift",
+      "typescript"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/wooorm/markdown-tm-language/blob/c78b1e5df644d24fa76716bbe26f4b48a6fc1610/source.mdx.tmLanguage"
+  },
+  {
+    "id": "mermaid",
+    "displayName": "Mermaid",
+    "scopeName": "markdown.mermaid.codeblock",
+    "file": "mermaid.json",
+    "extensions": [
+      "mermaid",
+      "mmd"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "mmd"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/bpruitt-goddard/vscode-mermaid-syntax-highlight/blob/8b62f487cb7a89afcd152febfbf47f5d4787657f/syntaxes/mermaid.tmLanguage.yaml"
+  },
+  {
+    "id": "mipsasm",
+    "displayName": "MIPS Assembly",
+    "scopeName": "source.mips",
+    "file": "mipsasm.json",
+    "extensions": [
+      "mips"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "mips"
+    ],
+    "embedded": [],
+    "license": "LicenseRef-TextMate-Bundle",
+    "source": "https://github.com/textmate/mips.tmbundle/blob/eb7601016a109bf912a48a1c21988f3c4a59fb3a/Syntaxes/MIPS.tmLanguage"
+  },
+  {
+    "id": "mojo",
+    "displayName": "Mojo",
+    "scopeName": "source.mojo",
+    "file": "mojo.json",
+    "extensions": [
+      "mojo"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/modular/vscode-mojo/blob/7661e4e6157718ab1ecc700441138738f4fcbc9b/syntaxes/mojo.syntax.json"
+  },
+  {
+    "id": "moonbit",
+    "displayName": "MoonBit",
+    "scopeName": "source.moonbit",
+    "file": "moonbit.json",
+    "extensions": [
+      "mbt"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "mbt",
+      "mbti"
+    ],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/moonbitlang/moonbit-tmLanguage/blob/5be3967f9f5093fd0210afc385bd3495b243d465/grammars/moonbit.tmLanguage.json"
+  },
+  {
+    "id": "move",
+    "displayName": "Move",
+    "scopeName": "source.move",
+    "file": "move.json",
+    "extensions": [
+      "move"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/damirka/move-syntax/blob/01aeb9284635195a4861cfa7d46759320bb6609c/syntaxes/move.tmLanguage.json"
+  },
+  {
+    "id": "narrat",
+    "displayName": "Narrat Language",
+    "scopeName": "source.narrat",
+    "file": "narrat.json",
+    "extensions": [
+      "narrat",
+      "nar"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "nar"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/liana-p/narrat-syntax-highlighting-vscode/blob/00d4b410338fc50ca0ce77a1f7e873c1fb66d376/syntaxes/narrat.tmLanguage.yaml"
+  },
+  {
+    "id": "nextflow",
+    "displayName": "Nextflow",
+    "scopeName": "source.nextflow",
+    "file": "nextflow.json",
+    "extensions": [
+      "nf"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "nf"
+    ],
+    "embedded": [
+      "nextflow-groovy"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/nextflow-io/vscode-language-nextflow/blob/928fc02dd8d082d489a5cec0c019268894719339/syntaxes/nextflow.tmLanguage.json"
+  },
+  {
+    "id": "nextflow-groovy",
+    "displayName": "Nextflow Groovy",
+    "scopeName": "source.nextflow-groovy",
+    "file": "nextflow-groovy.json",
+    "extensions": [],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/nextflow-io/vscode-language-nextflow/blob/928fc02dd8d082d489a5cec0c019268894719339/syntaxes/groovy.tmLanguage.json"
+  },
+  {
+    "id": "nim",
+    "displayName": "Nim",
+    "scopeName": "source.nim",
+    "file": "nim.json",
+    "extensions": [
+      "nim",
+      "nims",
+      "nimble"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "c",
+      "html",
+      "xml",
+      "javascript",
+      "css",
+      "markdown"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/pragmagic/vscode-nim/blob/0272a0544ddf147fde98f8a8f2b624b7dcb19eb3/syntaxes/nim.json"
+  },
+  {
+    "id": "nix",
+    "displayName": "Nix",
+    "scopeName": "source.nix",
+    "file": "nix.json",
+    "extensions": [
+      "nix"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "markdown-nix"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/nix-community/vscode-nix-ide/blob/effbf3494a43250a537834805b305793994b9ca8/dist/nix.tmLanguage.json"
+  },
+  {
+    "id": "nsis",
+    "displayName": "NSIS",
+    "scopeName": "source.nsis",
+    "file": "nsis.json",
+    "extensions": [
+      "nsi",
+      "nsh"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/idleberg/vscode-nsis/blob/9adaf15a501157c1d3b73730c08a7bcbb057f812/syntaxes/nsis.tmLanguage"
+  },
+  {
+    "id": "nushell",
+    "displayName": "nushell",
+    "scopeName": "source.nushell",
+    "file": "nushell.json",
+    "extensions": [
+      "nu"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "nu"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/nushell/vscode-nushell-lang/blob/dd6145171b0e51963f1e3b0f92ade7e9ddfd1628/syntaxes/nushell.tmLanguage.json"
+  },
+  {
+    "id": "objective-c",
+    "displayName": "Objective-C",
+    "scopeName": "source.objc",
+    "file": "objective-c.json",
+    "extensions": [
+      "m"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "objc"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/bd1abe08c38bb5deccf65610f8f3c03d2338d20d/extensions/objective-c/syntaxes/objective-c.tmLanguage.json"
+  },
+  {
+    "id": "objective-cpp",
+    "displayName": "Objective-C++",
+    "scopeName": "source.objcpp",
+    "file": "objective-cpp.json",
+    "extensions": [
+      "mm"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/bd1abe08c38bb5deccf65610f8f3c03d2338d20d/extensions/objective-c/syntaxes/objective-c++.tmLanguage.json"
+  },
+  {
+    "id": "odin",
+    "displayName": "Odin",
+    "scopeName": "source.odin",
+    "file": "odin.json",
+    "extensions": [
+      "odin"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/DanielGavin/ols/blob/d26a19b38c581e28f67609cbb2d5ac933a9373d1/editors/vscode/syntaxes/odin.tmLanguage.json"
+  },
+  {
+    "id": "openscad",
+    "displayName": "OpenSCAD",
+    "scopeName": "source.scad",
+    "file": "openscad.json",
+    "extensions": [
+      "scad"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "scad"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/tbuser/openscad.tmbundle/blob/5962175ed355c2d58dc1991801c229809363e999/Syntaxes/OpenSCAD.tmLanguage"
+  },
+  {
+    "id": "pascal",
+    "displayName": "Pascal",
+    "scopeName": "source.pascal",
+    "file": "pascal.json",
+    "extensions": [
+      "pas",
+      "dpr",
+      "lpr"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/alefragnani/vscode-language-pascal/blob/f2d6345bd9fe83932f4d04fcacf98ce7d74b8034/syntaxes/pascal.tmLanguage"
+  },
+  {
+    "id": "perl",
+    "displayName": "Perl",
+    "scopeName": "source.perl",
+    "file": "perl.json",
+    "extensions": [
+      "pl",
+      "pm",
+      "pod"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "html",
+      "xml",
+      "css",
+      "javascript",
+      "sql"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/e637ff1bf7f481134849625e982ec80df9b35bc8/extensions/perl/syntaxes/perl.tmLanguage.json"
+  },
+  {
+    "id": "php",
+    "displayName": "PHP",
+    "scopeName": "source.php",
+    "file": "php.json",
+    "extensions": [
+      "php",
+      "phtml"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "html",
+      "xml",
+      "sql",
+      "javascript",
+      "json",
+      "css"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/af600487b1e94374d9f48f57cbf2cad24656b07f/extensions/php/syntaxes/php.tmLanguage.json"
+  },
+  {
+    "id": "pkl",
+    "displayName": "Pkl",
+    "scopeName": "source.pkl",
+    "file": "pkl.json",
+    "extensions": [
+      "pkl"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/apple/pkl.tmbundle/blob/4ed6ca67ec7579b7a3a86b96ee89874ae825f15f/Syntaxes/pkl.tmLanguage"
+  },
+  {
+    "id": "plsql",
+    "displayName": "PL/SQL",
+    "scopeName": "source.plsql.oracle",
+    "file": "plsql.json",
+    "extensions": [
+      "pls",
+      "pck",
+      "pkb",
+      "pks",
+      "plsql"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/zabel-xyz/plsql-language/blob/256a6b8f04f2bdc5e60ce921646a5068957078d7/syntaxes/plsql.tmLanguage"
+  },
+  {
+    "id": "po",
+    "displayName": "Gettext PO",
+    "scopeName": "source.po",
+    "file": "po.json",
+    "extensions": [
+      "po",
+      "pot"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "pot",
+      "potx"
+    ],
+    "embedded": [],
+    "license": "LicenseRef-TextMate-Bundle",
+    "source": "https://github.com/textmate/gettext.tmbundle/blob/08bb69558d82ada8d4f36b8869f871ce69014749/Syntaxes/Gettext.tmLanguage"
+  },
+  {
+    "id": "polar",
+    "displayName": "Polar",
+    "scopeName": "source.polar",
+    "file": "polar.json",
+    "extensions": [
+      "polar"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/osohq/polar-grammar/blob/1a87b3a7f2b47aea681a0f627b2297f77171d1c3/syntaxes/polar.tmLanguage.json"
+  },
+  {
+    "id": "postcss",
+    "displayName": "PostCSS",
+    "scopeName": "source.css.postcss",
+    "file": "postcss.json",
+    "extensions": [
+      "pcss",
+      "postcss"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/vuejs/vetur/blob/8ccae3ba50b65837d4cd4acc71a3b84cd3bee27c/syntaxes/vue-postcss.json"
+  },
+  {
+    "id": "powerquery",
+    "displayName": "PowerQuery",
+    "scopeName": "source.powerquery",
+    "file": "powerquery.json",
+    "extensions": [
+      "pq"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/powerquery-language/blob/eed9810b5f78dfb63319bdbce80bca50419dfa50/PowerQuery.tmLanguage.json"
+  },
+  {
+    "id": "powershell",
+    "displayName": "PowerShell",
+    "scopeName": "source.powershell",
+    "file": "powershell.json",
+    "extensions": [
+      "ps1",
+      "psm1",
+      "psd1"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "ps",
+      "ps1",
+      "pwsh"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/af600487b1e94374d9f48f57cbf2cad24656b07f/extensions/powershell/syntaxes/powershell.tmLanguage.json"
+  },
+  {
+    "id": "prisma",
+    "displayName": "Prisma",
+    "scopeName": "source.prisma",
+    "file": "prisma.json",
+    "extensions": [
+      "prisma"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/prisma/language-tools/blob/eca96bfdfa03bde79465e831e502481d386934be/packages/vscode/syntaxes/prisma.tmLanguage.json"
+  },
+  {
+    "id": "prolog",
+    "displayName": "Prolog",
+    "scopeName": "source.prolog",
+    "file": "prolog.json",
+    "extensions": [
+      "prolog"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/arthwang/vsc-prolog/blob/5e15f731d5ef8e0f3974589b84ddefe6a2bf78c7/syntaxes/prolog.swi.tmLanguage.json"
+  },
+  {
+    "id": "proto",
+    "displayName": "Protocol Buffer 3",
+    "scopeName": "source.proto",
+    "file": "proto.json",
+    "extensions": [
+      "proto"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "protobuf"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/zxh0/vscode-proto3/blob/274be763ecae7055505354b44f4892a2669e1da8/syntaxes/proto3.tmLanguage.json"
+  },
+  {
+    "id": "pug",
+    "displayName": "Pug",
+    "scopeName": "text.pug",
+    "file": "pug.json",
+    "extensions": [
+      "pug",
+      "jade"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "jade"
+    ],
+    "embedded": [
+      "javascript",
+      "css",
+      "sass",
+      "scss",
+      "stylus",
+      "coffee",
+      "html"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/6ac83c7c7dda9f27ca1fe9d98675253e010b75d1/extensions/pug/syntaxes/pug.tmLanguage.json"
+  },
+  {
+    "id": "puppet",
+    "displayName": "Puppet",
+    "scopeName": "source.puppet",
+    "file": "puppet.json",
+    "extensions": [
+      "pp"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/octref/puppet-vscode/blob/42e02ef6c02aefb0dcf03f8367fdc106d7213a6c/syntaxes/puppet.tmLanguage"
+  },
+  {
+    "id": "purescript",
+    "displayName": "PureScript",
+    "scopeName": "source.purescript",
+    "file": "purescript.json",
+    "extensions": [
+      "purs"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/nwolverson/vscode-language-purescript/blob/b7641936190d6d8eb346660284dab3a5d1cc636f/syntaxes/purescript.json"
+  },
+  {
+    "id": "qml",
+    "displayName": "QML",
+    "scopeName": "source.qml",
+    "file": "qml.json",
+    "extensions": [
+      "qml"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "javascript"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/seanwu1105/vscode-qt-for-python/blob/51408001e908800c00ce9f68f66e511545ea29fe/syntaxes/qml.tmLanguage.json"
+  },
+  {
+    "id": "qmldir",
+    "displayName": "QML Directory",
+    "scopeName": "source.qmldir",
+    "file": "qmldir.json",
+    "extensions": [],
+    "fileNames": [
+      "qmldir"
+    ],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/seanwu1105/vscode-qt-for-python/blob/b301e7b18493ba59c4f52e49c3f73b6cd23d4c4b/syntaxes/qmldir.tmLanguage.json"
+  },
+  {
+    "id": "qss",
+    "displayName": "Qt Style Sheets",
+    "scopeName": "source.qss",
+    "file": "qss.json",
+    "extensions": [
+      "qss"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/seanwu1105/vscode-qt-for-python/blob/f0a56a97d10f58ab7b4b6e2ab6ce34ca4c9d521d/syntaxes/qss.tmLanguage.json"
+  },
+  {
+    "id": "r",
+    "displayName": "R",
+    "scopeName": "source.r",
+    "file": "r.json",
+    "extensions": [
+      "r"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/posit-dev/positron/blob/c4d6bab60dd914427a2d47a4b64e75e025d94059/extensions/positron-r/syntaxes/r.tmGrammar.gen.json"
+  },
+  {
+    "id": "raku",
+    "displayName": "Raku",
+    "scopeName": "source.perl.6",
+    "file": "raku.json",
+    "extensions": [
+      "raku",
+      "rakumod",
+      "rakutest",
+      "p6",
+      "pl6",
+      "pm6"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "perl6"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/8fdf170a0850c1cc027382f31650aaf300d3ae2a/extensions/perl/syntaxes/perl6.tmLanguage.json"
+  },
+  {
+    "id": "razor",
+    "displayName": "ASP.NET Razor",
+    "scopeName": "text.aspnetcorerazor",
+    "file": "razor.json",
+    "extensions": [
+      "razor",
+      "cshtml"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "html",
+      "csharp"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/dotnet/razor/blob/743f32a68c61809b22fd84e8748c3686ef1bb8b8/src/Razor/src/Microsoft.VisualStudio.RazorExtension/EmbeddedGrammars/aspnetcorerazor.tmLanguage.json"
+  },
+  {
+    "id": "rbs",
+    "displayName": "RBS",
+    "scopeName": "source.rbs",
+    "file": "rbs.json",
+    "extensions": [
+      "rbs"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "ruby-signature"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/soutaro/vscode-rbs-syntax/blob/d945dc76ec7eee172c51eb8bea1f206aa2e52925/syntaxes/rbs.tmLanguage.json"
+  },
+  {
+    "id": "reg",
+    "displayName": "Windows Registry Script",
+    "scopeName": "source.reg",
+    "file": "reg.json",
+    "extensions": [
+      "reg"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/mihai-vlc/reg-vscode/blob/896096fc6756329d82c71a913663a1c0ac678f74/syntaxes/reg.tmLanguage"
+  },
+  {
+    "id": "regexp",
+    "displayName": "RegExp",
+    "scopeName": "source.regexp.python",
+    "file": "regexp.json",
+    "extensions": [],
+    "fileNames": [],
+    "aliases": [
+      "regex"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/MagicStack/MagicPython/blob/c9b3409deb69acec31bbf7913830e93a046b30cc/grammars/MagicRegExp.tmLanguage"
+  },
+  {
+    "id": "ron",
+    "displayName": "RON",
+    "scopeName": "source.ron",
+    "file": "ron.json",
+    "extensions": [
+      "ron"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/a5huynh/vscode-ron/blob/3acb0d97348c972b3b6f04b4e92901a541b22022/syntaxes/ron.tmGrammar.json"
+  },
+  {
+    "id": "rst",
+    "displayName": "reStructuredText",
+    "scopeName": "source.rst",
+    "file": "rst.json",
+    "extensions": [
+      "rst"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "html-derivative",
+      "cpp",
+      "python",
+      "javascript",
+      "shellscript",
+      "yaml",
+      "cmake",
+      "ruby"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/48e93f756b764991ede33ad09781a863aca6907a/extensions/restructuredtext/syntaxes/rst.tmLanguage.json"
+  },
+  {
+    "id": "ruby",
+    "displayName": "Ruby",
+    "scopeName": "source.ruby",
+    "file": "ruby.json",
+    "extensions": [
+      "rb",
+      "rake",
+      "gemspec",
+      "ru"
+    ],
+    "fileNames": [
+      "gemfile",
+      "rakefile",
+      "vagrantfile",
+      "podfile",
+      "brewfile",
+      "guardfile"
+    ],
+    "aliases": [
+      "rb"
+    ],
+    "embedded": [
+      "html",
+      "haml",
+      "xml",
+      "sql",
+      "graphql",
+      "css",
+      "cpp",
+      "c",
+      "javascript",
+      "shellscript",
+      "lua",
+      "yaml"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/af600487b1e94374d9f48f57cbf2cad24656b07f/extensions/ruby/syntaxes/ruby.tmLanguage.json"
+  },
+  {
+    "id": "sas",
+    "displayName": "SAS",
+    "scopeName": "source.sas",
+    "file": "sas.json",
+    "extensions": [
+      "sas"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "sql"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/rpardee/sas/blob/49f6e733c6c0b918a2a825ca2f63dba704f3e8c0/syntaxes/sas.tmLanguage"
+  },
+  {
+    "id": "sass",
+    "displayName": "Sass",
+    "scopeName": "source.sass",
+    "file": "sass.json",
+    "extensions": [
+      "sass"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/TheRealSyler/vscode-sass-indented/blob/f0e50cfaca4b64a1d49f8d938f188d6fd0bcfb6f/syntaxes/sass.tmLanguage.json"
+  },
+  {
+    "id": "scala",
+    "displayName": "Scala",
+    "scopeName": "source.scala",
+    "file": "scala.json",
+    "extensions": [
+      "scala",
+      "sc",
+      "sbt"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/scala/vscode-scala-syntax/blob/672fa16c64e12b2cc8b98da011411463968de727/syntaxes/Scala.tmLanguage.json"
+  },
+  {
+    "id": "scheme",
+    "displayName": "Scheme",
+    "scopeName": "source.scheme",
+    "file": "scheme.json",
+    "extensions": [
+      "scm",
+      "ss"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/sjhuangx/vscode-scheme/blob/4e21683666e1e2edfa21d040ecd427f628e7b5ff/syntaxes/scheme.tmLanguage"
+  },
+  {
+    "id": "scss",
+    "displayName": "SCSS",
+    "scopeName": "source.css.scss",
+    "file": "scss.json",
+    "extensions": [
+      "scss"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "css"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/cf8d61ebd2f022f4ce8280171f0360d1fe0a206d/extensions/scss/syntaxes/scss.tmLanguage.json"
+  },
+  {
+    "id": "sdbl",
+    "displayName": "1C (Query)",
+    "scopeName": "source.sdbl",
+    "file": "sdbl.json",
+    "extensions": [
+      "sdbl"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "1c-query"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/1c-syntax/vsc-language-1c-bsl/blob/c60d42089e5139942ff5b1db3a0a3ca8dd094ce6/syntaxes/1c-query.tmLanguage.json"
+  },
+  {
+    "id": "shaderlab",
+    "displayName": "ShaderLab",
+    "scopeName": "source.shaderlab",
+    "file": "shaderlab.json",
+    "extensions": [
+      "shader",
+      "cginc"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "shader"
+    ],
+    "embedded": [
+      "hlsl"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/8fdf170a0850c1cc027382f31650aaf300d3ae2a/extensions/shaderlab/syntaxes/shaderlab.tmLanguage.json"
+  },
+  {
+    "id": "shellsession",
+    "displayName": "Shell Session",
+    "scopeName": "text.shell-session",
+    "file": "shellsession.json",
+    "extensions": [],
+    "fileNames": [],
+    "aliases": [
+      "console"
+    ],
+    "embedded": [
+      "shellscript"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/hronro/sublime-linguist-syntax/blob/9c84f1d69dbe89bc23292f129cf2d408a9c7afe1/syntaxes/ShellSession.tmLanguage"
+  },
+  {
+    "id": "smalltalk",
+    "displayName": "GNU Smalltalk",
+    "scopeName": "source.smalltalk.gnu",
+    "file": "smalltalk.json",
+    "extensions": [
+      "st"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/leocamello/vscode-smalltalk/blob/241ae15a15643a7728ddf6c5c1771e340e731041/syntaxes/gnu-smalltalk.YAML-tmLanguage"
+  },
+  {
+    "id": "smithy",
+    "displayName": "Smithy",
+    "scopeName": "source.smithy",
+    "file": "smithy.json",
+    "extensions": [
+      "smithy"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/smithy-lang/smithy-vscode/blob/207935eefd01821565e86f115b928fa44992830f/syntaxes/smithy.tmLanguage.json"
+  },
+  {
+    "id": "solidity",
+    "displayName": "Solidity",
+    "scopeName": "source.solidity",
+    "file": "solidity.json",
+    "extensions": [
+      "sol"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/juanfranblanco/vscode-solidity/blob/54ae302551a095e3f34371bb15f654f574e10fac/syntaxes/solidity.json"
+  },
+  {
+    "id": "soy",
+    "displayName": "Closure Templates",
+    "scopeName": "text.html.soy",
+    "file": "soy.json",
+    "extensions": [
+      "soy"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "closure-templates"
+    ],
+    "embedded": [
+      "html"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/mthadley/language-closure-templates/blob/7caf3a1fad0245c4196d3766ba0f481762fbc92e/grammars/closure-templates.json"
+  },
+  {
+    "id": "splunk",
+    "displayName": "Splunk Query Language",
+    "scopeName": "source.splunk_search",
+    "file": "splunk.json",
+    "extensions": [
+      "spl"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "spl"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/arcsector/vscode-splunk-search-syntax/blob/b1f68ff035950e6a98e0db4af1a338cb1c3c1858/syntaxes/splunk_search.tmLanguage"
+  },
+  {
+    "id": "sql",
+    "displayName": "SQL",
+    "scopeName": "source.sql",
+    "file": "sql.json",
+    "extensions": [
+      "sql",
+      "ddl",
+      "dml"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/af600487b1e94374d9f48f57cbf2cad24656b07f/extensions/sql/syntaxes/sql.tmLanguage.json"
+  },
+  {
+    "id": "stylus",
+    "displayName": "Stylus",
+    "scopeName": "source.stylus",
+    "file": "stylus.json",
+    "extensions": [
+      "styl"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "styl"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/d4rkr00t/language-stylus/blob/198a851f385aee857332f3ce5dd981ff67720ead/syntaxes/stylus.json"
+  },
+  {
+    "id": "surrealql",
+    "displayName": "SurrealQL",
+    "scopeName": "source.surrealql",
+    "file": "surrealql.json",
+    "extensions": [
+      "surql"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "surql"
+    ],
+    "embedded": [
+      "javascript"
+    ],
+    "license": "Apache-2.0",
+    "source": "https://github.com/surrealdb/surrealql-grammar/blob/d7594cbe432daaa51d30723a63fb63888d5073a0/syntaxes/surrealql.tmLanguage.json"
+  },
+  {
+    "id": "svelte",
+    "displayName": "Svelte",
+    "scopeName": "source.svelte",
+    "file": "svelte.json",
+    "extensions": [
+      "svelte"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "javascript",
+      "typescript",
+      "coffee",
+      "stylus",
+      "sass",
+      "css",
+      "scss",
+      "less",
+      "postcss",
+      "pug",
+      "markdown"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/sveltejs/language-tools/blob/2cfcc15b4c44dfc1128432e20ca663fe20bdd12e/packages/svelte-vscode/syntaxes/svelte.tmLanguage.src.yaml"
+  },
+  {
+    "id": "systemd",
+    "displayName": "Systemd Units",
+    "scopeName": "source.systemd",
+    "file": "systemd.json",
+    "extensions": [
+      "service",
+      "socket",
+      "timer",
+      "target",
+      "mount",
+      "automount",
+      "slice",
+      "netdev",
+      "network"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/hangxingliu/vscode-systemd/blob/62ace1156b5afa0ec9932e3a55cfc00c0123c457/src/syntax/systemd.tmLanguage"
+  },
+  {
+    "id": "talonscript",
+    "displayName": "TalonScript",
+    "scopeName": "source.talon",
+    "file": "talonscript.json",
+    "extensions": [
+      "talon"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "talon"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/mrob95/vscode-TalonScript/blob/91f3a6faaf926c02582f36ee155f2c4a02b9cc48/syntaxes/talon.tmLanguage.json"
+  },
+  {
+    "id": "tasl",
+    "displayName": "Tasl",
+    "scopeName": "source.tasl",
+    "file": "tasl.json",
+    "extensions": [
+      "tasl"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/underlay/vscode-tasl/blob/dde4b7c0b762c2e667584095362dd49ebfacece7/syntaxes/tasl.tmLanguage.json"
+  },
+  {
+    "id": "templ",
+    "displayName": "Templ",
+    "scopeName": "source.templ",
+    "file": "templ.json",
+    "extensions": [
+      "templ"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "go",
+      "javascript",
+      "css"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/templ-go/templ-vscode/blob/d0af70c97ed384e93892c46b93d622ffaba5d93c/syntaxes/templ.tmLanguage.json"
+  },
+  {
+    "id": "terraform",
+    "displayName": "Terraform",
+    "scopeName": "source.hcl.terraform",
+    "file": "terraform.json",
+    "extensions": [
+      "tf",
+      "tfvars"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "tf",
+      "tfvars"
+    ],
+    "embedded": [],
+    "license": "MPL-2.0",
+    "source": "https://github.com/hashicorp/syntax/blob/cc2b4d4fe389f14b8a13937f4e0d7b2811b57588/syntaxes/terraform.tmGrammar.json"
+  },
+  {
+    "id": "tex",
+    "displayName": "TeX",
+    "scopeName": "text.tex",
+    "file": "tex.json",
+    "extensions": [],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "r"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/609f17a76734f092792a33c891af40bbcaea0c64/extensions/latex/syntaxes/TeX.tmLanguage.json"
+  },
+  {
+    "id": "toml",
+    "displayName": "TOML",
+    "scopeName": "source.toml",
+    "file": "toml.json",
+    "extensions": [
+      "toml"
+    ],
+    "fileNames": [
+      "cargo.lock",
+      "pipfile",
+      "poetry.lock",
+      "uv.lock"
+    ],
+    "aliases": [],
+    "embedded": [],
+    "license": "LicenseRef-TextMate-Bundle",
+    "source": "https://github.com/textmate/toml.tmbundle/blob/e82b64c1e86396220786846201e9aa3f0a2d9ca2/Syntaxes/TOML.tmLanguage"
+  },
+  {
+    "id": "tsv",
+    "displayName": "TSV",
+    "scopeName": "text.tsv",
+    "file": "tsv.json",
+    "extensions": [
+      "tsv"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/mechatroner/vscode_rainbow_csv/blob/00d4c947f1bbe6a4a73599bd97fb31bdfbe262f3/syntaxes/tsv.tmLanguage.json"
+  },
+  {
+    "id": "tsx",
+    "displayName": "TSX",
+    "scopeName": "source.tsx",
+    "file": "tsx.json",
+    "extensions": [
+      "tsx"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/210541906e5a96ab39f9c753f921b1bd35f4138b/extensions/typescript-basics/syntaxes/TypeScriptReact.tmLanguage.json"
+  },
+  {
+    "id": "twig",
+    "displayName": "Twig",
+    "scopeName": "text.html.twig",
+    "file": "twig.json",
+    "extensions": [
+      "twig"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "javascript",
+      "css",
+      "scss",
+      "php",
+      "python",
+      "ruby"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/mblode/vscode-twig-language-2/blob/73f4e2729ce5f490e294dd158c82c22a35cf96de/src/syntaxes/twig.tmLanguage"
+  },
+  {
+    "id": "typespec",
+    "displayName": "TypeSpec",
+    "scopeName": "source.tsp",
+    "file": "typespec.json",
+    "extensions": [
+      "tsp"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "tsp"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/typespec/blob/8e16f8cfffd431f2a04647f8f98bbc98e8f6fcd0/grammars/typespec.json"
+  },
+  {
+    "id": "typst",
+    "displayName": "Typst",
+    "scopeName": "source.typst",
+    "file": "typst.json",
+    "extensions": [
+      "typ"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "typ"
+    ],
+    "embedded": [
+      "bat",
+      "bibtex",
+      "c",
+      "clojure",
+      "coffee",
+      "cpp",
+      "css",
+      "csharp",
+      "dart",
+      "diff",
+      "docker",
+      "elixir",
+      "erlang",
+      "fsharp",
+      "git-commit",
+      "git-rebase",
+      "go",
+      "groovy",
+      "handlebars",
+      "html",
+      "ini",
+      "java",
+      "javascript",
+      "jsonc",
+      "json",
+      "julia",
+      "latex",
+      "less",
+      "log",
+      "lua",
+      "make",
+      "markdown",
+      "objective-c",
+      "perl",
+      "raku",
+      "php",
+      "powershell",
+      "pug",
+      "r",
+      "regexp",
+      "ruby",
+      "scss",
+      "sql",
+      "swift",
+      "xml",
+      "xsl",
+      "yaml",
+      "python",
+      "rust",
+      "scala",
+      "shellscript",
+      "typescript",
+      "tsx",
+      "twig",
+      "verilog",
+      "vb"
+    ],
+    "license": "Apache-2.0",
+    "source": "https://github.com/Myriad-Dreamin/tinymist/blob/b4e837d01ddb66d676637a1af80b6754ff874395/editors/vscode/package.json"
+  },
+  {
+    "id": "vala",
+    "displayName": "Vala",
+    "scopeName": "source.vala",
+    "file": "vala.json",
+    "extensions": [
+      "vala",
+      "vapi"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/vala-lang/vala-vscode/blob/8f825e95648326df2572d0522632251cdff4a43b/syntaxes/vala.YAML-tmLanguage"
+  },
+  {
+    "id": "vb",
+    "displayName": "Visual Basic",
+    "scopeName": "source.asp.vb.net",
+    "file": "vb.json",
+    "extensions": [
+      "vb",
+      "vbs",
+      "bas"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/35d97bc7e439fce0f50f42074041ab2d8571b20a/extensions/vb/syntaxes/asp-vb-net.tmLanguage.json"
+  },
+  {
+    "id": "verilog",
+    "displayName": "Verilog",
+    "scopeName": "source.verilog",
+    "file": "verilog.json",
+    "extensions": [
+      "v",
+      "vh"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/mshr-h/vscode-verilog-hdl-support/blob/67065883604b1b68a97ca33db22b1eb0c05553de/syntaxes/verilog.tmLanguage.json"
+  },
+  {
+    "id": "vhdl",
+    "displayName": "VHDL",
+    "scopeName": "source.vhdl",
+    "file": "vhdl.json",
+    "extensions": [
+      "vhd",
+      "vhdl"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/jonasjj/awesome-vhdl/blob/b787559a47d64c7baf2a9ac0f4cac8e2e721cddc/syntaxes/vhdl.tmLanguage"
+  },
+  {
+    "id": "viml",
+    "displayName": "Vim Script",
+    "scopeName": "source.viml",
+    "file": "viml.json",
+    "extensions": [
+      "vim"
+    ],
+    "fileNames": [
+      ".vimrc",
+      "_vimrc"
+    ],
+    "aliases": [
+      "vim",
+      "vimscript"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/dunstontc/viml/blob/8762570fc7d6f1009a3c93efd2a337330d88b88e/syntaxes/viml.tmLanguage.json"
+  },
+  {
+    "id": "vue",
+    "displayName": "Vue",
+    "scopeName": "text.html.vue",
+    "file": "vue.json",
+    "extensions": [
+      "vue"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "markdown",
+      "pug",
+      "stylus",
+      "sass",
+      "css",
+      "scss",
+      "less",
+      "javascript",
+      "typescript",
+      "jsx",
+      "tsx",
+      "coffee",
+      "json",
+      "jsonc",
+      "json5",
+      "yaml",
+      "toml",
+      "graphql",
+      "html",
+      "html-derivative",
+      "markdown-vue",
+      "vue-directives",
+      "vue-interpolations",
+      "vue-sfc-style-variable-injection"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/vuejs/language-tools/blob/cd7a6e53d58111640f116d1e19f1c1cf06c7157d/extensions/vscode/syntaxes/vue.tmLanguage.json"
+  },
+  {
+    "id": "vue-directives",
+    "displayName": "vue-directives",
+    "scopeName": "vue.directives",
+    "file": "vue-directives.json",
+    "extensions": [],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/vuejs/language-tools/blob/784dd56026e07f1dadb9ef2498418eccbb3dee29/extensions/vscode/syntaxes/vue-directives.json"
+  },
+  {
+    "id": "vue-interpolations",
+    "displayName": "vue-interpolations",
+    "scopeName": "vue.interpolations",
+    "file": "vue-interpolations.json",
+    "extensions": [],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/vuejs/language-tools/blob/784dd56026e07f1dadb9ef2498418eccbb3dee29/extensions/vscode/syntaxes/vue-interpolations.json"
+  },
+  {
+    "id": "vue-sfc-style-variable-injection",
+    "displayName": "vue-sfc-style-variable-injection",
+    "scopeName": "vue.sfc.style.variable.injection",
+    "file": "vue-sfc-style-variable-injection.json",
+    "extensions": [],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "javascript"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/vuejs/language-tools/blob/e85556a2e4bf0d6c981bdbd95c8a0b1e85e7ae8a/extensions/vscode/syntaxes/vue-sfc-style-variable-injection.json"
+  },
+  {
+    "id": "vyper",
+    "displayName": "Vyper",
+    "scopeName": "source.vyper",
+    "file": "vyper.json",
+    "extensions": [
+      "vy"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "vy"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/tintinweb/vscode-vyper/blob/3df08ea46fc7df1a5e7f35365e615624849d1c1b/syntaxes/vyper.tmLanguage.json"
+  },
+  {
+    "id": "wasm",
+    "displayName": "WebAssembly",
+    "scopeName": "source.wat",
+    "file": "wasm.json",
+    "extensions": [
+      "wat",
+      "wast"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/wasmerio/vscode-wasm/blob/9d0ace1ff113f4a3e95797675039cd94ec257078/syntaxes/wat.json"
+  },
+  {
+    "id": "wenyan",
+    "displayName": "Wenyan",
+    "scopeName": "source.wenyan",
+    "file": "wenyan.json",
+    "extensions": [
+      "wy"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "文言"
+    ],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/wenyan-lang/highlight/blob/5100e8a803978b4f5b009adac035d1f27f591760/wenyan.tmLanguage.json"
+  },
+  {
+    "id": "wgsl",
+    "displayName": "WGSL",
+    "scopeName": "source.wgsl",
+    "file": "wgsl.json",
+    "extensions": [
+      "wgsl"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/PolyMeilex/vscode-wgsl/blob/04222c48533ca541d6dc97043ea096471517e079/syntaxes/wgsl.tmLanguage.json"
+  },
+  {
+    "id": "wit",
+    "displayName": "WebAssembly Interface Types",
+    "scopeName": "source.wit",
+    "file": "wit.json",
+    "extensions": [
+      "wit"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/wasmerio/vscode-wasm/blob/5a67ac3f5ade246b44308768b034204612f3a0c9/syntaxes/wit.json"
+  },
+  {
+    "id": "wolfram",
+    "displayName": "Wolfram",
+    "scopeName": "source.wolfram",
+    "file": "wolfram.json",
+    "extensions": [
+      "wl",
+      "wls"
+    ],
+    "fileNames": [],
+    "aliases": [
+      "wl"
+    ],
+    "embedded": [],
+    "license": "Apache-2.0",
+    "source": "https://github.com/WolframResearch/vscode-wolfram/blob/8b55fb1724d971a303120b3f5b981d654c308c59/syntaxes/wolfram.tmLanguage.json"
+  },
+  {
+    "id": "xsl",
+    "displayName": "XSL",
+    "scopeName": "text.xml.xsl",
+    "file": "xsl.json",
+    "extensions": [
+      "xsl",
+      "xslt"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [
+      "xml"
+    ],
+    "license": "MIT",
+    "source": "https://github.com/microsoft/vscode/blob/8fdf170a0850c1cc027382f31650aaf300d3ae2a/extensions/xml/syntaxes/xsl.tmLanguage.json"
+  },
+  {
+    "id": "zenscript",
+    "displayName": "ZenScript",
+    "scopeName": "source.zenscript",
+    "file": "zenscript.json",
+    "extensions": [
+      "zs"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/CraftTweaker/ZenScript-tmLanguage/blob/5a7bcb775a6fb37470e56f904e70d8b8b9e6b047/zenscript.tmLanguage.json"
+  },
+  {
+    "id": "zig",
+    "displayName": "Zig",
+    "scopeName": "source.zig",
+    "file": "zig.json",
+    "extensions": [
+      "zig"
+    ],
+    "fileNames": [],
+    "aliases": [],
+    "embedded": [],
+    "license": "MIT",
+    "source": "https://github.com/ziglang/vscode-zig/blob/9c7bb7631f3af99331475b633aaf5b70345c6713/syntaxes/zig.tmLanguage.json"
+  }
+]

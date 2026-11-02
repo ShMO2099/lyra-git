@@ -1,0 +1,196 @@
+/* ---- Gruvbox Light theme tokens ----
+
+   Gruvbox, light: the cream (#fbf1c7) history over tan panels (#f2e5bc) and sand chrome
+   (#ebdbb2), with the dark Gruvbox accents - deep red, olive, amber, teal - which hold their
+   contrast on cream where the bright ones do not. Greys are Gruvbox's warm browns.
+
+   Like the other whole-palette themes this file restates Primer's own colour names, because it is a
+   different ground and not only different accents. Defines the same tokens as every other
+   theme file (ThemeTokensTest holds them in step), the Primer ones included, so that a
+   theme never inherits a colour from the base it was not tuned against. */
+
+.root {
+    /* ---- Primer's semantic palette ---- */
+    -color-fg-default: #3c3836;
+    -color-fg-muted: #625850;
+    -color-fg-subtle: #78695e;
+    -color-fg-emphasis: #fbf1c7;
+
+    /* Default is the panels (sidebar, details, dialogs); subtle the chrome around them -
+       toolbar, headers, buttons, chips; inset the wells. */
+    -color-bg-default: #f2e5bc;
+    -color-bg-subtle: #ebdbb2;
+    -color-bg-inset: #e6d5a8;
+    -color-bg-overlay: #fbf1c7;
+
+    -color-border-default: #cdbb94;
+    -color-border-muted: #dccca2;
+    -color-border-subtle: #e4d4aa;
+    -color-shadow-default: #cdbb94;
+
+    -color-neutral-emphasis-plus: #555c68;
+    -color-neutral-emphasis: #6a7280;
+    -color-neutral-muted: rgba(124, 111, 100, 0.16);
+    -color-neutral-subtle: rgba(124, 111, 100, 0.08);
+
+    -color-accent-fg: #076678;
+    -color-accent-emphasis: #0b6a7d;
+    -color-accent-muted: rgba(11, 106, 125, 0.38);
+    -color-accent-subtle: rgba(11, 106, 125, 0.1);
+    -color-success-fg: #6f6a0c;
+    -color-success-emphasis: #6b6b10;
+    -color-success-muted: rgba(111, 106, 12, 0.38);
+    -color-success-subtle: rgba(111, 106, 12, 0.1);
+    -color-warning-fg: #8c5c0a;
+    -color-warning-emphasis: #94620c;
+    -color-warning-muted: rgba(140, 92, 10, 0.38);
+    -color-warning-subtle: rgba(140, 92, 10, 0.1);
+    -color-danger-fg: #9d0006;
+    -color-danger-emphasis: #b3201c;
+    -color-danger-muted: rgba(157, 0, 6, 0.38);
+    -color-danger-subtle: rgba(157, 0, 6, 0.1);
+
+    /* The few ramp steps the stylesheets read directly: a hovered button's fill is the
+       sixth step of its colour, and Primer's own controls use the base ramp's sixth and
+       seventh for hover and selection. */
+    -color-base-6: #cdbb94;
+    -color-base-7: #ebdbb2;
+    -color-accent-6: #07505f;
+    -color-success-6: #595a0c;
+    -color-warning-6: #7b520a;
+    -color-danger-6: #92140f;
+    /* Primer's light controls read the ramp from the other end: a hovered button and a
+       selected list row are its first and second steps (a step darker than the chrome
+       they sit on), a focused success button its fifth. */
+    -color-base-1: #e2d1a4;
+    -color-base-2: #d6c398;
+    -color-success-5: #6b6b10;
+
+    /* ---- Where each region's ground comes from ---- */
+    -jfx-tabs-bg: -color-bg-subtle;
+    -jfx-tabs-selected-bg: -color-bg-default;
+    -jfx-status-bg: -color-bg-default;
+    /* The history, set apart from the panels either side of it. GraphPalette holds a copy of
+       #fbf1c7, which GraphPaletteTest checks against this. */
+    -jfx-list-bg: #fbf1c7;
+    -jfx-list-alt-bg: #f6ebc0;
+    -jfx-selected-bg: #d9dfbb;
+    -jfx-current-bg: #d4e0b3;
+    -jfx-current-fg: #2e3a10;
+
+    /* ---- Application tokens ---- */
+    -jfx-attention: #a63a03;
+    -jfx-accent-alt: #8f3f71;
+    -jfx-done-fg: #8f3f71;
+    -jfx-done-emphasis: #8f3f71;
+    -jfx-done-subtle: rgba(143, 63, 113, 0.1);
+    -jfx-done-row: rgba(143, 63, 113, 0.14);
+    -jfx-fg-bright: #282828;
+    /* Text drawn on -color-success-fg, which is dark enough here to take a light label. */
+    -jfx-fg-on-success: #fbf1c7;
+
+    /* Colourblind diff palette: blue and amber, separated by lightness as well as hue. */
+    -jfx-cb-add-bg: #dfe8dc;
+    -jfx-cb-add-edge: #076678;
+    -jfx-cb-add-inline: #bcd5cf;
+    -jfx-cb-del-bg: #f3e2b0;
+    -jfx-cb-del-edge: #8c5c0a;
+    -jfx-cb-del-inline: #e6cf8e;
+
+    /* Syntax, in the same role assignment as the other themes so a file reads the same
+       structure in any of them. */
+    -jfx-syntax-keyword: #9d0006;
+    -jfx-syntax-string: #6f6a0c;
+    -jfx-syntax-number: #8f3f71;
+    -jfx-syntax-annotation: #8c5c0a;
+    -jfx-syntax-property: #076678;
+    -jfx-syntax-literal: #8f3f71;
+    -jfx-syntax-function: #3b6e50;
+    -jfx-syntax-type: #8c5c0a;
+    -jfx-syntax-tag: #3b6e50;
+
+    /* Find: every match, painted behind the text. */
+    -jfx-find-match: rgba(215, 153, 33, 0.36);
+
+    /* Syntax colours per TextMate scope: GitHub Light Default's, recoloured into this theme's
+       palette. Generated: run scripts/derive-theme-syntax.mjs, do not edit. */
+    /* --- generated: syntax theme (scripts/derive-theme-syntax.mjs) - do not edit by hand --- */
+    -jfx-tm-comment: #78695e;
+    -jfx-tm-constant: #076678;
+    -jfx-tm-entity: #076678;
+    -jfx-tm-keyword: #9d0006;
+    -jfx-tm-storage: #9d0006;
+    -jfx-tm-string: #6f6a0c;
+    -jfx-tm-support: #076678;
+    -jfx-tm-variable: #a63a03;
+    -jfx-tm-carriage-return: #f2e5bc;
+    -jfx-tm-string-comment: #78695e;
+    -jfx-tm-constant-character: #9d0006;
+    -jfx-tm-variable-language: #076678;
+    -jfx-tm-entity-name: #a63a03;
+    -jfx-tm-meta-block: #3c3836;
+    -jfx-tm-storage-type: #9d0006;
+    -jfx-tm-meta-property-name: #076678;
+    -jfx-tm-variable-other: #3c3836;
+    -jfx-tm-invalid-broken: #b3201c;
+    -jfx-tm-invalid-deprecated: #b3201c;
+    -jfx-tm-invalid-illegal: #b3201c;
+    -jfx-tm-invalid-unimplemented: #b3201c;
+    -jfx-tm-message-error: #b3201c;
+    -jfx-tm-source-regexp: #6f6a0c;
+    -jfx-tm-string-regexp: #6f6a0c;
+    -jfx-tm-support-constant: #076678;
+    -jfx-tm-support-variable: #076678;
+    -jfx-tm-meta-module-reference: #076678;
+    -jfx-tm-markup-heading: #076678;
+    -jfx-tm-markup-quote: #3b6e50;
+    -jfx-tm-markup-italic: #3c3836;
+    -jfx-tm-markup-bold: #3c3836;
+    -jfx-tm-markup-deleted: #b3201c;
+    -jfx-tm-markup-inserted: #3b6e50;
+    -jfx-tm-markup-changed: #a63a03;
+    -jfx-tm-markup-ignored: #e6d5a8;
+    -jfx-tm-markup-untracked: #e6d5a8;
+    -jfx-tm-meta-separator: #076678;
+    -jfx-tm-meta-output: #076678;
+    -jfx-tm-brackethighlighter-tag: #625850;
+    -jfx-tm-brackethighlighter-curly: #625850;
+    -jfx-tm-brackethighlighter-round: #625850;
+    -jfx-tm-brackethighlighter-square: #625850;
+    -jfx-tm-brackethighlighter-angle: #625850;
+    -jfx-tm-brackethighlighter-quote: #625850;
+    -jfx-tm-brackethighlighter-unmatched: #b3201c;
+    -jfx-tm-punctuation-definition-comment: #78695e;
+    -jfx-tm-constant-other-placeholder: #9d0006;
+    -jfx-tm-entity-name-constant: #3c3836;
+    -jfx-tm-variable-other-constant: #076678;
+    -jfx-tm-variable-other-enummember: #076678;
+    -jfx-tm-meta-export-default: #a63a03;
+    -jfx-tm-meta-definition-variable: #a63a03;
+    -jfx-tm-variable-parameter-function: #3c3836;
+    -jfx-tm-meta-jsx-children: #3c3836;
+    -jfx-tm-meta-tag-attributes: #3c3836;
+    -jfx-tm-meta-object-member: #3c3836;
+    -jfx-tm-meta-embedded-expression: #3c3836;
+    -jfx-tm-entity-name-function: #8f3f71;
+    -jfx-tm-entity-name-tag: #3b6e50;
+    -jfx-tm-support-class-component: #3b6e50;
+    -jfx-tm-storage-modifier-package: #3c3836;
+    -jfx-tm-storage-modifier-import: #3c3836;
+    -jfx-tm-storage-type-java: #3c3836;
+    -jfx-tm-string-regexp-character-class: #6f6a0c;
+    -jfx-tm-markup-inline-raw: #076678;
+    -jfx-tm-punctuation-definition-deleted: #b3201c;
+    -jfx-tm-punctuation-section-embedded: #9d0006;
+    -jfx-tm-punctuation-definition-inserted: #3b6e50;
+    -jfx-tm-punctuation-definition-changed: #a63a03;
+    -jfx-tm-meta-diff-range: #8f3f71;
+    -jfx-tm-meta-diff-header: #076678;
+    -jfx-tm-string-other-link: #6f6a0c;
+    -jfx-tm-support-type-property-name-json: #3b6e50;
+    -jfx-tm-meta-diff-header-from-file: #b3201c;
+    -jfx-tm-meta-diff-header-to-file: #3b6e50;
+    -jfx-tm-constant-other-reference-link: #6f6a0c;
+    -jfx-tm-punctuation-definition-list-begin-markdown: #a63a03;
+    /* --- end generated --- */
+}

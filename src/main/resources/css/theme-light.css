@@ -1,0 +1,140 @@
+/* ---- Light theme tokens ----
+
+   The same token set as theme-dark.css, retuned for a white ground. These are not
+   inversions: a hue that reads well against #0d1117 is usually too pale against
+   white, so each one is darkened until it holds its contrast rather than flipped. */
+
+.root {
+    -jfx-attention: #bc4c00;
+    -jfx-accent-alt: #8250df;
+    /* The "done" violet at light-ground weights: a rebase plan's squash and fixup. */
+    -jfx-done-fg: #8250df;
+    -jfx-done-emphasis: #8250df;
+    -jfx-done-subtle: #fbefff;
+    /* The violet as a row tint under code: the merge tool's undecided conflicts. The
+       subtle wash all but vanishes on white behind a line of text; this sits with the
+       accent and warning row tints. */
+    -jfx-done-row: #f0e2ff;
+    /* On white the "bright" foreground is the darkest one. */
+    -jfx-fg-bright: #1f2328;
+    -jfx-fg-on-success: #ffffff;
+
+    /* Region grounds, each one of Primer's own two; see theme-dark.css. */
+    -jfx-tabs-bg: -color-bg-default;
+    -jfx-tabs-selected-bg: -color-bg-default;
+    -jfx-status-bg: -color-bg-subtle;
+    -jfx-list-bg: -color-bg-default;
+    -jfx-list-alt-bg: transparent;
+    -jfx-selected-bg: -color-accent-subtle;
+    -jfx-current-bg: transparent;
+    -jfx-current-fg: -color-accent-fg;
+
+    /* Colourblind palette, same blue-and-amber pairing at light-ground weights:
+       pale washes with saturated edges. */
+    -jfx-cb-add-bg: #ddf4ff;
+    -jfx-cb-add-edge: #0969da;
+    -jfx-cb-add-inline: #b6e3ff;
+    -jfx-cb-del-bg: #fff8c5;
+    -jfx-cb-del-edge: #9a6700;
+    -jfx-cb-del-inline: #f5e6a8;
+
+    /* Syntax at light-theme weights, following the same role assignment as the dark
+       set so a file looks structurally identical in either theme. */
+    -jfx-syntax-keyword: #8250df;
+    -jfx-syntax-string: #0a3069;
+    -jfx-syntax-number: #0550ae;
+    -jfx-syntax-annotation: #953800;
+    -jfx-syntax-property: #116329;
+    -jfx-syntax-literal: #0550ae;
+    /* Added for TextMateTokenizer's grammar-backed languages; same role assignment as
+       theme-dark.css (function reuses annotation's hue, tag reuses literal's) so a
+       grammar-backed file looks structurally identical to its dark-theme rendering. */
+    -jfx-syntax-function: #953800;
+    -jfx-syntax-type: #0f6e5c;
+    -jfx-syntax-tag: #0550ae;
+
+    /* Find matches: the same amber, a wash rather than a block on white. */
+    -jfx-find-match: rgba(212, 167, 44, 0.40);
+
+    /* Syntax colours per TextMate scope, from GitHub Light Default (primer/github-vscode-theme,
+       MIT) via tm-themes. Generated: run scripts/update-syntax-theme.mjs, do not edit. */
+    /* --- generated: syntax theme (scripts/update-syntax-theme.mjs) - do not edit by hand --- */
+    -jfx-tm-comment: #6e7781;
+    -jfx-tm-constant: #0550ae;
+    -jfx-tm-entity: #0550ae;
+    -jfx-tm-keyword: #cf222e;
+    -jfx-tm-storage: #cf222e;
+    -jfx-tm-string: #0a3069;
+    -jfx-tm-support: #0550ae;
+    -jfx-tm-variable: #953800;
+    -jfx-tm-carriage-return: #f6f8fa;
+    -jfx-tm-string-comment: #6e7781;
+    -jfx-tm-constant-character: #cf222e;
+    -jfx-tm-variable-language: #0550ae;
+    -jfx-tm-entity-name: #953800;
+    -jfx-tm-meta-block: #1f2328;
+    -jfx-tm-storage-type: #cf222e;
+    -jfx-tm-meta-property-name: #0550ae;
+    -jfx-tm-variable-other: #1f2328;
+    -jfx-tm-invalid-broken: #82071e;
+    -jfx-tm-invalid-deprecated: #82071e;
+    -jfx-tm-invalid-illegal: #82071e;
+    -jfx-tm-invalid-unimplemented: #82071e;
+    -jfx-tm-message-error: #82071e;
+    -jfx-tm-source-regexp: #0a3069;
+    -jfx-tm-string-regexp: #0a3069;
+    -jfx-tm-support-constant: #0550ae;
+    -jfx-tm-support-variable: #0550ae;
+    -jfx-tm-meta-module-reference: #0550ae;
+    -jfx-tm-markup-heading: #0550ae;
+    -jfx-tm-markup-quote: #116329;
+    -jfx-tm-markup-italic: #1f2328;
+    -jfx-tm-markup-bold: #1f2328;
+    -jfx-tm-markup-deleted: #82071e;
+    -jfx-tm-markup-inserted: #116329;
+    -jfx-tm-markup-changed: #953800;
+    -jfx-tm-markup-ignored: #eaeef2;
+    -jfx-tm-markup-untracked: #eaeef2;
+    -jfx-tm-meta-separator: #0550ae;
+    -jfx-tm-meta-output: #0550ae;
+    -jfx-tm-brackethighlighter-tag: #57606a;
+    -jfx-tm-brackethighlighter-curly: #57606a;
+    -jfx-tm-brackethighlighter-round: #57606a;
+    -jfx-tm-brackethighlighter-square: #57606a;
+    -jfx-tm-brackethighlighter-angle: #57606a;
+    -jfx-tm-brackethighlighter-quote: #57606a;
+    -jfx-tm-brackethighlighter-unmatched: #82071e;
+    -jfx-tm-punctuation-definition-comment: #6e7781;
+    -jfx-tm-constant-other-placeholder: #cf222e;
+    -jfx-tm-entity-name-constant: #1f2328;
+    -jfx-tm-variable-other-constant: #0550ae;
+    -jfx-tm-variable-other-enummember: #0550ae;
+    -jfx-tm-meta-export-default: #953800;
+    -jfx-tm-meta-definition-variable: #953800;
+    -jfx-tm-variable-parameter-function: #1f2328;
+    -jfx-tm-meta-jsx-children: #1f2328;
+    -jfx-tm-meta-tag-attributes: #1f2328;
+    -jfx-tm-meta-object-member: #1f2328;
+    -jfx-tm-meta-embedded-expression: #1f2328;
+    -jfx-tm-entity-name-function: #8250df;
+    -jfx-tm-entity-name-tag: #116329;
+    -jfx-tm-support-class-component: #116329;
+    -jfx-tm-storage-modifier-package: #1f2328;
+    -jfx-tm-storage-modifier-import: #1f2328;
+    -jfx-tm-storage-type-java: #1f2328;
+    -jfx-tm-string-regexp-character-class: #0a3069;
+    -jfx-tm-markup-inline-raw: #0550ae;
+    -jfx-tm-punctuation-definition-deleted: #82071e;
+    -jfx-tm-punctuation-section-embedded: #cf222e;
+    -jfx-tm-punctuation-definition-inserted: #116329;
+    -jfx-tm-punctuation-definition-changed: #953800;
+    -jfx-tm-meta-diff-range: #8250df;
+    -jfx-tm-meta-diff-header: #0550ae;
+    -jfx-tm-string-other-link: #0a3069;
+    -jfx-tm-support-type-property-name-json: #116329;
+    -jfx-tm-meta-diff-header-from-file: #82071e;
+    -jfx-tm-meta-diff-header-to-file: #116329;
+    -jfx-tm-constant-other-reference-link: #0a3069;
+    -jfx-tm-punctuation-definition-list-begin-markdown: #953800;
+    /* --- end generated --- */
+}

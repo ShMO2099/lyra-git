@@ -1,0 +1,191 @@
+/* ---- Midnight theme tokens ----
+
+   A deep blue-black with an indigo accent: the dark theme for a dim room, where
+   Primer's grey-blue still glows. Grounds are only a few steps apart but all well below
+   mid-grey, and the accent is a periwinkle rather than GitHub's blue so it is not mistaken
+   for the default dark theme at a glance.
+
+   Unlike theme-dark.css this file restates Primer's own colour names, because it is a
+   different ground and not only different accents. Defines the same tokens as every other
+   theme file (ThemeTokensTest holds them in step), the Primer ones included, so that a
+   theme never inherits a colour from the base it was not tuned against. */
+
+.root {
+    /* ---- Primer's semantic palette ---- */
+    -color-fg-default: #c9d2e6;
+    -color-fg-muted: #8f9bb8;
+    -color-fg-subtle: #7886a6;
+    -color-fg-emphasis: #ffffff;
+
+    /* Default is the panels (sidebar, details, dialogs); subtle the chrome above them -
+       toolbar, headers, buttons, chips; inset the wells below them. */
+    -color-bg-default: #0f1526;
+    -color-bg-subtle: #161e36;
+    -color-bg-inset: #080c18;
+    -color-bg-overlay: #161e36;
+
+    -color-border-default: #2a3656;
+    -color-border-muted: #1c2540;
+    -color-border-subtle: #18203a;
+    -color-shadow-default: #03050b;
+
+    -color-neutral-emphasis-plus: #6a707c;
+    -color-neutral-emphasis: #5d636f;
+    -color-neutral-muted: rgba(120, 135, 175, 0.3);
+    -color-neutral-subtle: rgba(120, 135, 175, 0.12);
+
+    -color-accent-fg: #8aa8ff;
+    -color-accent-emphasis: #4a64e8;
+    -color-accent-muted: rgba(74, 100, 232, 0.4);
+    -color-accent-subtle: rgba(74, 100, 232, 0.15);
+    -color-success-fg: #4fd18b;
+    -color-success-emphasis: #17844f;
+    -color-success-muted: rgba(79, 209, 139, 0.4);
+    -color-success-subtle: rgba(79, 209, 139, 0.15);
+    -color-warning-fg: #e6b450;
+    -color-warning-emphasis: #946814;
+    -color-warning-muted: rgba(230, 180, 80, 0.4);
+    -color-warning-subtle: rgba(230, 180, 80, 0.15);
+    -color-danger-fg: #ff7a85;
+    -color-danger-emphasis: #cc3948;
+    -color-danger-muted: rgba(255, 122, 133, 0.4);
+    -color-danger-subtle: rgba(255, 122, 133, 0.15);
+
+    /* The few ramp steps the stylesheets read directly: a hovered button's fill is the
+       sixth step of its colour, and Primer's own controls use the base ramp's sixth and
+       seventh for hover and selection. */
+    -color-base-6: #2a3656;
+    -color-base-7: #161e36;
+    -color-accent-6: #3a50c2;
+    -color-success-6: #126a40;
+    -color-warning-6: #7d5710;
+    -color-danger-6: #a92f3c;
+
+    /* ---- Where each region's ground comes from ---- */
+    -jfx-tabs-bg: -color-bg-subtle;
+    -jfx-tabs-selected-bg: -color-bg-default;
+    -jfx-status-bg: -color-bg-default;
+    /* The history, a step below the panels either side of it. GraphPalette holds a copy of
+       #0b1020, which GraphPaletteTest checks against this. */
+    -jfx-list-bg: #0b1020;
+    -jfx-list-alt-bg: #0b1020;
+    -jfx-selected-bg: #1d2b5a;
+    -jfx-current-bg: #1b3b57;
+    -jfx-current-fg: #e8f1fb;
+
+    /* ---- Application tokens ---- */
+    -jfx-attention: #ff9f5a;
+    -jfx-accent-alt: #b08cf0;
+    -jfx-done-fg: #b79cff;
+    -jfx-done-emphasis: #6d4fd0;
+    -jfx-done-subtle: rgba(183, 156, 255, 0.15);
+    -jfx-done-row: rgba(183, 156, 255, 0.15);
+    -jfx-fg-bright: #e8edf8;
+    /* Text drawn on -color-success-fg, which is bright here and dark in the light themes. */
+    -jfx-fg-on-success: #04170d;
+
+    /* Colourblind diff palette: blue and amber, separated by lightness as well as hue. */
+    -jfx-cb-add-bg: #112349;
+    -jfx-cb-add-edge: #5b86e8;
+    -jfx-cb-add-inline: #22478f;
+    -jfx-cb-del-bg: #38290f;
+    -jfx-cb-del-edge: #d2962c;
+    -jfx-cb-del-inline: #9c5d10;
+
+    /* Syntax, in the same role assignment as the other themes so a file reads the same
+       structure in any of them. */
+    -jfx-syntax-keyword: #c792ea;
+    -jfx-syntax-string: #c3e88d;
+    -jfx-syntax-number: #f78c6c;
+    -jfx-syntax-annotation: #ffcb6b;
+    -jfx-syntax-property: #89ddff;
+    -jfx-syntax-literal: #f78c6c;
+    -jfx-syntax-function: #82aaff;
+    -jfx-syntax-type: #ffcb6b;
+    -jfx-syntax-tag: #ff6b81;
+
+    /* Find: every match, painted behind the text. */
+    -jfx-find-match: rgba(230, 180, 80, 0.40);
+
+    /* Syntax colours per TextMate scope: GitHub Dark Default's, recoloured into this theme's
+       palette. Generated: run scripts/derive-theme-syntax.mjs, do not edit. */
+    /* --- generated: syntax theme (scripts/derive-theme-syntax.mjs) - do not edit by hand --- */
+    -jfx-tm-comment: #7480a6;
+    -jfx-tm-constant: #89ddff;
+    -jfx-tm-entity: #89ddff;
+    -jfx-tm-keyword: #c792ea;
+    -jfx-tm-storage: #c792ea;
+    -jfx-tm-string: #c3e88d;
+    -jfx-tm-support: #89ddff;
+    -jfx-tm-variable: #ffcb6b;
+    -jfx-tm-carriage-return: #e8edf8;
+    -jfx-tm-string-comment: #7480a6;
+    -jfx-tm-constant-character: #c792ea;
+    -jfx-tm-variable-language: #89ddff;
+    -jfx-tm-entity-name: #ffcb6b;
+    -jfx-tm-meta-block: #c9d2e6;
+    -jfx-tm-storage-type: #c792ea;
+    -jfx-tm-meta-property-name: #89ddff;
+    -jfx-tm-variable-other: #c9d2e6;
+    -jfx-tm-invalid-broken: #ff6b81;
+    -jfx-tm-invalid-deprecated: #ff6b81;
+    -jfx-tm-invalid-illegal: #ff6b81;
+    -jfx-tm-invalid-unimplemented: #ff6b81;
+    -jfx-tm-message-error: #ff6b81;
+    -jfx-tm-source-regexp: #c3e88d;
+    -jfx-tm-string-regexp: #c3e88d;
+    -jfx-tm-support-constant: #89ddff;
+    -jfx-tm-support-variable: #89ddff;
+    -jfx-tm-meta-module-reference: #89ddff;
+    -jfx-tm-markup-heading: #89ddff;
+    -jfx-tm-markup-quote: #7fdbca;
+    -jfx-tm-markup-italic: #c9d2e6;
+    -jfx-tm-markup-bold: #c9d2e6;
+    -jfx-tm-markup-deleted: #ff6b81;
+    -jfx-tm-markup-inserted: #7fdbca;
+    -jfx-tm-markup-changed: #ffcb6b;
+    -jfx-tm-markup-ignored: #0f1526;
+    -jfx-tm-markup-untracked: #0f1526;
+    -jfx-tm-meta-separator: #89ddff;
+    -jfx-tm-meta-output: #89ddff;
+    -jfx-tm-brackethighlighter-tag: #7480a6;
+    -jfx-tm-brackethighlighter-curly: #7480a6;
+    -jfx-tm-brackethighlighter-round: #7480a6;
+    -jfx-tm-brackethighlighter-square: #7480a6;
+    -jfx-tm-brackethighlighter-angle: #7480a6;
+    -jfx-tm-brackethighlighter-quote: #7480a6;
+    -jfx-tm-brackethighlighter-unmatched: #ff6b81;
+    -jfx-tm-punctuation-definition-comment: #7480a6;
+    -jfx-tm-constant-other-placeholder: #c792ea;
+    -jfx-tm-entity-name-constant: #c9d2e6;
+    -jfx-tm-variable-other-constant: #89ddff;
+    -jfx-tm-variable-other-enummember: #89ddff;
+    -jfx-tm-meta-export-default: #ffcb6b;
+    -jfx-tm-meta-definition-variable: #ffcb6b;
+    -jfx-tm-variable-parameter-function: #c9d2e6;
+    -jfx-tm-meta-jsx-children: #c9d2e6;
+    -jfx-tm-meta-tag-attributes: #c9d2e6;
+    -jfx-tm-meta-object-member: #c9d2e6;
+    -jfx-tm-meta-embedded-expression: #c9d2e6;
+    -jfx-tm-entity-name-function: #82aaff;
+    -jfx-tm-entity-name-tag: #7fdbca;
+    -jfx-tm-support-class-component: #7fdbca;
+    -jfx-tm-storage-modifier-package: #c9d2e6;
+    -jfx-tm-storage-modifier-import: #c9d2e6;
+    -jfx-tm-storage-type-java: #c9d2e6;
+    -jfx-tm-string-regexp-character-class: #c3e88d;
+    -jfx-tm-markup-inline-raw: #89ddff;
+    -jfx-tm-punctuation-definition-deleted: #ff6b81;
+    -jfx-tm-punctuation-section-embedded: #c792ea;
+    -jfx-tm-punctuation-definition-inserted: #7fdbca;
+    -jfx-tm-punctuation-definition-changed: #ffcb6b;
+    -jfx-tm-meta-diff-range: #82aaff;
+    -jfx-tm-meta-diff-header: #89ddff;
+    -jfx-tm-string-other-link: #c3e88d;
+    -jfx-tm-support-type-property-name-json: #7fdbca;
+    -jfx-tm-meta-diff-header-from-file: #ff6b81;
+    -jfx-tm-meta-diff-header-to-file: #7fdbca;
+    -jfx-tm-constant-other-reference-link: #c3e88d;
+    -jfx-tm-punctuation-definition-list-begin-markdown: #ffcb6b;
+    /* --- end generated --- */
+}

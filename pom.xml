@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.jfx.git</groupId>
+    <artifactId>lyra</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>Lyra</name>
+
+    <!-- Third-party licences and notices: THIRD-PARTY-NOTICES.md and NOTICE. -->
+    <licenses>
+        <license>
+            <name>Apache-2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>5.10.2</junit.version>
+        <!-- 25 is the current LTS. The Foreign Function & Memory API this project needs
+             was finalised in 22 (JEP 454), so nothing here requires a non-LTS release,
+             and pinning to one shut out anyone on a supported JDK.
+
+             Named maven.compiler.release rather than java.version: the latter collides
+             with the JVM's own java.version system property, which resolves to the
+             running JDK instead in some contexts. The compiler plugin reads this
+             property directly. -->
+        <maven.compiler.release>25</maven.compiler.release>
+        <javafx.version>27</javafx.version>
+        <testfx.version>4.0.18</testfx.version>
+        <!-- See the surefire configuration below; override with -DexcludedTestGroups= -->
+        <excludedTestGroups>slow,tour,visual</excludedTestGroups>
+        <!-- The test JVM's heap ceiling; see the surefire argLine. -Dtest.heap=1500m to change it. -->
+        <test.heap>1g</test.heap>
+    </properties>
+
+    <!--
+      Dependencies this project builds itself and keeps in the repository: today only a
+      patched org.eclipse.tm4e.core, see the note on that dependency below. Releases only,
+      so Maven never asks this folder for snapshot metadata.
+
+      Maven treats a file: repository as remote, so an offline build (-o) would refuse to
+      read it on a machine that has not resolved the jar online before. The
+      -Daether.offline.protocols=file in .mvn/maven.config lets offline builds read it.
+    -->
+    <repositories>
+        <repository>
+            <id>project-third-party</id>
+            <url>file://${project.basedir}/third-party/maven-repo</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit -->
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit</artifactId>
+            <version>7.2.1.202505142326-r</version>
+        </dependency>
+        <!-- SSH transport. Apache MINA sshd rather than JSch: JSch is unmaintained and
+             rejects the ed25519 and rsa-sha2 keys that GitHub now requires. -->
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.ssh.apache</artifactId>
+            <version>7.2.1.202505142326-r</version>
+        </dependency>
+        <!-- Talks to a running ssh-agent / Pageant, so a passphrase-protected key that
+             is already unlocked in the agent never prompts. Discovered by ServiceLoader,
+             which is why module-info has to require it explicitly. -->
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit.ssh.apache.agent</artifactId>
+            <version>7.2.1.202505142326-r</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Table-driven cases: the intra-line diff rules read as a table, not as a
+             dozen near-identical test methods. -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--
+          Drives the UI the way a person does: real clicks, drags and key presses.
+
+          The third rung of the testing ladder. Plain unit tests cover stored state and
+          arithmetic; FxHarness builds real nodes and measures the layout they produce;
+          neither can press a mouse button. Three bugs reached the user through that gap -
+          a context menu that stacked a new copy on every right-click, a hidden column
+          that vanished from the header but not the rows, and a tab drag nothing exercised.
+          Each was invisible to a test that only asked what the model held.
+
+          Reserved for interaction. A layout question belongs in an FxHarness test, which
+          is an order of magnitude faster and does not need a robot.
+        -->
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-core</artifactId>
+            <version>${testfx.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit5</artifactId>
+            <version>${testfx.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!--
+          Renders the robot tests into an off-screen buffer instead of onto the desktop.
+
+          Not a nicety. Run headed, these tests open real windows, take the pointer and
+          steal focus from whatever the developer is doing - and they fail when they lose
+          the race, which showed up as different tests failing on each run while the
+          product was fine. Headless removes the desktop from the equation, so a failure
+          means the code is wrong.
+        -->
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>openjfx-monocle</artifactId>
+            <version>21.0.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- UI Theme: AtlantaFX -->
+        <dependency>
+            <groupId>io.github.mkpaz</groupId>
+            <artifactId>atlantafx-base</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <!-- Diff Viewer: RichTextFX. 0.11.7 at least: earlier releases clash with the
+             TextFlow methods JavaFX 25 added (getUnderlineShape, getCaretShape) and fail
+             at startup on JavaFX 25 and later. -->
+        <dependency>
+            <groupId>org.fxmisc.richtext</groupId>
+            <artifactId>richtextfx</artifactId>
+            <version>0.11.7</version>
+        </dependency>
+
+        <!--
+          TextMate grammar engine, used by com.jfx.git.ui.syntax.TextMateTokenizer to add
+          languages beyond the three hand-written tokenizers. groupId is "org.eclipse",
+          not "org.eclipse.tm4e": confirmed against the live snapshot repo's
+          maven-metadata.xml, which also confirms no non-SNAPSHOT version exists yet.
+          Originally added test-scope-only as a feasibility spike (see Tm4eSpikeTest);
+          promoted to main scope once the spike passed and the integration was designed.
+
+          PATCHED, AND KEPT IN THIS REPOSITORY. The jar comes from third-party/maven-repo,
+          built by third-party/tm4e/build.sh from one upstream snapshot build:
+
+              upstream: 0.18.0-20260827.121906-2
+              sha-256:  8ed77bdc34494e18c7a998c4bfa89807c3b73455285bceb563971f828bd777ff
+              sha-1:    91a3eed07783574ef6d25bad7d42f645e94f0e88
+
+          with one class changed: OnigRegExp compiles each distinct pattern once and shares
+          it. Upstream compiles a pattern again for every rule list that includes it - one
+          TypeScript pattern 75 times - and those copies were 99 MB of a 138 MB live heap
+          after files in seven languages had been opened; with the patch the heap is 46 MB
+          and the highlighting is identical. third-party/tm4e/README.md has the details, and
+          TextMatePatternSharingTest fails if an unpatched build comes back.
+
+          Kept here rather than fetched: a timestamped snapshot is the only kind of build
+          TM4E publishes, the moving "0.18.0-SNAPSHOT" alias changed content under this
+          project once already, and Eclipse purges old snapshots without notice. Upstream's
+          jar is signed; the patched one is not, because a changed class no longer matches
+          the signature.
+
+          Known cost: this jar has no module-info.class, only Automatic-Module-Name, so
+          module-info.java requires it as an automatic module - the same already-accepted
+          pattern used for org.eclipse.jgit.ssh.apache below. jlink already can't link this
+          project because of that one; this doesn't newly break jlink, but is one more
+          automatic module to resolve if jlink is ever fixed later.
+
+          EXCLUSIONS. Upstream's generated pom, kept as it is in third-party/maven-repo,
+          lists four compile-scope dependencies that its classes never touch (jdeps finds
+          only gson, joni, jcodings and snakeyaml-engine): assertj-core and byte-buddy are
+          tm4e's own test libraries, and commons-io and commons-logging are unused. The
+          packaging scripts ship every runtime jar, so without these they went into the
+          application image, and commons-logging put a second copy of the
+          org.apache.commons.logging classes beside jcl-over-slf4j's.
+        -->
+        <dependency>
+            <groupId>org.eclipse</groupId>
+            <artifactId>org.eclipse.tm4e.core</artifactId>
+            <version>0.18.0-20260827.121906-2-jfxgit1</version>
+            <exclusions>
+                <exclusion><groupId>org.assertj</groupId><artifactId>assertj-core</artifactId></exclusion>
+                <exclusion><groupId>net.bytebuddy</groupId><artifactId>byte-buddy</artifactId></exclusion>
+                <exclusion><groupId>commons-io</groupId><artifactId>commons-io</artifactId></exclusion>
+                <exclusion><groupId>commons-logging</groupId><artifactId>commons-logging</artifactId></exclusion>
+            </exclusions>
+        </dependency>
+        <!--
+          tm4e-core declares its real dependencies as OSGi Require-Bundle entries, which
+          plain Maven does not follow - `mvn dependency:tree` shows it as a leaf with none.
+          joni (the Oniguruma-syntax regex engine TextMate patterns are written against)
+          and its own dependency jcodings are both genuinely needed at runtime: omitting
+          them threw NoClassDefFoundError on the very first tokenizeLine() call, not just
+          on some theme/CSS-only path. Neither jar declares Automatic-Module-Name, so their
+          derived module names come from the jar filename: "joni" and "jcodings".
+        -->
+        <dependency>
+            <groupId>org.jruby.joni</groupId>
+            <artifactId>joni</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jruby.jcodings</groupId>
+            <artifactId>jcodings</artifactId>
+            <version>1.0.58</version>
+        </dependency>
+        <!--
+          Was already on the classpath as tm4e-core's own transitive dependency (and
+          module-info.java already `requires com.google.gson` for that reason); declared
+          explicitly now that com.jfx.git.core.github parses GitHub's REST responses with
+          it too, so this module's real dependency on Gson is not an accident of what
+          another dependency happens to pull in. Version pinned to what was already
+          resolving, so nothing about the runtime classpath actually changes.
+        -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.13.2</version>
+        </dependency>
+        <!-- Markdown preview: CommonMark, with GitHub's tables, strikethrough and bare
+             links, rendered into JavaFX nodes rather than a WebView (see MarkdownView). -->
+        <dependency>
+            <groupId>org.commonmark</groupId>
+            <artifactId>commonmark</artifactId>
+            <version>0.24.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.commonmark</groupId>
+            <artifactId>commonmark-ext-gfm-tables</artifactId>
+            <version>0.24.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.commonmark</groupId>
+            <artifactId>commonmark-ext-gfm-strikethrough</artifactId>
+            <version>0.24.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.commonmark</groupId>
+            <artifactId>commonmark-ext-autolink</artifactId>
+            <version>0.24.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <!-- Stamps the jar's manifest with Implementation-Version, from the project
+                     version above. AppVersion reads it there - for the About dialog, crash
+                     reports and the update check - and without it every packaged build
+                     calls itself a development build, which cannot be compared with a
+                     release. -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <release>${maven.compiler.release}</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <!--
+                      A heap ceiling for the one JVM the whole suite runs in. Without one
+                      the JVM takes a quarter of the machine's memory as its limit, and G1
+                      grows toward it rather than collect: past 2 GB committed, which on a
+                      busy 16 GB machine failed at the OS as a native out-of-memory crash
+                      rather than a Java one. Classes leave 30-50 MB live between them,
+                      so 1 GB is room, and a leak fails here, loudly, with a dump in
+                      target/ to read it from.
+
+                      SoftRefLRUPolicyMSPerMB=0 clears soft references at every collection.
+                      JavaFX's software renderer pools the images drop shadows are drawn
+                      into behind soft references, which are otherwise kept until the heap
+                      is nearly full: they took the live heap from about 35 MB to 160 MB
+                      across eight settings classes, and filled whatever room a cap leaves.
+                    -->
+                    <argLine>--enable-native-access=ALL-UNNAMED -Xmx${test.heap} -XX:SoftRefLRUPolicyMSPerMB=0 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}</argLine>
+                    <!--
+                      Soak and performance tests are tagged "slow" and left out of the
+                      ordinary build: one is a 500-iteration open/close loop looking for a
+                      native-handle leak, the other builds a ten-thousand-commit fixture
+                      and times the graph against a budget. Both are worth having and
+                      neither belongs in the loop a developer runs on every change.
+
+                        mvn test -Dgroups=slow -DexcludedTestGroups=
+                    -->
+                    <excludedGroups>${excludedTestGroups}</excludedGroups>
+                    <systemPropertyVariables>
+                        <!--
+                          Settings go to a throwaway file under target/ for the whole test
+                          run. Without this the suite reads the developer's own saved
+                          settings, which is not hypothetical: the graph-order preference
+                          used to decide whether a lane assertion passed, so the same
+                          commit produced different results on two machines and after
+                          anyone touched the Preferences dialog. mvn clean wipes it.
+
+                          One file per fork, not one per run. Surefire replaces
+                          ${surefire.forkNumber} here, and with -DforkCount>1 the forks are
+                          separate JVMs sharing one filesystem: a single path meant the
+                          favourites test in one fork raced another fork clearing the same
+                          key, which is a failure that only appears in parallel and looks
+                          like a bug in whichever test lost. With the default forkCount of
+                          1 this is simply test-settings-1.properties.
+                        -->
+                        <lyra.settings>${project.build.directory}/test-settings-${surefire.forkNumber}.properties</lyra.settings>
+                        <!--
+                          Robot tests render off-screen through Monocle rather than onto
+                          the desktop. Headed, they grab the pointer and the focus, and
+                          lose races against whatever else is on screen - which reads as
+                          a different test failing on every run. Set -Dheadless=false to
+                          watch them drive the real UI when diagnosing one.
+                        -->
+                        <!--
+                          Syntax colours arrive from a background thread in the application.
+                          The suite asserts on them straight after a render, so it has them
+                          computed inline; the tests of the background path switch it off.
+                        -->
+                        <lyra.syntax.synchronous>true</lyra.syntax.synchronous>
+                        <testfx.robot>glass</testfx.robot>
+                        <glass.platform>Monocle</glass.platform>
+                        <monocle.platform>Headless</monocle.platform>
+                        <!--
+                          Monocle Headless defaults to a 1280x800 upload framebuffer.
+                          Shown test windows include the app's 1280x840 startup scene,
+                          a 1200x900 robot scene, and a 1400x640 graph-layout scene.
+                          Give the virtual screen room for all of them; shrinking the
+                          product window would hide the same overflow instead of fixing
+                          the off-screen test display.
+                        -->
+                        <headless.geometry>1600x1000</headless.geometry>
+                        <prism.order>sw</prism.order>
+                        <java.awt.headless>true</java.awt.headless>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <executions>
+                    <execution>
+                        <!-- Default configuration for running with: mvn clean javafx:run -->
+                        <id>default-cli</id>
+                        <configuration>
+                            <mainClass>com.jfx.git.lyra/com.jfx.git.LyraApp</mainClass>
+                            <options>
+                                <option>--enable-native-access=com.jfx.git.lyra,javafx.graphics</option>
+                            </options>
+                            <!--
+                              jlink parameters used to live here (launcher, jlinkZipName,
+                              jlinkImageName, noManPages, stripDebug, noHeaderFiles). They
+                              are gone, because `mvn javafx:jlink` cannot run on this
+                              project and advertising a goal that always fails wastes the
+                              time of whoever tries it. It fails with:
+
+                                automatic module cannot be used with jlink:
+                                org.eclipse.jgit.ssh.apache
+
+                              jlink refuses filename-based automatic modules, and this
+                              project has two: the JGit SSH transport and
+                              org.eclipse.tm4e.core. Both are load-bearing -
+                              SshSessionManager needs the first, the syntax highlighter
+                              the second - so the fix is not to drop them but to give
+                              them real module descriptors (shading JGit-SSH, or building
+                              tm4e from source), which is a dependency decision rather
+                              than a build one.
+
+                              Until someone takes that decision, packaging is
+                              jpackage-over-JDK-modules and nothing else:
+                              package-windows.sh builds a JDK-only runtime image with
+                              jlink and runs the application from the classpath, which is
+                              where no automatic module can block anything. That script,
+                              not this plugin, is the packaging story.
+                            -->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!--
+          The tests CI runs on every push. The whole suite takes over 90 minutes: the
+          robot tests drive the UI, BackendConformanceTest runs each case on every
+          engine, and the classes tagged "heavy" - each 20 s or more, most of them
+          starting a git process per step - took 35 of the remaining 44 minutes when
+          measured. What is left is about three quarters of the tests in about nine
+          minutes. The rest run locally, and in CI on demand.
+
+            ./mvnw verify -Pfast
+        -->
+        <profile>
+            <id>fast</id>
+            <properties>
+                <excludedTestGroups>slow,tour,visual,heavy</excludedTestGroups>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/*RobotTest.java</exclude>
+                                <exclude>**/BackendConformanceTest.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
