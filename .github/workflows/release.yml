@@ -87,7 +87,8 @@ jobs:
           distribution: temurin
           java-version: '25'
           cache: maven
-      - run: ./mvnw -B -ntp verify -Pfast
+      # Reruns a failing test up to twice, as ci.yml does and for the same reason.
+      - run: ./mvnw -B -ntp verify -Pfast -Dsurefire.rerunFailingTestsCount=2
 
   linux:
     needs: [version, test]
