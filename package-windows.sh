@@ -665,9 +665,21 @@ installers() {
   # would drop the signatures just put on the image, and the trained AOT cache with it.
   local msi=(jpackage --type msi --app-image "target/dist/$APP_NAME"
              --name "$APP_NAME" --app-version "$APP_VERSION"
-             --win-dir-chooser --win-menu --win-shortcut)
+             --win-dir-chooser --win-menu --win-shortcut --win-menu-group "$APP_NAME")
   local machine_msi="target/dist/$APP_NAME-$APP_VERSION.msi"
   local user_msi="target/dist/$APP_NAME-$APP_VERSION-per-user.msi"
+
+  # Packaging from an app image, jpackage gives every launcher the image lists the
+  # MSI's --win-menu and --win-shortcut, and ignores the win-menu=false a launcher's
+  # own properties could say. So LyraAskpass, which nobody is meant to start, would get
+  # a Start menu entry and a desktop icon. Left out of that list (.jpackage.xml, which
+  # only jpackage reads), it is installed like any other file of the image.
+  local state="target/dist/$APP_NAME/app/.jpackage.xml"
+  sed -i 's#<add-launcher name="LyraAskpass"[^>]*></add-launcher>##' "$state"
+  if grep -q LyraAskpass "$state"; then
+    echo "error: could not take LyraAskpass out of $state; its format has changed" >&2
+    exit 1
+  fi
 
   echo "==> MSI, per machine"
   "${msi[@]}" --dest target/dist --win-upgrade-uuid "$MACHINE_UPGRADE_UUID"
