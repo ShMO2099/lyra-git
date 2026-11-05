@@ -19,8 +19,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -134,11 +136,42 @@ class AppLifetimeTest {
     /** {@code ref}'s referent after collections have had their chance; null once it is gone. */
     private static <T> T collected(WeakReference<T> ref) throws InterruptedException {
         for (int i = 0; i < 40 && ref.get() != null; i++) {
+            dropTheToolkitsLastRenderPaths();
             System.gc();
             Thread.sleep(50);
             // Work already queued on the FX thread can still hold what it was queued with.
             FxHarness.run(() -> { });
         }
         return ref.get();
+    }
+
+    /**
+     * Lets go of the render-root paths JavaFX keeps from the last frames it painted.
+     *
+     * <h2>Why</h2>
+     * The toolkit finds a render root for each dirty region of a frame and keeps the path
+     * to it in a static array ({@code ViewPainter.ROOT_PATHS}), clearing each path once its
+     * region is painted - but a region it skips as empty is never painted, so that path
+     * stays until some later frame has as many regions again. It runs down the closed
+     * window's render tree to a text node, and from there to the node's scene and what the
+     * scene's handlers hold: the whole application. Held by the toolkit, not by anything
+     * the application registered with, and only when the window's last frame happened to
+     * end that way - which on a busy machine it now and then did, so the test failed on CI
+     * and passed on every rerun. Found from a heap dump of one of those failures.
+     *
+     * <p>By name, because these are the toolkit's internals. If the field is ever renamed,
+     * or the tests run where it cannot be reached, this does nothing: the test goes back
+     * to failing now and then, rather than passing when it should not.
+     */
+    private static void dropTheToolkitsLastRenderPaths() {
+        try {
+            Field paths = Class.forName("com.sun.javafx.tk.quantum.ViewPainter").getDeclaredField("ROOT_PATHS");
+            paths.setAccessible(true);
+            // Emptied slots are recreated on demand; a frame painting meanwhile finds its
+            // region's path empty and skips that region once.
+            Arrays.fill((Object[]) paths.get(null), null);
+        } catch (ReflectiveOperationException | RuntimeException unreachable) {
+            // Nothing to let go of from here.
+        }
     }
 }

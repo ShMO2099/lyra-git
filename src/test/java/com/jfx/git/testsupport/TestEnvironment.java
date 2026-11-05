@@ -5,15 +5,21 @@ package com.jfx.git.testsupport;
 
 import com.jfx.git.core.ThreadGuard;
 
+import org.eclipse.jgit.lib.Config;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.RepositoryCache;
+import org.eclipse.jgit.storage.file.FileBasedConfig;
 import org.eclipse.jgit.storage.file.WindowCacheConfig;
+import org.eclipse.jgit.util.FS;
+import org.eclipse.jgit.util.SystemReader;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 /**
- * Keeps JGit from holding a test's repository open after the test has finished.
+ * Keeps JGit from holding a test's repository open, or still working in it, after the
+ * test has finished.
  *
  * <h2>The failure this prevents</h2>
  * A test that passed, and then failed in teardown:
@@ -45,6 +51,11 @@ import org.junit.jupiter.api.extension.ExtensionContext;
  * exactly this reason; doing it here means the ones that did not are covered too, and a
  * new test does not have to know about any of it.
  *
+ * <h2>The same failure on Linux, from a different cause</h2>
+ * <pre>Failed to delete temp directory … .git/gc.log.lock</pre>
+ * Nothing holds a file open there; JGit is still at work in the folder. See
+ * {@link #runJGitsAutomaticGcInTheForeground}.
+ *
  * <h2>How it is registered</h2>
  * {@code META-INF/services/org.junit.jupiter.api.extension.Extension} plus
  * {@code junit.jupiter.extensions.autodetection.enabled} in
@@ -52,17 +63,55 @@ import org.junit.jupiter.api.extension.ExtensionContext;
  */
 public final class TestEnvironment implements BeforeAllCallback, BeforeEachCallback, AfterEachCallback {
 
-    private static volatile boolean mmapDisabled;
+    private static volatile boolean configured;
 
     /**
      * Matches what the application does at startup on Windows: no memory-mapped packs, so
-     * a pack file this process reads is not one the user's own git cannot write.
+     * a pack file this process reads is not one the user's own git cannot write. And has
+     * JGit finish its housekeeping before a command returns.
      */
     @Override
     public void beforeAll(ExtensionContext context) {
-        if (mmapDisabled) return;
-        mmapDisabled = true;
+        if (configured) return;
+        configured = true;
         releasePackFiles();
+        runJGitsAutomaticGcInTheForeground();
+    }
+
+    /**
+     * Sets {@code gc.autoDetach=false} beneath every configuration JGit reads.
+     *
+     * <h2>Why</h2>
+     * A JGit merge, rebase or fetch ends with an automatic gc, and with {@code gc.autoDetach}
+     * at its default of {@code true} that gc runs in the background: {@code gc.log.lock} is
+     * created before the command returns, and deleted later by a thread of JGit's own
+     * {@code WorkQueue}, which on a busy machine is after the test has finished and while
+     * {@code @TempDir} is deleting the folder. A file that disappears between JUnit listing
+     * a directory and deleting it fails the cleanup as surely as one that will not go - a
+     * passing test reported as an error, on whichever test happened to end with a merge. In
+     * the foreground the gc is done, lock and all, before the command returns; a repository
+     * this small never needs one, so it costs a glance at the object directory.
+     *
+     * <h2>Why beneath everything</h2>
+     * A repository's config inherits the user's, which inherits the system's, which
+     * inherits JGit's own file. The setting goes in memory under that last one, the only
+     * layer nothing in the suite replaces: tests that keep JGit away from the developer's
+     * {@code ~/.gitconfig} swap the user and system layers, delegating the rest to the
+     * reader installed here. Saving a config writes only its own entries, so the setting
+     * reaches no file - not when the application saves the user's config, and not when
+     * JGit records what it measured about the file system in its own. A machine whose
+     * config sets {@code gc.autoDetach} itself still wins, as it does for git.
+     */
+    private static void runJGitsAutomaticGcInTheForeground() {
+        SystemReader.setInstance(new SystemReader.Delegate(SystemReader.getInstance()) {
+            @Override
+            public FileBasedConfig openJGitConfig(Config parent, FS fs) {
+                Config suiteDefaults = new Config(parent);
+                suiteDefaults.setBoolean(ConfigConstants.CONFIG_GC_SECTION, null,
+                        ConfigConstants.CONFIG_KEY_AUTODETACH, false);
+                return super.openJGitConfig(suiteDefaults, fs);
+            }
+        });
     }
 
     @Override

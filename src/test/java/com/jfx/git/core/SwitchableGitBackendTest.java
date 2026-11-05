@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -117,14 +119,63 @@ class SwitchableGitBackendTest {
     }
 
     /**
-     * A swap landing mid-call must not break the call. Readers run on the calling thread
-     * against whichever engine they resolved, and the replacement is open before the
-     * previous one is closed - so an in-flight read finishes against a live engine either
-     * way. Twenty switches under four concurrent readers is enough to catch a swap that
-     * closes what someone is still using.
+     * A switch must not close an engine under a call that is still running on it.
+     *
+     * <p>Git work cannot be in flight then: it runs on the repository's lane, and so does
+     * the switch. The editor's file I/O does not - a save is made from the FX thread - so
+     * a switch can land part-way through one, and used to close the engine there and then:
+     * the save carried on against a closed engine and failed. Held still inside the old
+     * engine here, so the switch lands mid-call every time rather than now and then.
      */
     @Test
-    void readsKeepWorkingWhileTheEngineIsSwappedUnderThem() throws Exception {
+    void aCallOffTheLaneKeepsItsEngineOpenThroughASwitch() throws Exception {
+        CountDownLatch inside = new CountDownLatch(1);
+        CountDownLatch carryOn = new CountDownLatch(1);
+        GitService first = new GitService() {
+            @Override
+            public byte[] getWorkingTreeBytes(String path) {
+                inside.countDown();
+                try {
+                    carryOn.await(10, TimeUnit.SECONDS);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                return super.getWorkingTreeBytes(path);
+            }
+        };
+        backend.close();
+        backend = new SwitchableGitBackend(first);
+        assertTrue(backend.openRepository(tempDir.toFile()));
+
+        ExecutorService editor = Executors.newSingleThreadExecutor();
+        try {
+            Future<byte[]> read = editor.submit(() -> backend.getWorkingTreeBytes("f.txt"));
+            assertTrue(inside.await(10, TimeUnit.SECONDS), "the read should have reached the engine");
+
+            assertTrue(backend.switchTo(GitBackendFactory.BackendEngine.JGIT).isOk());
+            assertNotSame(first, backend.currentEngine());
+            assertTrue(first.isOpen(), "a call is still running on the engine it replaced");
+
+            carryOn.countDown();
+            assertEquals("v7\n", new String(read.get(10, TimeUnit.SECONDS), StandardCharsets.UTF_8));
+            assertFalse(first.isOpen(), "closed once the last call on it returned");
+        } finally {
+            carryOn.countDown();
+            editor.shutdownNow();
+        }
+    }
+
+    /**
+     * The same under load: the calls that skip the lane, from four threads, while the
+     * engine is swapped twenty times - enough to catch a hold that lets the count reach
+     * zero under someone.
+     *
+     * <p>Git reads are deliberately not among them. Four threads reading through one
+     * engine at once is nothing any engine promises (see GitTaskRunner), and a git read on
+     * the lane never overlaps a switch on the same lane.
+     */
+    @Test
+    void editorReadsKeepWorkingWhileTheEngineIsSwappedUnderThem() throws Exception {
         assumeNativeGit();
         int readers = 4;
         ExecutorService pool = Executors.newFixedThreadPool(readers + 1);
@@ -140,10 +191,9 @@ class SwitchableGitBackendTest {
                     try {
                         start.await();
                         while (running.on) {
-                            // Reads only: two engines writing the same repository at once
-                            // is not what this class promises, and not what a tab does.
-                            assertNotNull(backend.getCurrentBranch());
-                            assertFalse(backend.getLocalBranches().isEmpty());
+                            assertTrue(backend.isOpen());
+                            assertNotNull(backend.getWorkTree());
+                            assertEquals("v7\n", backend.getWorkingTreeContent("f.txt"));
                             reads.incrementAndGet();
                         }
                     } catch (Throwable t) {

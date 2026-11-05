@@ -48,11 +48,13 @@ jobs:
           java-version: '25'
           cache: maven
 
-      # A failing test is run again, up to twice, before it fails the build: a handful of
-      # tests race the runner's scheduling (an engine swap under concurrent reads, git's
-      # background gc against temp-directory cleanup) and lose now and then on a busy
-      # 4-core machine. A real failure fails all three times; a test that passes on a rerun
-      # is listed under "Flakes" in the log rather than hidden.
+      # A failing test is run again, up to twice, before it fails the build. The races this
+      # first caught on a busy 4-core runner are fixed where they started (an engine swap
+      # under an editor's read, JGit's background gc against temp-directory cleanup, a
+      # closed window kept by the toolkit's last frame, a tail read mid-re-measure); it stays
+      # as a net for any not yet found. A real failure fails all three times; a test that
+      # passes on a rerun is listed under "Flakes" in the log rather than hidden, and is a
+      # race to fix, not noise.
       - name: Build and test
         run: ./mvnw -B -ntp verify -Dsurefire.rerunFailingTestsCount=2 ${{ inputs.suite == 'full' && '' || '-Pfast' }}
 

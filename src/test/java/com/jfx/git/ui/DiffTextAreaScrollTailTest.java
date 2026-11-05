@@ -73,17 +73,36 @@ class DiffTextAreaScrollTailTest {
      * Lets a deferred tail re-measure land and the stylesheet take effect: the area
      * re-measures after a layout pass, later rather than within it, so a fixture is not
      * final until the queue behind it has run and the next pulses have applied the CSS.
+     *
+     * <p>Repeated, a few rounds at most, until the tail is the one the rows on screen call
+     * for. The toolkit runs pulses of its own between these, and on a busy machine one of
+     * them moved the area along a step after the last explicit pass: a test reading the
+     * tail and the rows straight away found one of them a pass behind the other - a tail
+     * still measured against the unzoomed rows, or a row not yet restyled under a tail
+     * already measured against the zoomed ones. A tail that is wrong for good still fails
+     * the test: the rounds run out with it still disagreeing.
      */
     private static Fixture settled(Fixture f) {
-        FxHarness.run(() -> {
-            FxHarness.pulse(f.root());
-            FxHarness.pulse(f.root());
-        });
-        FxHarness.run(() -> {
-            FxHarness.pulse(f.root());
-            FxHarness.pulse(f.root());
-        });
+        for (int round = 0; round < 5; round++) {
+            FxHarness.run(() -> {
+                FxHarness.pulse(f.root());
+                FxHarness.pulse(f.root());
+            });
+            FxHarness.run(() -> {
+                FxHarness.pulse(f.root());
+                FxHarness.pulse(f.root());
+            });
+            if (FxHarness.call(() -> tailAgreesWithTheRows(f.area()))) {
+                break;
+            }
+        }
         return f;
+    }
+
+    /** Whether the tail is what the viewport and the rows on screen now call for; true with none. */
+    private static boolean tailAgreesWithTheRows(DiffTextArea area) {
+        double tail = area.tailPadding();
+        return tail == 0 || tail == Math.ceil(Math.max(0, area.getHeight() - area.rowHeight()) / 4) * 4;
     }
 
     private static List<Region> boxes(DiffTextArea area) {
