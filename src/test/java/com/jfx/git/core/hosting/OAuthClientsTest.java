@@ -39,15 +39,18 @@ class OAuthClientsTest {
     }
 
     /**
-     * Until the maintainer registers the applications, every provider offers tokens only -
-     * and the shipped file is read at all, from where the class looks for it.
+     * The shipped file is read at all, from where the class looks for it - GitHub's
+     * registration there is the one a sign-in uses - and a provider with no registration
+     * offers tokens only.
      */
     @Test
-    void theShippedBlankRegistrationsOfferNoSignIn() {
-        for (HostingProvider p : HostingProvider.values()) {
-            assertEquals(Optional.empty(), OAuthClients.shipped().spec(p), p.id());
-        }
+    void theShippedRegistrationsAreReadAndAMissingOneOffersNoSignIn() {
         assertNotNull(OAuthClients.class.getResourceAsStream(OAuthClients.RESOURCE), "resource present");
+        assertEquals(OAuthSpec.Flow.DEVICE,
+                OAuthClients.shipped().spec(HostingProvider.GITHUB).orElseThrow().flow());
+        for (HostingProvider p : HostingProvider.values()) {
+            assertEquals(Optional.empty(), registered().spec(p), p.id());
+        }
         assertEquals(Optional.empty(), registered("github.clientId", "  ").spec(HostingProvider.GITHUB, GITHUB));
     }
 

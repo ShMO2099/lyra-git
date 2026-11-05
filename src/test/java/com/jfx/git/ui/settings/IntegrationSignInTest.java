@@ -56,6 +56,9 @@ class IntegrationSignInTest {
     void setUp() throws Exception {
         Settings.useFile(tempDir.resolve("settings.properties"));
         previousWriter = IntegrationsPane.tokenWriter;
+        // The registrations each test needs, it sets; none ship, and no developer's local
+        // Bitbucket secret is read, so a card with only a client id stays on tokens.
+        OAuthClients.useForTests(new java.util.Properties());
     }
 
     @AfterEach
@@ -68,6 +71,7 @@ class IntegrationSignInTest {
         if (api != null) api.stop(0);
         for (HostingProvider p : HostingProvider.values()) ProviderSessions.disconnect(p);
         Settings.useFile(null);
+        OAuthClients.useForTests(null);
     }
 
     private static List<Labeled> labelled(javafx.scene.Node root) {

@@ -38,7 +38,10 @@ class ProviderSessionsTest {
     @Test
     void theTypedSessionsReadTheRegistry() {
         var user = new GitLabUser("tanuki", null);
-        var grant = ProviderCredential.oauth("access", "refresh", Instant.parse("2026-10-07T12:00:00Z"), "c", null);
+        // Valid for an hour, so reading the token never refreshes it. A fixed date passed
+        // and turned this into a real refresh against gitlab.com once a GitLab application
+        // shipped, which signed the session out.
+        var grant = ProviderCredential.oauth("access", "refresh", Instant.now().plusSeconds(3600), "c", null);
         GitLabSession.connect(grant, user);
 
         assertEquals("access", GitLabSession.token());

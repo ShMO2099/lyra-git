@@ -7,6 +7,7 @@ import com.jfx.git.core.github.GitHubSession;
 import com.jfx.git.core.gitlab.GitLabClient;
 import com.jfx.git.core.gitlab.GitLabSession;
 import com.jfx.git.core.hosting.HostingProvider;
+import com.jfx.git.core.hosting.OAuthClients;
 import com.jfx.git.ui.FxHarness;
 import com.jfx.git.ui.RobotWait;
 
@@ -21,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Window;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.util.WaitForAsyncUtils;
 
@@ -65,6 +67,16 @@ class IntegrationsPaneTest {
         return pane;
     }
 
+    /**
+     * No application registered for any provider, so every card connects with a token -
+     * what these tests are about - whichever registrations ship, and whether or not this
+     * machine keeps a Bitbucket secret beside them.
+     */
+    @BeforeEach
+    void noRegistrations() {
+        OAuthClients.useForTests(new java.util.Properties());
+    }
+
     @AfterEach
     void tidyUp() {
         FxHarness.run(() -> built.forEach(IntegrationsPane::dispose));
@@ -74,6 +86,7 @@ class IntegrationsPaneTest {
         GitHubSession.disconnect();
         GitLabSession.disconnect();
         BitbucketSession.disconnect();
+        OAuthClients.useForTests(null);
     }
 
     private GitHubClient fakeClient(int status, String body) throws Exception {

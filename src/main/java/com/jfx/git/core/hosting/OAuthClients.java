@@ -82,6 +82,16 @@ public final class OAuthClients {
         this.registrations = registrations;
     }
 
+    /**
+     * Stands {@code registrations} in for the shipped ones; {@code null} puts the shipped ones
+     * back. For tests of the cards rather than of the registrations, which would otherwise
+     * change under them as applications are registered, or with a developer's own
+     * {@link #SECRETS_RESOURCE} on the class path.
+     */
+    public static void useForTests(Properties registrations) {
+        shipped = registrations == null ? null : new OAuthClients(registrations);
+    }
+
     /** The registrations that ship with the application. */
     public static OAuthClients shipped() {
         OAuthClients s = shipped;
