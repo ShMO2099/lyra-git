@@ -170,12 +170,55 @@ jobs:
           VERSION: ${{ needs.version.outputs.version }}
         run: mvn -B -ntp -q versions:set -DnewVersion="$VERSION" -DgenerateBackupPoms=false
 
-      # Unsigned: SmartScreen warns about it until a certificate is set up (see the
-      # signing notes in package-windows.sh).
+      # Code signing with Azure Artifact Signing, once it is set up; until then this step
+      # is skipped and the packages are unsigned (see the signing notes in
+      # package-windows.sh for what that costs under SmartScreen and AppLocker). Setting it up:
+      # the repository variables ARTIFACT_SIGNING_ENDPOINT (the account's regional URL,
+      # e.g. https://eus.codesigning.azure.net), ARTIFACT_SIGNING_ACCOUNT and
+      # ARTIFACT_SIGNING_PROFILE (its certificate profile), and the repository secrets
+      # AZURE_TENANT_ID, AZURE_CLIENT_ID and AZURE_CLIENT_SECRET of a service principal
+      # holding the "Artifact Signing Certificate Profile Signer" role on that profile.
+      # This sets signtool up with the service's plug-in; package-windows.sh signs.
+      # The plug-in (client 1.0.151) runs on .NET 10.
+      - uses: actions/setup-dotnet@v4
+        if: vars.ARTIFACT_SIGNING_ACCOUNT != ''
+        with:
+          dotnet-version: '10.0.x'
+      - name: Code signing
+        if: vars.ARTIFACT_SIGNING_ACCOUNT != ''
+        shell: pwsh
+        env:
+          ENDPOINT: ${{ vars.ARTIFACT_SIGNING_ENDPOINT }}
+          ACCOUNT: ${{ vars.ARTIFACT_SIGNING_ACCOUNT }}
+          CERT_PROFILE: ${{ vars.ARTIFACT_SIGNING_PROFILE }}
+        run: |
+          $dir = "$env:RUNNER_TEMP\artifact-signing"
+          Invoke-WebRequest https://www.nuget.org/api/v2/package/Microsoft.ArtifactSigning.Client/1.0.151 -OutFile "$dir.zip"
+          Expand-Archive "$dir.zip" -DestinationPath $dir
+          $dlib = "$dir\bin\x64\Azure.CodeSigning.Dlib.dll"
+          if (-not (Test-Path $dlib)) { throw "no $dlib in the Artifact Signing client package" }
+          @{ Endpoint = $env:ENDPOINT; CodeSigningAccountName = $env:ACCOUNT; CertificateProfileName = $env:CERT_PROFILE } |
+            ConvertTo-Json | Out-File -Encoding utf8 "$dir\metadata.json"
+          # The plug-in needs SignTool 10.0.22621.755 or later: the newest SDK's.
+          $signtool = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin\10.*\x64\signtool.exe" |
+            Sort-Object { [version]$_.Directory.Parent.Name } | Select-Object -Last 1
+          if (-not $signtool) { throw "no signtool.exe in the Windows SDK" }
+          "signtool: $($signtool.FullName)"
+          $signtool.DirectoryName | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
+          "SIGNTOOL_DLIB=$dlib", "SIGNTOOL_DMDF=$dir\metadata.json",
+            "SIGNTOOL_TIMESTAMP_URL=http://timestamp.acs.microsoft.com" |
+            Out-File -Append -Encoding utf8 $env:GITHUB_ENV
+
+      # Both MSIs, per machine and per user; see installers in package-windows.sh.
       - name: Package
         env:
           APP_VERSION: ${{ needs.version.outputs.number }}
           LYRA_BITBUCKET_CLIENT_SECRET: ${{ secrets.LYRA_BITBUCKET_CLIENT_SECRET }}
+          # Who Artifact Signing signs for (the plug-in reads them through Azure's
+          # EnvironmentCredential); empty and unused while signing is not set up.
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
         run: bash package-windows.sh --installer
 
       - id: jdk

@@ -34,17 +34,63 @@ for a worked example).
 
 ```bash
 bash package-windows.sh              # app image -> target/dist/Lyra/Lyra.exe
-bash package-windows.sh --installer  # + MSI
+bash package-windows.sh --installer  # + two MSIs: per machine and per user
 ```
 
 Uses jpackage over JDK modules only; JavaFX stays on the module path. Requires `jlink`
-and `jpackage` on PATH.
+and `jpackage` on PATH, and for `--installer` WiX Toolset 3 (the release job puts
+`wix314-binaries.zip` on PATH; nothing needs installing). jpackage prefers WiX 4 or later
+when it finds a `wix.exe` on PATH, and that one needs its UI and Util extensions added
+first; the MSIs are built and released with WiX 3.
 
 `mvn javafx:jlink` is deliberately not configured: jlink refuses filename-based automatic
 modules and this project has two load-bearing ones (the JGit SSH transport and
 `org.eclipse.tm4e.core`), so the goal could only ever fail. `package-windows.sh` links a
 JDK-only runtime image instead and runs the application from the classpath, where no
-automatic module is consulted. Set `SIGNTOOL_CERT` to have it sign what it produces.
+automatic module is consulted.
+
+The Windows downloads, and who can use which:
+
+| File | Installs to | Administrator |
+|---|---|---|
+| `Lyra-<version>.msi` | `C:\Program Files\Lyra`, for every user | required: a UAC prompt, or IT deploying it with `msiexec /i Lyra-<version>.msi /qn` |
+| `Lyra-<version>-per-user.msi` | `%LOCALAPPDATA%\Lyra`, for the current user | not needed |
+| `Lyra-v<version>-windows-x86_64.zip` | wherever it is unpacked; no install | not needed |
+
+Each MSI upgrades earlier versions of itself only: install one or the other. Neither
+writes to its install directory after installing: settings live in `%APPDATA%\Lyra`, and
+the bundled libgit2 is unpacked to `%USERPROFILE%\.lyra\native`.
+
+On a machine managed with AppLocker or App Control for Business, a standard user can run
+only what the policy allows. The default rules allow Program Files and nothing a user can
+write to, so the zip and the per-user install are blocked ("This app has been blocked by
+your system administrator") and only the per-machine MSI, installed by IT, runs. With a
+signed build, IT can allow Lyra by its publisher wherever it is installed, with one rule
+that holds for every release.
+
+**Signing.** `package-windows.sh` signs both launchers, the JavaFX DLLs (OpenJFX ships them
+unsigned) and both MSIs, given `signtool` on PATH and one of:
+
+- `SIGNTOOL_CERT` set to a `.pfx` file, with `SIGNTOOL_PASSWORD`;
+- `SIGNTOOL_CERT` set to a certificate thumbprint, with `SIGNTOOL_USE_STORE=1`, for a
+  certificate in the Windows store or on a hardware token;
+- `SIGNTOOL_DLIB` and `SIGNTOOL_DMDF`, a signing service's signtool plug-in and its metadata
+  file: Azure Artifact Signing's `Azure.CodeSigning.Dlib.dll`, or another that works this way.
+
+The release workflow signs with Azure Artifact Signing (formerly Trusted Signing) once it
+has the repository variables `ARTIFACT_SIGNING_ENDPOINT`, `ARTIFACT_SIGNING_ACCOUNT` and
+`ARTIFACT_SIGNING_PROFILE`, and the secrets `AZURE_TENANT_ID`, `AZURE_CLIENT_ID` and
+`AZURE_CLIENT_SECRET` of a service principal with the *Artifact Signing Certificate Profile
+Signer* role on the profile. Without them it publishes unsigned packages, as before. The
+other ways to a certificate:
+
+- an OV code-signing certificate from a certificate authority, available in any country.
+  Since June 2023 the key must live on a hardware token or in the CA's cloud HSM, so in CI
+  it goes through the CA's own signing tool or plug-in rather than a `.pfx`;
+- SignPath Foundation, free for qualifying open-source projects, which signs under its own
+  name through its own GitHub integration (not wired up here).
+
+An EV certificate no longer buys SmartScreen reputation over an OV one.
 
 ### Packaging (Linux)
 
@@ -60,7 +106,7 @@ smoke-test the packaged image with its own runtime.
 ### Releases
 
 Pushing a version tag runs `.github/workflows/release.yml`, which tests, packages on Windows
-and Linux, and publishes a GitHub release with the MSI, a Windows zip, the `.deb`, a Linux
+and Linux, and publishes a GitHub release with both MSIs, a Windows zip, the `.deb`, a Linux
 tarball, `SHA256SUMS.txt`, and the source of the GPL-licensed components the packages carry:
 
 ```bash

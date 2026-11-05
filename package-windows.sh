@@ -4,7 +4,8 @@
 # Usage:  ./package-windows.sh [--installer] [--aot] [--no-bss]
 #
 #   (no flag)     app-image  -> target/dist/Lyra/Lyra.exe, runnable in place
-#   --installer   also an MSI -> target/dist/Lyra-1.0.msi
+#   --installer   also two MSIs -> target/dist/Lyra-1.0.msi (per machine) and
+#                 target/dist/Lyra-1.0-per-user.msi (no administrator needed); see installers below
 #   --aot         also train an AOT cache (JDK 25) into the image; see aot_train below
 #   --no-bss      leave the stylesheets as text; see binary_stylesheets below
 #
@@ -54,6 +55,8 @@ for tool in mvn jlink jpackage; do
 done
 
 echo "==> Building jar and collecting runtime dependencies"
+# jpackage leaves the launchers it writes read-only, which mvn clean cannot delete.
+[ ! -d target/dist ] || chmod -R u+w target/dist
 mvn -q clean package -DskipTests
 mvn -q dependency:copy-dependencies -DoutputDirectory=target/deps -DincludeScope=runtime
 
@@ -286,37 +289,80 @@ rm -f target/runtime/bin/server/classes_nocoops.jsa target/runtime/lib/server/cl
 # to confirm they meant to run software from nobody in particular - which is
 # exactly the habit an installer should not be teaching.
 #
-# Signing needs a certificate this repository cannot carry, so it is opt-in:
-# set SIGNTOOL_CERT (a .pfx path, or a thumbprint with SIGNTOOL_USE_STORE=1) and
-# SIGNTOOL_PASSWORD, with signtool.exe on PATH. Without them the build says
-# plainly that it produced unsigned output rather than pretending otherwise.
+# Signing is also what lets a managed machine run Lyra at all. Under an application-
+# control policy (AppLocker, App Control for Business) a standard user runs only what
+# the policy allows, and the default rules allow Program Files and Windows and nothing
+# a user can write to: an unsigned Lyra.exe unpacked from the zip is "blocked by your
+# system administrator". IT can allow a signed build by its publisher, one rule that
+# outlives every release; an unsigned one only by path, or by hash, again for each
+# release.
 #
-#   SIGNTOOL_CERT=~/certs/lyra.pfx SIGNTOOL_PASSWORD=... ./package-windows.sh --installer
+# Signing needs a certificate this repository cannot carry, so it is opt-in, with
+# signtool.exe (Windows SDK) on PATH and one of:
+#
+#   SIGNTOOL_CERT=~/certs/lyra.pfx SIGNTOOL_PASSWORD=...        a .pfx file
+#   SIGNTOOL_CERT=<thumbprint> SIGNTOOL_USE_STORE=1             a certificate in the store,
+#                                                               or on a hardware token
+#   SIGNTOOL_DLIB=.../Azure.CodeSigning.Dlib.dll                a signing service's signtool
+#   SIGNTOOL_DMDF=.../metadata.json                             plug-in - Azure Artifact
+#                                                               Signing, as the release does
+#
+# A publicly trusted certificate issued since June 2023 keeps its key on a hardware
+# token or in a cloud HSM, so for one of those the store or the dlib is the way in;
+# the README's Windows packaging section has the options. Without any of them the
+# build says plainly that it produced unsigned output rather than pretending otherwise.
 #
 # The timestamp URL matters: a signature without one stops verifying the day the
-# certificate expires, including on copies already installed.
+# certificate expires, including on copies already installed. Artifact Signing's
+# certificates last three days, so for it the timestamp is the whole signature's life.
 SIGNTOOL_TIMESTAMP_URL="${SIGNTOOL_TIMESTAMP_URL:-http://timestamp.digicert.com}"
 
+signing() { [ -n "${SIGNTOOL_CERT:-}${SIGNTOOL_DLIB:-}" ]; }
+
+# Signs the files named, in one signtool run, and verifies each.
 sign() {
-  local artifact="$1"
-  if [ -z "${SIGNTOOL_CERT:-}" ]; then
-    echo "    (unsigned: set SIGNTOOL_CERT to sign - SmartScreen will warn about this build)"
+  if ! signing; then
+    echo "    (unsigned: set SIGNTOOL_CERT or SIGNTOOL_DLIB to sign - SmartScreen will warn about this build)"
     return 0
   fi
   command -v signtool > /dev/null || {
-    echo "error: SIGNTOOL_CERT is set but signtool is not on PATH" >&2; exit 1; }
+    echo "error: signing is configured but signtool is not on PATH" >&2; exit 1; }
 
   local args=(sign /fd SHA256 /tr "$SIGNTOOL_TIMESTAMP_URL" /td SHA256)
-  if [ "${SIGNTOOL_USE_STORE:-}" = "1" ]; then
+  if [ -n "${SIGNTOOL_DLIB:-}" ]; then
+    [ -n "${SIGNTOOL_DMDF:-}" ] || {
+      echo "error: SIGNTOOL_DLIB is set but SIGNTOOL_DMDF, its metadata file, is not" >&2; exit 1; }
+    args+=(/dlib "$SIGNTOOL_DLIB" /dmdf "$SIGNTOOL_DMDF")
+  elif [ "${SIGNTOOL_USE_STORE:-}" = "1" ]; then
     args+=(/sha1 "$SIGNTOOL_CERT")            # certificate thumbprint in the local store
   else
     args+=(/f "$SIGNTOOL_CERT")
     [ -n "${SIGNTOOL_PASSWORD:-}" ] && args+=(/p "$SIGNTOOL_PASSWORD")
   fi
 
-  echo "==> Signing $(basename "$artifact")"
-  signtool "${args[@]}" "$artifact"
-  signtool verify /pa "$artifact"
+  echo "==> Signing $# file(s)"
+  # Git Bash rewrites an argument that looks like a POSIX path for a native program,
+  # and signtool's switches (/fd, /tr, /q) look like one.
+  MSYS_NO_PATHCONV=1 signtool "${args[@]}" "$@"
+  MSYS_NO_PATHCONV=1 signtool verify /pa /q "$@"
+}
+
+# Signs every executable and DLL in the image that its vendor has not: the two
+# launchers, and JavaFX's libraries, which OpenJFX ships unsigned. The runtime's
+# (Eclipse Foundation's) and the VC++ runtime's (Microsoft's) keep the signatures they
+# came with. App Control for Business checks each DLL a process loads, not only the
+# .exe it started from, so a launcher signed on its own would still be stopped at
+# glass.dll.
+sign_image() {
+  signing || { sign; return 0; }
+  local file unsigned=()
+  while IFS= read -r -d '' file; do
+    MSYS_NO_PATHCONV=1 signtool verify /pa /q "$file" > /dev/null 2>&1 || unsigned+=("$file")
+  done < <(find "target/dist/$APP_NAME" -type f \( -iname '*.exe' -o -iname '*.dll' \) -print0)
+  [ ${#unsigned[@]} -gt 0 ] || { echo "    (every executable in the image is already signed)"; return 0; }
+  # jpackage leaves its launchers read-only, and the signature is written into the file.
+  chmod u+w "${unsigned[@]}"
+  sign "${unsigned[@]}"
 }
 
 echo "==> jpackage"
@@ -579,21 +625,85 @@ aot_train() {
   echo "    app.aot: $(du -h "$app_dir/app.aot" | cut -f1)"
 }
 
-smoke_image
-aot_train
-sign "target/dist/$APP_NAME/$APP_NAME.exe"
+# ---------------------------------------------------------------------------
+# Installers (--installer)
+# ---------------------------------------------------------------------------
+# Two MSIs from the one image, for the two ways Windows installs software:
+#
+#   Lyra-<version>.msi           per machine, into Program Files, for every user. Needs
+#                                an administrator: a UAC prompt, or IT deploying it
+#                                (msiexec /i Lyra-<version>.msi /qn). On a machine under
+#                                AppLocker or App Control this is the one that runs,
+#                                because those policies allow Program Files and block
+#                                folders a user can write to.
+#   Lyra-<version>-per-user.msi  for the current user only, into %LOCALAPPDATA%\Lyra,
+#                                with Start menu and desktop shortcuts of their own. No
+#                                administrator and no UAC prompt, for a standard
+#                                account on a machine that lets it run what it installs.
+#
+# Each is a product line of its own, with its own upgrade code: Windows Installer
+# looks for the version to upgrade only within one install context, so a per-user
+# install never sees a per-machine one, and the other way round. The per-machine code
+# is jpackage's default for this name and vendor ("UpgradeCode/Unknown/Lyra"), pinned
+# so that setting a vendor some day cannot orphan the 1.0.x installations.
+MACHINE_UPGRADE_UUID=A620F59F-253F-3A55-A8DC-622AFA858564
+USER_UPGRADE_UUID=33784CAC-1E7C-47A6-B22E-4DA8CD42F334
 
-if [ "$INSTALLER" = true ]; then
+# A name-based UUID, as java.util.UUID.nameUUIDFromBytes makes them - the way jpackage
+# derives its codes (uuid3 "UpgradeCode/Unknown/Lyra" is MACHINE_UPGRADE_UUID).
+uuid3() {
+  local h
+  h="$(printf '%s' "$1" | md5sum | cut -c1-32)"
+  printf '%s-%s-3%s-%x%s-%s\n' "${h:0:8}" "${h:8:4}" "${h:13:3}" \
+    $(( (0x${h:16:1} & 0x3) | 0x8 )) "${h:17:3}" "${h:20:12}" | tr a-f A-F
+}
+
+installers() {
+  [ "$INSTALLER" = true ] || return 0
   # Needs WiX Toolset v3 on PATH; jpackage says so plainly if it is missing.
   # Packaged from the finished app-image rather than rebuilt from the inputs: a rebuild
-  # would drop the signature just put on Lyra.exe, and the trained AOT cache with it.
-  jpackage --type msi --app-image "target/dist/$APP_NAME" \
-    --name "$APP_NAME" --app-version "$APP_VERSION" --dest target/dist \
-    --win-dir-chooser --win-menu --win-shortcut
-  MSI="$(ls target/dist/*.msi 2>/dev/null | head -1)"
-  echo "    installer: $MSI"
-  [ -n "$MSI" ] && sign "$MSI"
-fi
+  # would drop the signatures just put on the image, and the trained AOT cache with it.
+  local msi=(jpackage --type msi --app-image "target/dist/$APP_NAME"
+             --name "$APP_NAME" --app-version "$APP_VERSION"
+             --win-dir-chooser --win-menu --win-shortcut)
+  local machine_msi="target/dist/$APP_NAME-$APP_VERSION.msi"
+  local user_msi="target/dist/$APP_NAME-$APP_VERSION-per-user.msi"
+
+  echo "==> MSI, per machine"
+  "${msi[@]}" --dest target/dist --win-upgrade-uuid "$MACHINE_UPGRADE_UUID"
+
+  # jpackage derives the ProductCode from vendor, name and version alone, so both MSIs
+  # of a version would carry the same one, and Windows Installer, finding that code
+  # installed per machine already, would refuse the per-user MSI as "another version of
+  # this product".
+  # overrides.wxi, which jpackage's main.wxs includes ahead of its Product element,
+  # gives the per-user one its own, derived like jpackage's so that a rebuild of a
+  # version keeps it.
+  echo "==> MSI, per user"
+  local res=target/msi-per-user
+  rm -rf "$res" && mkdir -p "$res/resources" "$res/out"
+  cat > "$res/resources/overrides.wxi" <<WXI
+<?xml version="1.0" encoding="utf-8"?>
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?ifndef JpProductCode ?>
+  <?error jpackage no longer defines JpProductCode: package-windows.sh's per-user ProductCode needs another way in ?>
+  <?endif ?>
+  <?undef JpProductCode ?>
+  <?define JpProductCode = "{$(uuid3 "ProductCode/$APP_NAME/per-user/$APP_VERSION")}" ?>
+</Include>
+WXI
+  "${msi[@]}" --dest "$res/out" --win-upgrade-uuid "$USER_UPGRADE_UUID" \
+    --win-per-user-install --resource-dir "$res/resources"
+  mv "$res/out/$APP_NAME-$APP_VERSION.msi" "$user_msi"
+
+  echo "    installers: $machine_msi, $user_msi"
+  sign "$machine_msi" "$user_msi"
+}
+
+smoke_image
+aot_train
+sign_image
+installers
 
 echo
 echo "Done. Size: $(du -sh "target/dist/$APP_NAME" | cut -f1)"
