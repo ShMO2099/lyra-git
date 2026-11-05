@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.util.NodeQueryUtils;
 import org.testfx.util.WaitForAsyncUtils;
 
 import java.nio.charset.StandardCharsets;
@@ -84,15 +86,26 @@ class ManualQaExternalEditWarningTest extends ApplicationTest {
             tab.graphList().getSelectionModel().clearSelection();
             tab.graphList().getSelectionModel().select(0);
         });
+        // Looked up in this test's own tab, not every window: one an earlier test class left
+        // showing can hold a file list and a diff viewer of its own.
         RobotWait.untilOnFx("a.txt never appeared in the unstaged list",
-                () -> lookup("a.txt").tryQuery().isPresent());
+                () -> from(tab.getContent()).lookup(".staging-unstaged-list").lookup("a.txt")
+                        .tryQuery().isPresent());
         RobotWait.drainGitWork();
-        Node list = lookup(".staging-unstaged-list").query();
-        clickOn(from(list).lookup("a.txt").match(node -> node.getScene() != null).queryAs(Node.class));
+        Node list = from(tab.getContent()).lookup(".staging-unstaged-list").query();
+        clickOn(from(list).lookup("a.txt").match(NodeQueryUtils.isVisible()).queryAs(Node.class));
 
-        DiffViewer viewer = lookup(".diff-viewer").queryAs(DiffViewer.class);
-        RobotWait.untilOnFx("a.txt never loaded into the diff viewer",
-                () -> "a.txt".equals(viewer.filePathProperty().get()));
+        DiffViewer viewer = from(tab.getContent()).lookup(".diff-viewer").queryAs(DiffViewer.class);
+        try {
+            RobotWait.untilOnFx("a.txt never loaded into the diff viewer",
+                    () -> "a.txt".equals(viewer.filePathProperty().get()));
+        } catch (AssertionError timedOut) {
+            // Passes everywhere but on the CI runner, so the failure says what it saw.
+            boolean idle = com.jfx.git.core.AutoFetchScheduler.drainPendingWork(1_000);
+            throw new AssertionError(timedOut.getMessage() + "; git lane "
+                    + (idle ? "idle" : "still busy") + "; " + FxHarness.call(() -> describe(viewer)),
+                    timedOut);
+        }
         interact(viewer::beginEditing);
         interact(() -> viewer.replaceBuffer("original\napp draft, edited\n"));
         assertTrue(FxHarness.call(viewer::isEditing));
@@ -114,6 +127,26 @@ class ManualQaExternalEditWarningTest extends ApplicationTest {
                                     + pane.getButtonTypes().stream().map(ButtonType::getText).toList()));
             ((Button) pane.lookupButton(type)).fire();
         });
+    }
+
+    /** Every diff viewer and unstaged list in every window: what each shows and has selected. */
+    private static String describe(DiffViewer waitedOn) {
+        StringBuilder out = new StringBuilder();
+        List<Window> windows = List.copyOf(Window.getWindows());
+        for (Window window : windows) {
+            if (window.getScene() == null) continue;
+            for (Node node : window.getScene().getRoot().lookupAll(".diff-viewer")) {
+                out.append(node == waitedOn ? "viewer waited on " : "other viewer ")
+                        .append('"').append(((DiffViewer) node).filePathProperty().get()).append("\"; ");
+            }
+            for (Node node : window.getScene().getRoot().lookupAll(".staging-unstaged-list")) {
+                ListView<?> unstaged = (ListView<?>) node;
+                out.append("unstaged list ").append(unstaged.getItems()).append(" selected ")
+                        .append(unstaged.getSelectionModel().getSelectedItems())
+                        .append(unstaged.getScene() == null ? " (detached)" : "").append("; ");
+            }
+        }
+        return out.append(windows.size()).append(" window(s)").toString();
     }
 
     private static List<String> dialogLabels(DialogPane pane) {
